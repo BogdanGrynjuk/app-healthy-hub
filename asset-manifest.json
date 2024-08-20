@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/app-healthy-hub/static/css/main.7a9469ca.css",
-    "main.js": "/app-healthy-hub/static/js/main.22034781.js",
-    "static/js/346.15aff323.chunk.js": "/app-healthy-hub/static/js/346.15aff323.chunk.js",
-    "static/js/936.4a62370b.chunk.js": "/app-healthy-hub/static/js/936.4a62370b.chunk.js",
+    "main.js": "/app-healthy-hub/static/js/main.7bdd7c43.js",
+    "static/js/781.df765517.chunk.js": "/app-healthy-hub/static/js/781.df765517.chunk.js",
+    "static/js/936.a062863c.chunk.js": "/app-healthy-hub/static/js/936.a062863c.chunk.js",
     "static/js/962.588e79ff.chunk.js": "/app-healthy-hub/static/js/962.588e79ff.chunk.js",
     "static/js/930.c9205dce.chunk.js": "/app-healthy-hub/static/js/930.c9205dce.chunk.js",
     "static/js/688.da54d54d.chunk.js": "/app-healthy-hub/static/js/688.da54d54d.chunk.js",
@@ -50,9 +50,9 @@
     "static/media/arrow-right.svg": "/app-healthy-hub/static/media/arrow-right.be9bceed642802b11548c5b22d986ea8.svg",
     "static/media/arrow-down.svg": "/app-healthy-hub/static/media/arrow-down.8cf3438f3dbcde251e8bc48b07aab667.svg",
     "main.7a9469ca.css.map": "/app-healthy-hub/static/css/main.7a9469ca.css.map",
-    "main.22034781.js.map": "/app-healthy-hub/static/js/main.22034781.js.map",
-    "346.15aff323.chunk.js.map": "/app-healthy-hub/static/js/346.15aff323.chunk.js.map",
-    "936.4a62370b.chunk.js.map": "/app-healthy-hub/static/js/936.4a62370b.chunk.js.map",
+    "main.7bdd7c43.js.map": "/app-healthy-hub/static/js/main.7bdd7c43.js.map",
+    "781.df765517.chunk.js.map": "/app-healthy-hub/static/js/781.df765517.chunk.js.map",
+    "936.a062863c.chunk.js.map": "/app-healthy-hub/static/js/936.a062863c.chunk.js.map",
     "962.588e79ff.chunk.js.map": "/app-healthy-hub/static/js/962.588e79ff.chunk.js.map",
     "930.c9205dce.chunk.js.map": "/app-healthy-hub/static/js/930.c9205dce.chunk.js.map",
     "688.da54d54d.chunk.js.map": "/app-healthy-hub/static/js/688.da54d54d.chunk.js.map",
@@ -72,6 +72,6 @@
   },
   "entrypoints": [
     "static/css/main.7a9469ca.css",
-    "static/js/main.22034781.js"
+    "static/js/main.7bdd7c43.js"
   ]
 }
