@@ -169,12 +169,12 @@ export const QuestionWrapper = styled.div`
   font-size: ${p => p.theme.fontSizes.xs};
   line-height: 1.43;
 
-  @media (${props => props.theme.mq.tablet}) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     flex-direction: row;
     justify-content: center;
   }
 
-  @media (${props => props.theme.mq.desktop}) {
+  @media screen and (${props => props.theme.mq.desktop}) {
     justify-content: flex-start;
   }
 `;

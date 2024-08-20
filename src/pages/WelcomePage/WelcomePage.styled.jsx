@@ -1,208 +1,176 @@
 import styled from 'styled-components';
 
+const BaseButton = styled.button`
+  width: 140px;
+  padding: 8px 10px;
+  font-family: ${p => p.theme.fontFamily.poppins};
+  font-weight: ${p => p.theme.fontWeights.medium};
+  font-size: ${p => p.theme.fontSizes.xs};
+  line-height: 20px;
+  cursor: pointer;
+
+  @media screen and (${p => p.theme.mq.tablet}) {
+    width: 210px;
+  }
+
+  @media screen and (${p => p.theme.mq.desktop}) {
+    width: 190px;
+  }
+`;
+
 export const Container = styled.div`
-  background-color: #050505;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+  padding: 24px 0;
+  background-color: ${props => props.theme.colors.black};
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    flex-direction: column;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    row-gap: 60px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    flex-direction: column;
-  }
-
-  @media (min-width: 1440px) {
+  @media screen and (${props => props.theme.mq.desktop}) {
     flex-direction: row;
+    row-gap: 0;
+    column-gap: 100px;
     justify-content: center;
+    padding: 40px 0;
   }
 `;
 
 export const Image = styled.img`
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 40px;
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
-    margin-top: 24px;
-    margin-bottom: 24px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     width: 380px;
-    margin-bottom: 80px;
   }
 
-  @media (min-width: 1440px) {
-    width: 592px;
-    margin: 40px 104px 72px 0;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 590px;
+    height: 590px;
   }
 `;
 
 export const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
-    margin: 0 auto 40px;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 436px;
-    margin: 0 auto 286px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  @media (min-width: 1440px) {
-    width: 444px;
-    margin-top: 120px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    margin-top: 80px;
   }
 `;
 
 export const Title = styled.h1`
   margin-bottom: 16px;
-  color: ${p => p.theme.colors.white};
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-size: ${p => p.theme.fontSizes.xl};
-  font-weight: ${p => p.theme.fontWeights.medium};
-  line-height: 36px;
+  color: ${props => props.theme.colors.white};
+  font-family: Poppins;
+  font-weight: ${props => props.theme.fontWeights.medium};
+  text-align: center;
+  font-size: ${p => p.theme.fontSizes.l2};
+  line-height: 1.25;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    font-size: ${p => p.theme.fontSizes.l2};
-    line-height: 30px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    text-align: center;
-    align-self: center;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    font-size: ${p => p.theme.fontSizes.xl};
+    line-height: 1.2;
   }
 `;
 
 export const Text = styled.p`
+  width: 300px;
   margin-bottom: 24px;
-  color: ${p => p.theme.colors.gray};
   font-family: ${p => p.theme.fontFamily.poppins};
   font-weight: ${p => p.theme.fontWeights.regular};
-  font-size: ${p => p.theme.fontSizes.l};
-  line-height: 32px;
+  font-size: ${p => p.theme.fontSizes.m};
+  line-height: 1.33;
+  text-align: center;
+  color: ${props => props.theme.colors.gray};
 
-  @media (min-width: 320px) and (max-width: 833px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
     font-size: ${p => p.theme.fontSizes.m};
-    line-height: 24px;
   }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 410px;
-    text-align: center;
-    align-self: center;
-  }
-  
-  @media (min-width: 1440px) {
-    width: 410px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    line-height: 1.45;
   }
 `;
 
 export const BtnBox = styled.div`
-  margin-bottom: 80px;
+  display: flex;
+  column-gap: 16px;
+  margin-bottom: 40px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    margin-bottom: 40px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     width: 350px;
     margin: 0 auto 80px auto;
   }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    column-gap: 38px;
+    margin-bottom: 80px;
+  }
 `;
 
-export const BtnSignIn = styled.button`
-  
-  padding: 8px 10px;
+export const BtnSignIn = styled(BaseButton)`
   background-color: ${p => p.theme.colors.greenLite};
   color: ${p => p.theme.colors.black2};
+  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${p => p.theme.radii.normal};
-  border: ${p => p.theme.borders.none};
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-weight: ${p => p.theme.fontWeights.medium};
-  font-size: ${p => p.theme.fontSizes.xs};
-  line-height: 20px;
-
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 142px;
-    margin-right: 16px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 212px;
-    margin-right: 16px;
-  }
-
-  @media (min-width: 1440px) {
-    width: 192px;
-    margin-right: 38px;
-  }
 `;
 
-export const BtnSignUp = styled.button`
-  background-color: ${p => p.theme.colors.black};
+export const BtnSignUp = styled(BaseButton)`
+  background-color: transparent;
   border: ${p => p.theme.borders.none};
   color: ${p => p.theme.colors.white};
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-weight: ${p => p.theme.fontWeights.medium};
-  font-size: ${p => p.theme.fontSizes.xs};
-  line-height: 20px;
+  border-radius: ${p => p.theme.radii.normal};
+
+  &:hover {
+    border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  }
 `;
 
 export const List = styled.ul`
-  @media (min-width: 834px) and (max-width: 1439px) {
-    display: flex;
-    flex-wrap: wrap;
+  & > li:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  @media screen and (min-width: 834px) and (max-width: 1439px) {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    row-gap: 16px;
+
+    & > li:not(:last-child) {
+      margin-bottom: 0px;
+    }
   }
 `;
 
 export const Item = styled.li`
-  display: flex;
-  margin-bottom: 16px;
-  
-  &:last-child {
-    @media (min-width: 320px) and (max-width: 833px) {
-      margin-bottom: 0;
-    }
+  position: relative;
+  padding-left: 16px;
 
-    @media (min-width: 1440px) {
-      margin-bottom: 0;
-    }
+  &::before {
+    content: ' ';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background-color: ${p => p.theme.colors.greenLite};
   }
-  
-  &:nth-child(n + 3) {
-    @media (min-width: 834px) and (max-width: 1439px) {
-      margin-bottom: 0;
-    }
-  }
-
-  &:nth-child(even) {
-    @media (min-width: 834px) and (max-width: 1439px) {
-      width: 170px;
-    }
-  }
-
-  &:nth-child(odd) {
-    @media (min-width: 834px) and (max-width: 1439px) {
-      width: 250px;
-      margin-right: 16px;
-    }
-  }
-`;
-
-export const ItemImg = styled.img`
-  height: 8px;
-  margin-top: 6px;
 `;
 
 export const ItemText = styled.p`
-  margin-left: 8px;
   color: ${p => p.theme.colors.white};
   font-family: ${p => p.theme.fontFamily.poppins};
   font-weight: ${p => p.theme.fontWeights.regular};

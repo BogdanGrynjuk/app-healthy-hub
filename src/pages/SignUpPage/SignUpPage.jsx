@@ -84,7 +84,7 @@ const SignUpPage = () => {
             validationSchema={validationSchema}
             onSubmit={handleNewUserData}
           >
-            <SignUpForm>
+            <SignUpForm autoComplete="off">
               <InputWrapper>
                 <Input type="text" name="name" placeholder="Name" />
                 <ErrorMsg name="name" component="div" />
