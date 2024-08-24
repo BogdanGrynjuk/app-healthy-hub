@@ -1,176 +1,189 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { ErrorMessage, Field, Form } from 'formik';
 
 export const Container = styled.div`
-  background-color: #050505;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+  padding: 24px 0;
+  background-color: ${props => props.theme.colors.black};
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    flex-direction: column;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    row-gap: 60px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    flex-direction: column;
-  }
-
-  @media (min-width: 1440px) {
+  @media screen and (${props => props.theme.mq.desktop}) {
     flex-direction: row;
+    row-gap: 0;
+    column-gap: 100px;
     justify-content: center;
+    padding: 40px 0;
   }
 `;
 
 export const Image = styled.img`
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 40px;
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
-    margin-top: 24px;
-    margin-bottom: 24px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     width: 380px;
-    margin-bottom: 60px;
   }
 
-  @media (min-width: 1440px) {
-    width: 592px;
-    margin: 40px 104px 72px 0;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 590px;
+    height: 590px;
   }
 `;
 
 export const ContentBox = styled.div`
-  width: 444px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
-    margin: auto;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  @media (min-width: 1440px) {
-    margin-top: 120px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    margin-top: 80px;
   }
 `;
 
 export const Title = styled.h1`
   margin-bottom: 16px;
-  color: ${p => p.theme.colors.white};
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-size: ${p => p.theme.fontSizes.xl};
-  font-weight: ${p => p.theme.fontWeights.medium};
-  line-height: 1.2;
+  color: ${props => props.theme.colors.white};
+  font-family: Poppins;
+  font-weight: ${props => props.theme.fontWeights.medium};
+  text-align: center;
+  font-size: ${p => p.theme.fontSizes.l2};
+  line-height: 1.25;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    font-size: ${p => p.theme.fontSizes.l2};
-    line-height: 1.25;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    text-align: center;
-    align-self: center;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    font-size: ${p => p.theme.fontSizes.xl};
+    line-height: 1.2;
   }
 `;
 
 export const Text = styled.p`
+  width: 300px;
   margin-bottom: 24px;
-  color: ${p => p.theme.colors.gray};
   font-family: ${p => p.theme.fontFamily.poppins};
   font-weight: ${p => p.theme.fontWeights.regular};
-  font-size: ${p => p.theme.fontSizes.l};
-  line-height: 1.45;
+  font-size: ${p => p.theme.fontSizes.m};
+  line-height: 1.33;
+  text-align: center;
+  color: ${props => props.theme.colors.gray};
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    font-size: ${p => p.theme.fontSizes.m};
-    line-height: 1.33;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
+    font-size: ${p => p.theme.fontSizes.l};
   }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    text-align: center;
-  }
-`;
-
-export const FormWrapper = styled.div`
-
-  @media (min-width: 320px) and (max-width: 833px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 32px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 222px;
-  }
-
-  @media (min-width: 1440px) {
-    margin-bottom: 184px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    line-height: 1.45;
   }
 `;
 
-export const Form = styled.form`
+export const SignInForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  align-self: center;
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    align-self: flex-start;
+  }
 `;
 
-export const Input = styled.input`
-  width: 212px;
+export const FormField = styled.div`
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
   margin-bottom: 20px;
-  padding: 7px 10px;
-  color: ${p => p.theme.colors.gray};
-  background-color: ${p => p.theme.colors.black2};
-  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
-  border-radius: ${p => p.theme.radii.normal};
 
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-weight: ${p => p.theme.fontWeights.regular};
-  font-size: ${p => p.theme.fontSizes.xs};
-  line-height: 1.43;
-
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
+  &:nth-child(3) {
+    margin-bottom: 40px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     width: 380px;
   }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 212px;
+  }
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+`;
+
+export const Input = styled(Field)`
+  height: 36px;
+  width: 100%;
+  padding: 10px 8px;
+  border: ${p =>
+    p.error
+      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
+      : p.value === ''
+      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
+      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
+  border-radius: 12px;
+  background-color: ${p => p.theme.colors.black2};
+  color: ${p => p.theme.colors.gray};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const ErrorMsg = styled(ErrorMessage)`
+  font-family: ${props => props.theme.fontFamily.poppins};
+  font-size: 10px;
+  font-weight: ${props => props.theme.fontWeights.regular};
+  line-height: 12px;
+  color: ${p => p.theme.colors.error};
+`;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const FormButton = styled.button`
-  width: 212px;
-  margin-top: 20px;
+  width: 300px;
   padding: 8px;
-  background-color: ${p => p.theme.colors.greenLite};
   text-align: center;
+  background-color: ${p => p.theme.colors.greenLite};
+  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${p => p.theme.radii.normal};
-  border: ${p => p.theme.borders.none};
   font-family: ${p => p.theme.fontFamily.poppins};
-  font-size: ${p => p.theme.fontSizes.xs};
   font-weight: ${p => p.theme.fontWeights.medium};
-  line-height: 1.43;  
+  font-size: ${p => p.theme.fontSizes.xs};
+  line-height: 1.43;
+  cursor: pointer;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 380px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 380px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 212px;
   }
 `;
 
 export const ForgotPasswordLink = styled(Link)`
+  margin-top: 20px;
   color: ${p => p.theme.colors.gray};
   background-color: ${p => p.theme.colors.black};
   border: none;
@@ -178,60 +191,42 @@ export const ForgotPasswordLink = styled(Link)`
   font-size: ${p => p.theme.fontSizes.xs};
   font-weight: ${p => p.theme.fontWeights.regular};
   line-height: 1.43;
-  
-  
-  @media (min-width: 320px) and (max-width: 833px) {
-    text-align: center;
+  text-align: center;
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
   }
 `;
 
-export const SignUpContainer = styled.div`
+export const QuestionWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 48px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    margin-bottom: 20px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 60px;
-  }
-
-  @media (min-width: 834px) {
-    flex-direction: row;
-  }
-`;
-
-export const SignUpText = styled.p`
-  color: ${p => p.theme.colors.gray};
   font-family: ${p => p.theme.fontFamily.poppins};
   font-size: ${p => p.theme.fontSizes.xs};
-  font-weight: ${p => p.theme.fontWeights.regular};
   line-height: 1.43;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    margin-bottom: 16px;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 206px;
   }
 
-  @media (min-width: 834px) {
-    margin-right: 16px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    justify-content: flex-start;
+    margin-top: 168px;
   }
+`;
+
+export const QuestionText = styled.p`
+  color: ${p => p.theme.colors.gray};
+  font-weight: ${p => p.theme.fontWeights.regular};
 `;
 
 export const SignUpLink = styled(Link)`
-  background-color:${p => p.theme.colors.black};
   color: ${p => p.theme.colors.white};
-  border: ${p => p.theme.borders.none};
-
-  font-family: ${p => p.theme.fontFamily.poppins};
-  font-size: ${p => p.theme.fontSizes.xs};
   font-weight: ${p => p.theme.fontWeights.medium};
-  line-height: 1.43;
-
-  @media (min-width: 834px) {
-    margin: 0;
-  }
 `;

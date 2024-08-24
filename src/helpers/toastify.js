@@ -1,29 +1,19 @@
 import { toast } from 'react-toastify';
 
-export default function toastifyMessage(type, message) {
-  if (type === 'warn') {   
-    return toast.warn(message, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    });
+const toastifyMessage = (type, message) => {
+  switch (type) {
+    case 'success':
+      toast.success(message);
+      break;
+    case 'error':
+      toast.error(message);
+      break;
+    case 'warn':
+      toast.warn(message);
+      break;
+    default:
+      toast.info(message);
   }
+};
 
-  if (type === 'success') {
-    return toast.success(message, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    });
-  }
-}
+export default toastifyMessage;

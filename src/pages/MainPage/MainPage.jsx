@@ -32,7 +32,6 @@ const MainPage = () => {
       ) : (
         <Container>
           <Content>
-            {/* Заговолок */}
             <HeaderMainPage>
               <TitlePage>Today</TitlePage>
               <LinkToDashboard to="/dashboard">
@@ -46,26 +45,21 @@ const MainPage = () => {
                 />
               </LinkToDashboard>
             </HeaderMainPage>
-            {/* Блоки, що показують трекери прийому їжі та води (Daily Goal, Water, Food)  */}
+
             <TrackerList>
               <Tarker>
-                {/* блок Щоденна мета DailyGoal */}
                 <DailyGoal />
               </Tarker>
               <Tarker>
-                {/* блок Вода Water */}
                 <Water />
               </Tarker>
               <Tarker>
-                {/* блок Їжа Food */}
                 <Food />
               </Tarker>
             </TrackerList>
 
             <Wrapper>
-              {/* блок щоденник */}
               <DiaryOnMain />
-              {/* блок рекомендована їжа */}
               <RecommendedFoodOnMain />
             </Wrapper>
           </Content>

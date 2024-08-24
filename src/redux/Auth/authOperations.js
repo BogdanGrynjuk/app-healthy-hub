@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getStats } from 'redux/Statistics/statisticsOperations';
-import toastifyMessage from '../../helpers/toastify'
+import toastifyMessage from '../../helpers/toastify';
 
 axios.defaults.baseURL = 'https://healthyhub-z4y1.onrender.com';
 
@@ -40,7 +40,8 @@ export const logIn = createAsyncThunk(
       thunkAPI.dispatch(getStats('today'));
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      toastifyMessage('error', error.response.data.message);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -143,12 +144,12 @@ export const addWeight = createAsyncThunk(
     try {
       setAuthHeader(tokenCurrent);
       const response = await axios.post('/api/user/weight', {
-        'weight': inputWeight,
+        weight: inputWeight,
       });
-      toastifyMessage('success', 'Weight updated!');      
+      toastifyMessage('success', 'Weight updated!');
       return response.data;
-    } catch (error) {   
-      toastifyMessage('warn', 'You have already updated your weight!');      
+    } catch (error) {
+      toastifyMessage('warn', 'You have already updated your weight!');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -166,7 +167,7 @@ export const updateGoal = createAsyncThunk(
 
     try {
       setAuthHeader(tokenCurrent);
-      const response = await axios.patch('/users/goal', { 'goal': selectedGoal });  
+      const response = await axios.patch('/users/goal', { goal: selectedGoal });
       toastifyMessage('success', 'Goal updated!');
       return response.data;
     } catch (error) {

@@ -97,11 +97,11 @@ export const SignUpForm = styled(Form)`
   }
 `;
 
-export const InputWrapper = styled.div`
+export const FormField = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 4px;
   margin-bottom: 20px;
 
   &:nth-child(3) {
@@ -117,13 +117,27 @@ export const InputWrapper = styled.div`
   }
 `;
 
+export const InputWrapper = styled.div`
+  position: relative;
+`;
+
 export const Input = styled(Field)`
   height: 36px;
+  width: 100%;
   padding: 10px 8px;
-  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  border: ${p =>
+    p.error
+      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
+      : p.value === ''
+      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
+      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
   border-radius: 12px;
   background-color: ${p => p.theme.colors.black2};
   color: ${p => p.theme.colors.gray};
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ErrorMsg = styled(ErrorMessage)`
@@ -134,9 +148,20 @@ export const ErrorMsg = styled(ErrorMessage)`
   color: ${p => p.theme.colors.error};
 `;
 
+export const IconWrapper = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+`;
+
 export const FormButton = styled.button`
   width: 300px;
-  margin-bottom: 48px;
   padding: 8px;
   text-align: center;
   background-color: ${p => p.theme.colors.greenLite};
@@ -150,12 +175,10 @@ export const FormButton = styled.button`
 
   @media (${props => props.theme.mq.tablet}) {
     width: 380px;
-    margin-bottom: 206px;
   }
 
   @media (${props => props.theme.mq.desktop}) {
     width: 212px;
-    margin-bottom: 168px;
   }
 `;
 
@@ -164,6 +187,7 @@ export const QuestionWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  margin-top: 48px;
 
   font-family: ${p => p.theme.fontFamily.poppins};
   font-size: ${p => p.theme.fontSizes.xs};
@@ -172,10 +196,12 @@ export const QuestionWrapper = styled.div`
   @media screen and (${props => props.theme.mq.tablet}) {
     flex-direction: row;
     justify-content: center;
+    margin-top: 206px;
   }
 
   @media screen and (${props => props.theme.mq.desktop}) {
     justify-content: flex-start;
+    margin-top: 168px;
   }
 `;
 

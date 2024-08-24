@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -8,6 +9,9 @@ import {
   setNewUserEmail,
   setNewUserPassword,
 } from 'redux/Auth/authSlice';
+
+import { ReactComponent as EyeCloseSvg } from '../../images/icons/eye-off.svg';
+import { ReactComponent as EyeOpenSvg } from '../../images/icons/eye.svg';
 
 import {
   Container,
@@ -23,6 +27,8 @@ import {
   QuestionText,
   SignInLink,
   InputWrapper,
+  IconWrapper,
+  FormField,
 } from './SignUpPage.styled';
 
 import logoPic from '../../images/WelcomePageImg/logoPic.png';
@@ -34,7 +40,7 @@ const validationSchema = yup.object({
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
       'Name may contain only letters, apostrophe, dash and spaces.'
     )
-    .min(2, 'Name must be at least 3 characters long.')
+    .min(2, 'Name must be at least 2 characters long.')
     .max(50, 'Name must be no more than 50 characters.')
     .required('Name is required')
     .trim('Name cannot include leading and trailing spaces')
@@ -56,6 +62,7 @@ const validationSchema = yup.object({
 const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const initialValues = {
     name: '',
@@ -71,46 +78,96 @@ const SignUpPage = () => {
     navigate('/your-goal');
   };
 
+  const showPassword = () => setIsVisiblePassword(true);
+  const hidePassword = () => setIsVisiblePassword(false);
+
   return (
-    <>
-      <Container>
-        <Image src={logoPic} alt="Logo" />
-        <ContentBox>
-          <Title>Sign up</Title>
-          <Text>You need to register to use the service</Text>
+    <Container>
+      <Image src={logoPic} alt="Logo" />
+      <ContentBox>
+        <Title>Sign up</Title>
+        <Text>You need to register to use the service</Text>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleNewUserData}
-          >
-            <SignUpForm autoComplete="off">
-              <InputWrapper>
-                <Input type="text" name="name" placeholder="Name" />
-                <ErrorMsg name="name" component="div" />
-              </InputWrapper>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleNewUserData}
+        >
+          {({ errors, touched, values }) => (
+            <SignUpForm>
+              <FormField>
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  autoComplete="username"
+                  error={touched.name && errors.name}
+                  value={values.name}
+                />
+                <ErrorMsg
+                  className={touched.name && errors.name ? 'visible' : ''}
+                  name="name"
+                  component="div"
+                />
+              </FormField>
 
-              <InputWrapper>
-                <Input type="email" name="email" placeholder="E-mail" />
-                <ErrorMsg name="email" component="div" />
-              </InputWrapper>
+              <FormField>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                  autoComplete="email"
+                  error={touched.email && errors.email}
+                  value={values.email}
+                />
+                <ErrorMsg
+                  className={touched.email && errors.email ? 'visible' : ''}
+                  name="email"
+                  component="div"
+                />
+              </FormField>
 
-              <InputWrapper>
-                <Input type="password" name="password" placeholder="Password" />
-                <ErrorMsg name="password" component="div" />
-              </InputWrapper>
+              <FormField>
+                <InputWrapper>
+                  <Input
+                    type={isVisiblePassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Password"
+                    autoComplete="current-password"
+                    error={touched.password && errors.password}
+                    value={values.password}
+                  />
+                  <IconWrapper
+                    onMouseEnter={showPassword}
+                    onMouseLeave={hidePassword}
+                  >
+                    {isVisiblePassword ? (
+                      <EyeOpenSvg width={16} height={16} />
+                    ) : (
+                      <EyeCloseSvg width={16} height={16} />
+                    )}
+                  </IconWrapper>
+                </InputWrapper>
+                <ErrorMsg
+                  className={
+                    touched.password && errors.password ? 'visible' : ''
+                  }
+                  name="password"
+                  component="div"
+                />
+              </FormField>
 
               <FormButton type="submit">Sign Up</FormButton>
             </SignUpForm>
-          </Formik>
+          )}
+        </Formik>
 
-          <QuestionWrapper>
-            <QuestionText>Do you already have an account?</QuestionText>
-            <SignInLink to={'/signin'}>Sign in</SignInLink>
-          </QuestionWrapper>
-        </ContentBox>
-      </Container>
-    </>
+        <QuestionWrapper>
+          <QuestionText>Do you already have an account?</QuestionText>
+          <SignInLink to="/signin">Sign in</SignInLink>
+        </QuestionWrapper>
+      </ContentBox>
+    </Container>
   );
 };
 

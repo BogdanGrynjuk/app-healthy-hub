@@ -8,7 +8,7 @@ import {
   forgotPassword,
   updateAvatar,
   addWeight,
-  updateGoal
+  updateGoal,
 } from './authOperations';
 
 const initialState = {
@@ -31,6 +31,8 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  error: null,
+  isLoading: false,
 };
 
 const authSlice = createSlice({
@@ -72,10 +74,20 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
+      .addCase(logIn.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(logIn.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
       })
       .addCase(logOut.fulfilled, state => {
         state.user = {
@@ -123,7 +135,7 @@ const authSlice = createSlice({
         // state.token = action.payload.token;
         state.isLoggedIn = true;
       })
-      .addCase(addWeight.fulfilled, (state, action) => {      
+      .addCase(addWeight.fulfilled, (state, action) => {
         state.user.weight = action.payload.weight;
         state.user.bmr = action.payload.bmr;
       })
@@ -132,7 +144,7 @@ const authSlice = createSlice({
         state.user.fat = action.payload.fat;
         state.user.protein = action.payload.protein;
         state.user.carbohydrate = action.payload.carbohydrate;
-      });    
+      });
   },
 });
 

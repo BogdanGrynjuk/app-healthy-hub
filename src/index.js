@@ -7,7 +7,9 @@ import { ThemeProvider } from 'styled-components';
 import { App } from 'components/App';
 import { persistor, store } from './redux/store';
 import { theme } from './constants/theme';
+// import { ToastContainer } from 'react-toastify';
 import './index.css';
+import ToastPortal from 'components/ToastPortal';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter basename="/app-healthy-hub">
             <App />
+            <ToastPortal />
           </BrowserRouter>
         </PersistGate>
       </Provider>
