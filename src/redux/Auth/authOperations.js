@@ -90,22 +90,14 @@ export const updateUser = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
-  async (password, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const tokenCurrent = state.auth.token;
-
-    if (tokenCurrent === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
-
+  async (email, thunkAPI) => {
     try {
-      setAuthHeader(tokenCurrent);
-      const response = await axios.patch('/users/forgotpassword', {
-        forgotpassword: password,
-      });
+      const response = await axios.patch('/users/forgotpassword', email);
+      toastifyMessage('success', response.data.message);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      toastifyMessage('error', error.response.data.message);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );

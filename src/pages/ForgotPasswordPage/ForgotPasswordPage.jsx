@@ -1,50 +1,96 @@
-// import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import axios from 'axios';
+
 import {
-  BackgroundContainer,
-  ForgotPasswordLogo,
-  ForgotPasswordContainer,
-  ForgotPasswordHeadline,
-  ForgotPasswordText,
-  ForgotPasswordFormWrapper,
-  ForgotPasswordForm,
-  ForgotPasswordInput,
-  ForgotPasswordButton,
-  ForgotPasswordButtonWrapper,
-  SignInSuggestion,
   SignInLink,
+  Container,
+  Image,
+  ContentBox,
+  Title,
+  Text,
+  ForgotPasswordForm,
+  FormField,
+  Input,
+  ErrorMsg,
+  FormButton,
+  QuestionWrapper,
+  QuestionText,
 } from './ForgotPasswordPage.styled';
+
+import toastifyMessage from 'helpers/toastify';
 import logoPic from '../../images/WelcomePageImg/logoPic.png';
 
+axios.defaults.baseURL = 'https://healthyhub-z4y1.onrender.com';
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email('Invalid email address')
+    .required('Email is required'),
+});
+
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
+
+  const initialValues = {
+    email: '',
+  };
+
+  const handleSubmit = async ({ email }, { resetForm }) => {
+    try {
+      // !!! Тут є баг на стороні бекенда (на пошту не приходить оновелений пароль)
+      const response = await axios.patch('/users/forgotpassword', { email });
+      toastifyMessage('success', response.data.message);
+      navigate('/signin');
+      resetForm();
+    } catch (error) {
+      toastifyMessage('error', error.response.data.message);
+    }
+  };
+
   return (
-    <div>
-      <BackgroundContainer>
-        <style>
-          @import
-          url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto&display=swap');
-        </style>
+    <Container>
+      <Image src={logoPic} alt="Logo" />
+      <ContentBox>
+        <Title>Forgot your password</Title>
+        <Text>We will send you an email with recovery instructions</Text>
 
-          <ForgotPasswordLogo src={logoPic} alt="Logo" />
-        <ForgotPasswordContainer>
-
-          <ForgotPasswordHeadline>Forgot your password</ForgotPasswordHeadline>
-          <ForgotPasswordText>
-            We will send you an email with recovery instructions
-          </ForgotPasswordText>
-          <ForgotPasswordFormWrapper>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched, values }) => (
             <ForgotPasswordForm>
-              <ForgotPasswordInput placeholder="E-mail" />
-              <ForgotPasswordButton>Send</ForgotPasswordButton>
-            </ForgotPasswordForm>
-          </ForgotPasswordFormWrapper>
+              <FormField>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                  autoComplete="email"
+                  error={touched.email && errors.email}
+                  value={values.email}
+                />
+                <ErrorMsg
+                  className={touched.email && errors.email ? 'visible' : ''}
+                  name="email"
+                  component="div"
+                />
+              </FormField>
 
-          <ForgotPasswordButtonWrapper>
-            <SignInSuggestion>Do you already have an account?</SignInSuggestion>
-            <SignInLink to={'/signin'}>Sign in</SignInLink>
-          </ForgotPasswordButtonWrapper>
-        </ForgotPasswordContainer>
-      </BackgroundContainer>
-    </div>
+              <FormButton type="submit">Send</FormButton>
+            </ForgotPasswordForm>
+          )}
+        </Formik>
+
+        <QuestionWrapper>
+          <QuestionText>Do you already have an account?</QuestionText>
+          <SignInLink to="/signin">Sign in</SignInLink>
+        </QuestionWrapper>
+      </ContentBox>
+    </Container>
   );
 };
 export default ForgotPasswordPage;

@@ -1,209 +1,200 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { ErrorMessage, Field, Form } from 'formik';
 
-export const BackgroundContainer = styled.div`
-  background-color: #050505;
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+  padding: 24px 0;
+  background-color: ${props => props.theme.colors.black};
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    row-gap: 60px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    display: flex;
-    flex-direction: center;
-    margin: auto;
-  }
-
-  @media (min-width: 1439px) {
-    display: flex;
+  @media screen and (${props => props.theme.mq.desktop}) {
     flex-direction: row;
+    row-gap: 0;
+    column-gap: 100px;
     justify-content: center;
-    margin: auto;
+    padding: 40px 0;
   }
 `;
 
-export const ForgotPasswordLogo = styled.img`
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 40px;
-  margin-bottom: 40px;
+export const Image = styled.img`
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    width: 300px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-  @media (min-width: 834px) and (max-width: 1439px) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     width: 380px;
-    margin-right: auto;
-    margin-left: auto;
   }
 
-  @media (min-width: 1439px) {
-    margin-right: 80px;
-    margin-left: 0;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 590px;
+    height: 590px;
   }
 `;
 
-export const ForgotPasswordContainer = styled.div`
-  max-width: 444px;
-  margin-top: 120px;
-  margin-left: 104px;
+export const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
 
-  @media (min-width: 320px) and (max-width: 833px) {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
   }
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  @media (min-width: 1439px) {
-    width: 444px;
-    margin-left: 0;
-    margin-right: 120px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    margin-top: 80px;
   }
 `;
 
-export const ForgotPasswordHeadline = styled.h1`
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 36px;
+export const Title = styled.h1`
+  margin-bottom: 16px;
+  color: ${props => props.theme.colors.white};
   font-family: Poppins;
-  width: 320px;
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 100%;
-    text-align: center;
-    align-self: center;
-  }
-`;
-
-export const ForgotPasswordText = styled.p`
-  color: #b6b6b6;
-  font-weight: 400;
-  font-size: 22px;
-  margin-top: 16px;
-  line-height: 32px;
-  width: 280px;
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 360px;
-    text-align: center;
-    align-self: center;
-    align-text: center;
-  }
-
-  @media (min-width: 1439px) {
-    width: 460px;
-  }
-`;
-
-export const ForgotPasswordFormWrapper = styled.div `
-    width: 212px; 
-`
-
-export const ForgotPasswordForm = styled.form`
-  display: block;
-  margin-top: 8px;
-  margin-top: 8px;
-  align-self: center;
-  margin-right: auto;
-  margin-left: auto;
-  align-text: center;
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 380px;
-  }
-`;
-
-export const ForgotPasswordInput = styled.input`
-  border: 1px solid #e3ffa8;
-  border-radius: 12px;
-  background-color: #0f0f0f;
-  width: 268px;
-  height: 36px;
-  color: #b6b6b6;
-  padding-left: 8px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 8px;
-  margin-top: 16px;
-  align-self: center;
-  margin-right: auto;
-  margin-left: auto;
-
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 380px;
-  }
-`;
-
-export const ForgotPasswordButton = styled.button`
-  background-color: #e3ffa8;
+  font-weight: ${props => props.theme.fontWeights.medium};
   text-align: center;
-  margin-top: 16px;
-  border-radius: 12px;
-  width: 268px;
-  padding: 8px;
-  font-size: 14px;
-  font-family: Poppins;
+  font-size: ${p => p.theme.fontSizes.l2};
+  line-height: 1.25;
 
-  @media (min-width: 834px) and (max-width: 1439px) {
-    width: 380px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    font-size: ${p => p.theme.fontSizes.xl};
+    line-height: 1.2;
   }
 `;
 
-export const ForgotYourPassword = styled.button `
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: #B6B6B6;
-    background-color: #050505;
-    border: none;
-    margin-top: 20px;
-    margin-left: 25px;
+export const Text = styled.p`
+  width: 300px;
+  margin-bottom: 24px;
+  font-family: ${p => p.theme.fontFamily.poppins};
+  font-weight: ${p => p.theme.fontWeights.regular};
+  font-size: ${p => p.theme.fontSizes.m};
+  line-height: 1.33;
+  text-align: center;
+  color: ${props => props.theme.colors.gray};
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 450px;
+    font-size: ${p => p.theme.fontSizes.l};
+  }
+  @media screen and (${props => props.theme.mq.desktop}) {
+    text-align: left;
+    line-height: 1.45;
+  }
 `;
 
-export const ForgotPasswordButtonWrapper = styled.div`
+export const ForgotPasswordForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  margin-top: 200px;
+  align-self: center;
 
-  @media (min-width: 834px) {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 60px;
+  @media screen and (${props => props.theme.mq.desktop}) {
+    align-self: flex-start;
   }
 `;
 
-export const SignInSuggestion = styled.p`
-  color: #b6b6b6;
+export const FormField = styled.div`
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  margin-bottom: 20px;
 
-  @media (min-width: 834px) {
-    margin-right: 20px;
+  &:nth-child(3) {
+    margin-bottom: 40px;
   }
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 380px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 212px;
+  }
+`;
+
+export const Input = styled(Field)`
+  height: 36px;
+  width: 100%;
+  padding: 10px 8px;
+  border: ${p =>
+    p.error
+      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
+      : p.value === ''
+      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
+      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
+  border-radius: 12px;
+  background-color: ${p => p.theme.colors.black2};
+  color: ${p => p.theme.colors.gray};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const ErrorMsg = styled(ErrorMessage)`
+  font-family: ${props => props.theme.fontFamily.poppins};
+  font-size: 10px;
+  font-weight: ${props => props.theme.fontWeights.regular};
+  line-height: 12px;
+  color: ${p => p.theme.colors.error};
+`;
+
+export const FormButton = styled.button`
+  width: 300px;
+  padding: 8px;
+  text-align: center;
+  background-color: ${p => p.theme.colors.greenLite};
+  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  border-radius: ${p => p.theme.radii.normal};
+  font-family: ${p => p.theme.fontFamily.poppins};
+  font-weight: ${p => p.theme.fontWeights.medium};
+  font-size: ${p => p.theme.fontSizes.xs};
+  line-height: 1.43;
+  cursor: pointer;
+
+  @media (${props => props.theme.mq.tablet}) {
+    width: 380px;
+  }
+
+  @media (${props => props.theme.mq.desktop}) {
+    width: 212px;
+  }
+`;
+
+export const QuestionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 48px;
+
+  font-family: ${p => p.theme.fontFamily.poppins};
+  font-size: ${p => p.theme.fontSizes.xs};
+  line-height: 1.43;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 206px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    justify-content: flex-start;
+    margin-top: 168px;
+  }
+`;
+
+export const QuestionText = styled.p`
+  color: ${p => p.theme.colors.gray};
+  font-weight: ${p => p.theme.fontWeights.regular};
 `;
 
 export const SignInLink = styled(Link)`
-  background-color: #050505;
-  color: #ffffff;
-  border: none;
-  margin-top: 20px;
-  margin-bottom: 40px;
-
-  @media (min-width: 834px) {
-    margin: 0;
-  }
+  color: ${p => p.theme.colors.white};
+  font-weight: ${p => p.theme.fontWeights.medium};
 `;

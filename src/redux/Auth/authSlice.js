@@ -5,7 +5,6 @@ import {
   logOut,
   currentUser,
   updateUser,
-  forgotPassword,
   updateAvatar,
   addWeight,
   updateGoal,
@@ -120,14 +119,8 @@ const authSlice = createSlice({
       .addCase(currentUser.rejected, state => {
         state.isRefreshing = false;
       })
-
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = { ...state.user, ...action.payload };
-        state.isLoggedIn = true;
-      })
-      .addCase(forgotPassword.fulfilled, (state, action) => {
-        state.user.password = action.payload.user.password;
-        state.token = action.payload.token;
         state.isLoggedIn = true;
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
