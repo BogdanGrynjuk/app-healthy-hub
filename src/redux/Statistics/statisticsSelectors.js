@@ -60,7 +60,7 @@ const calculateSumMacronutrients = (products, inputMacronutrient) => {
   );
 };
 
-// цей селетор повертає к-сть спожитих вугеводів на сніданок (число)
+// цей селектор повертає к-сть спожитих вугеводів на сніданок (число)
 export const selectConsumedCarbonohidratesForBreakfast = createSelector(
   [selectConsumedProductsForBreakfast],
   products => calculateSumMacronutrients(products, 'carbohydrate')

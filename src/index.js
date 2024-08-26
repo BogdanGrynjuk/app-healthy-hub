@@ -7,7 +7,6 @@ import { ThemeProvider } from 'styled-components';
 import { App } from 'components/App';
 import { persistor, store } from './redux/store';
 import { theme } from './constants/theme';
-// import { ToastContainer } from 'react-toastify';
 import './index.css';
 import ToastPortal from 'components/ToastPortal';
 
