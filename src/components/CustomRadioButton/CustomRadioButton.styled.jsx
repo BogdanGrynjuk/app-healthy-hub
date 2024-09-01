@@ -4,7 +4,7 @@ import { Field } from 'formik';
 export const RadioMark = styled.span`
   min-width: 12px;
   min-height: 12px;
-  border: 1px solid rgba(182, 182, 182, 1);
+  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.gray};
   border-radius: 50%;
   position: relative;
 
@@ -37,7 +37,6 @@ export const LabelWithRadio = styled.label`
   display: flex;
   align-items: center;
   gap: 10px;
-  /* width: 100%; */
   cursor: pointer;
 
   &:hover > ${RadioMark} {

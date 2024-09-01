@@ -11,9 +11,8 @@ import {
   CtaLink,
 } from './AuthPageTemplate.styled';
 
-import logoPic from '../../images/WelcomePageImg/logoPic.png';
-
 const AuthPageTemplate = ({
+  url,
   title,
   text,
   ctaText,
@@ -23,7 +22,7 @@ const AuthPageTemplate = ({
 }) => {
   return (
     <Container>
-      <Image src={logoPic} alt="Logo" />
+      <Image src={url} alt="Banner" />
 
       <ContentBox>
         <TextContainer>
@@ -33,22 +32,25 @@ const AuthPageTemplate = ({
 
         {children}
 
-        <CtaContainer>
-          <CtaText>{ctaText}</CtaText>
-          <CtaLink to={ctaLink}>{ctaLinkText}</CtaLink>
-        </CtaContainer>
+        {ctaText && ctaLink && ctaLinkText && (
+          <CtaContainer>
+            <CtaText>{ctaText}</CtaText>
+            <CtaLink to={ctaLink}>{ctaLinkText}</CtaLink>
+          </CtaContainer>
+        )}
       </ContentBox>
     </Container>
   );
 };
 
 AuthPageTemplate.propTypes = {
+  url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  ctaText: PropTypes.string.isRequired,
-  ctaLink: PropTypes.string.isRequired,
-  ctaLinkText: PropTypes.string.isRequired,
+  ctaText: PropTypes.string,
+  ctaLink: PropTypes.string,
+  ctaLinkText: PropTypes.string,
 };
 
 export default AuthPageTemplate;

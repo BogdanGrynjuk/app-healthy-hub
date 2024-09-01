@@ -38,7 +38,6 @@ export const Image = styled.img`
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   row-gap: 24px;
   width: 300px;
   height: 450px;

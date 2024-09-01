@@ -23,7 +23,7 @@ import {
   LabelWithRadio,
   RadioInput,
   RadioMark,
-} from 'components/CustomRadioButton/CustomRadioButton.style';
+} from 'components/CustomRadioButton/CustomRadioButton.styled';
 import LogoPic from '../../images/YourActivityLogoPic.png';
 
 const YourActivityPage = () => {
@@ -67,9 +67,7 @@ const YourActivityPage = () => {
         <Image src={LogoPic} alt="Select Gender Logo" />
         <ContentBox>
           <Title>Your Activity</Title>
-          <Text>
-            To correctly calculate calorie and water intake
-          </Text>
+          <Text>To correctly calculate calorie and water intake</Text>
           <FormWrapper>
             <Formik>
               <ActivityForm onSubmit={handleActivityResults}>
@@ -85,9 +83,7 @@ const YourActivityPage = () => {
                       />
                       <RadioMark></RadioMark>
                     </LabelWithRadio>
-                    <FormListOption
-                      style={{ color: '#FFFF', fontSize: 14 }}
-                    >
+                    <FormListOption style={{ color: '#FFFF', fontSize: 14 }}>
                       1.2 - if you do not have physical activity and sedentary
                       work
                     </FormListOption>
@@ -104,11 +100,9 @@ const YourActivityPage = () => {
                       />
                       <RadioMark></RadioMark>
                     </LabelWithRadio>
-                    <FormListOption
-                      style={{ color: '#FFFF', fontSize: 14 }}
-                    >
-                      1,375 - if you do short runs or light gymnastics 1-3 times a
-                      week
+                    <FormListOption style={{ color: '#FFFF', fontSize: 14 }}>
+                      1,375 - if you do short runs or light gymnastics 1-3 times
+                      a week
                     </FormListOption>
                   </FormListWrapper>
 
@@ -122,9 +116,7 @@ const YourActivityPage = () => {
                       />
                       <RadioMark></RadioMark>
                     </LabelWithRadio>
-                    <FormListOption
-                      style={{ color: '#FFFF', fontSize: 14 }}
-                    >
+                    <FormListOption style={{ color: '#FFFF', fontSize: 14 }}>
                       1.55 - if you play sports with average loads 3-5 times a
                       week
                     </FormListOption>
@@ -141,9 +133,7 @@ const YourActivityPage = () => {
                       />
                       <RadioMark></RadioMark>
                     </LabelWithRadio>
-                    <FormListOption
-                      style={{ color: '#FFFF', fontSize: 14 }}
-                    >
+                    <FormListOption style={{ color: '#FFFF', fontSize: 14 }}>
                       1,725 ​​- if you train fully 6-7 times a week
                     </FormListOption>
                   </FormListWrapper>
@@ -159,18 +149,14 @@ const YourActivityPage = () => {
                       />
                       <RadioMark></RadioMark>
                     </LabelWithRadio>
-                    <FormListOption
-                      style={{ color: '#FFFF', fontSize: 14 }}
-                    >
-                      1.9 - if your work is related to physical labor, you train 2
-                      times a day and include strength exercises in your training
-                      program
+                    <FormListOption style={{ color: '#FFFF', fontSize: 14 }}>
+                      1.9 - if your work is related to physical labor, you train
+                      2 times a day and include strength exercises in your
+                      training program
                     </FormListOption>
                   </FormListWrapper>
                 </FormList>
-                <Button type="submit">
-                  Next
-                </Button>
+                <Button type="submit">Next</Button>
                 <br />
                 <BackButton location={locationRef.current} />
               </ActivityForm>
