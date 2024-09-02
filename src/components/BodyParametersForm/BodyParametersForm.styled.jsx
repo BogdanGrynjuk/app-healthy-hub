@@ -40,38 +40,6 @@ export const FormWrapper = styled(Form)`
   }
 `;
 
-export const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > label {
-    font-size: ${props => props.theme.fontSizes.xs};
-    font-weight: ${props => props.theme.fontWeights.medium};
-    line-height: 20px;
-  }
-`;
-
-export const FormGroupLabel = styled.p`
-  font-size: ${props => props.theme.fontSizes.xs};
-  font-weight: ${props => props.theme.fontWeights.medium};
-  line-height: 20px;
-  margin-bottom: 12px;
-`;
-
-export const WrapperRadioButton = styled.div`
-  display: flex;
-  gap: 16px;
-  height: 100%;
-
-  & > label {
-    flex-grow: 1;
-  }
-
-  @media screen and (${props => props.theme.mq.desktop}) {
-    flex-direction: column;
-  }
-`;
-
 export const Label = styled.label`
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.medium};

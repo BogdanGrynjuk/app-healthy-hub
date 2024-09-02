@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
 import { setNewUserAge, setNewUserGender } from 'redux/Auth/authSlice';
+import validationSchemaForAge from 'validationSchemas/validationSchemaForAge';
 import CustomRadioButton from 'components/CustomRadioButton';
 
 import {
@@ -18,7 +19,6 @@ import {
   NextButton,
   BackButton,
 } from './GenderAndAgeForm.styled';
-import validationSchemaForAge from 'validationSchemas/validationSchemaForAge';
 
 const GenderAndAgeForm = () => {
   const dispatch = useDispatch();
