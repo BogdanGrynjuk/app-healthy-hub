@@ -73,7 +73,7 @@ const GenderAndAgeForm = () => {
               type="number"
               name="age"
               placeholder="Enter your age"
-              autoComplete="current-age"
+              autoComplete="off"
               error={touched.age && errors.age}
               value={values.age}
               required

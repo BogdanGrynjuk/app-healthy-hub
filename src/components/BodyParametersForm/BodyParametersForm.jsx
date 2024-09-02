@@ -51,7 +51,7 @@ const BodyParametersForm = () => {
               type="number"
               name="height"
               placeholder="Enter your height"
-              autoComplete="height"
+              autoComplete="off"
               error={touched.height && errors.height}
               value={values.height}
               required
@@ -65,7 +65,7 @@ const BodyParametersForm = () => {
               type="number"
               name="weight"
               placeholder="Enter your weight"
-              autoComplete="weight"
+              autoComplete="off"
               error={touched.weight && errors.weight}
               value={values.weight}
               required
