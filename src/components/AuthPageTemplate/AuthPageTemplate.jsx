@@ -20,11 +20,13 @@ const AuthPageTemplate = ({
   ctaLinkText,
   children,
 }) => {
+  const hasCtaBlock = ctaText && ctaLink && ctaLinkText;
+
   return (
     <Container>
       <Image src={url} alt="Banner" />
 
-      <ContentBox>
+      <ContentBox $hasCtaBlock={hasCtaBlock}>
         <TextContainer>
           <Title>{title}</Title>
           <Text>{text}</Text>
@@ -32,7 +34,7 @@ const AuthPageTemplate = ({
 
         {children}
 
-        {ctaText && ctaLink && ctaLinkText && (
+        {hasCtaBlock && (
           <CtaContainer>
             <CtaText>{ctaText}</CtaText>
             <CtaLink to={ctaLink}>{ctaLinkText}</CtaLink>

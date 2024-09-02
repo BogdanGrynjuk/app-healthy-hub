@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
 import { setNewUserAge, setNewUserGender } from 'redux/Auth/authSlice';
+import { selectUser } from 'redux/Auth/authSelectors';
 import validationSchemaForAge from 'validationSchemas/validationSchemaForAge';
 import CustomRadioButton from 'components/CustomRadioButton';
 
@@ -24,14 +25,14 @@ const GenderAndAgeForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
 
   const initialValues = {
-    gender: 'Male',
-    age: '',
+    gender: user.gender || 'Male',
+    age: user.age || '',
   };
 
   const handleClickNext = values => {
-    console.log(`Gender: ${values.gender} and Age: ${values.age}`);
     dispatch(setNewUserGender(values.gender));
     dispatch(setNewUserAge(values.age));
     navigate('/body-parameters');

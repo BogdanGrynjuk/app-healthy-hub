@@ -40,18 +40,18 @@ export const ContentBox = styled.div`
   flex-direction: column;
   row-gap: 24px;
   width: 300px;
-  height: 450px;
+  height: ${({ $hasCtaBlock }) => ($hasCtaBlock ? '450px' : 'auto')};
   font-family: ${p => p.theme.fontFamily.poppins};
   color: ${props => props.theme.colors.gray};
 
   @media screen and (${props => props.theme.mq.tablet}) {
     width: 450px;
-    height: 550px;
+    height: ${({ $hasCtaBlock }) => ($hasCtaBlock ? '550px' : 'auto')};
   }
 
   @media screen and (${props => props.theme.mq.desktop}) {
     padding-top: 80px;
-    height: 600px;
+    height: ${({ $hasCtaBlock }) => ($hasCtaBlock ? '600px' : 'auto')};
   }
 `;
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
 import { setNewUserHeight, setNewUserWeight } from 'redux/Auth/authSlice';
+import { selectUser } from 'redux/Auth/authSelectors';
 import validationSchemaForHeightAndWeight from 'validationSchemas/validationSchemaForHeightAndWeight';
 
 import {
@@ -20,14 +21,14 @@ const BodyParametersForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
 
   const initialValues = {
-    height: '',
-    weight: '',
+    height: user.height || '',
+    weight: user.weight || '',
   };
 
   const handleClickNext = ({ height, weight }) => {
-    console.log(`height: ${height} and weight: ${weight}`);
     dispatch(setNewUserHeight(height));
     dispatch(setNewUserWeight(weight));
     navigate('/your-activity');

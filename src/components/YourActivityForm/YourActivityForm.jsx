@@ -19,13 +19,12 @@ const YourActivityForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { name, email, password, goal, gender, age, height, weight, activity } =
+    useSelector(selectUser);
 
   const initialValues = {
-    activity: '1.2',
+    activity: activity || '1.2',
   };
-
-  const { name, email, password, goal, gender, age, height, weight } =
-    useSelector(selectUser);
 
   const handleClickNext = ({ activity }) => {
     console.log(`activity: ${activity}`);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   BtnBox,
   BtnSignUp,
@@ -10,16 +10,20 @@ import {
 } from './ContentForWelcomePage.styled';
 
 const ContentForWelcomePage = () => {
+  const navigate = useNavigate();
+
+  const handleClickSignIn = () => {
+    navigate('/signin');
+  };
+
+  const handleClickSignUp = () => {
+    navigate('/signup');
+  };
   return (
     <>
       <BtnBox>
-        <BtnSignIn>
-          <Link to={'/signin'}>Sign in</Link>
-        </BtnSignIn>
-
-        <BtnSignUp>
-          <Link to={'/signup'}>Sign up</Link>
-        </BtnSignUp>
+        <BtnSignIn onClick={handleClickSignIn}>Sign in</BtnSignIn>
+        <BtnSignUp onClick={handleClickSignUp}>Sign up</BtnSignUp>
       </BtnBox>
 
       <List>
