@@ -21,11 +21,11 @@ const initialState = {
     weight: null,
     height: null,
     activity: null,
-    bmr: null,
-    fat: null,
-    protein: null,
-    carbohydrate: null,
-    avatarURL: null,
+    // bmr: null,
+    // fat: null,
+    // protein: null,
+    // carbohydrate: null,
+    // avatarURL: null,
   },
   token: null,
   isLoggedIn: false,
@@ -68,10 +68,18 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(register.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
       })
       .addCase(logIn.pending, state => {
         state.isLoading = true;

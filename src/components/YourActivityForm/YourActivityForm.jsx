@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -13,40 +13,33 @@ import {
 import CustomRadioButton from 'components/CustomRadioButton';
 import { setNewUserActivity } from 'redux/Auth/authSlice';
 import { register } from 'redux/Auth/authOperations';
-import { selectUser } from 'redux/Auth/authSelectors';
+import { selectError, selectUser } from 'redux/Auth/authSelectors';
 
 const YourActivityForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { name, email, password, goal, gender, age, height, weight, activity } =
-    useSelector(selectUser);
+  const user = useSelector(selectUser);
+  const error = useSelector(selectError);
 
   const initialValues = {
-    activity: activity || '1.2',
+    activity: user.activity || '1.2',
   };
 
   const handleClickNext = ({ activity }) => {
-    console.log(`activity: ${activity}`);
     dispatch(setNewUserActivity(activity));
-    dispatch(
-      register({
-        name,
-        email,
-        password,
-        goal,
-        gender,
-        age,
-        height,
-        weight,
-        activity,
-      })
-    );
+    dispatch(register({ ...user, activity }));
   };
 
   const handleClickBack = () => {
     navigate(location.state?.from ?? '/body-parameters');
   };
+
+  useEffect(() => {
+    if (error) {
+      navigate('/signup');
+    }
+  }, [error, navigate]);
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleClickNext}>

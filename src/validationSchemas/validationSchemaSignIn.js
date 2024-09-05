@@ -7,11 +7,17 @@ const validationSchemaSignIn = yup.object({
     .required('Email is required'),
   password: yup
     .string()
+    .matches(
+      /[A-Z]/,
+      'Password must contain at least one uppercase Latin letter'
+    )
+    .matches(
+      /[a-z]/,
+      'Password must contain at least one lowercase Latin letter'
+    )
+    .matches(/[0-9]/, 'Password must contain at least one digit')
     .min(6, 'Password must be at least 6 characters')
     .max(16, 'Password can be at most 16 characters')
-    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .matches(/[0-9]/, 'Password must contain at least one digit')
     .required('Password is required'),
 });
 

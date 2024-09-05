@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
 import {
@@ -22,24 +22,56 @@ import {
   IconWrapper,
 } from './SignUpForm.styled';
 import validationSchemaSignUp from 'validationSchemas/validationSchemaSignUp';
+import { selectError, selectUser } from 'redux/Auth/authSelectors';
+import { register } from 'redux/Auth/authOperations';
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const user = useSelector(selectUser);
+  const error = useSelector(selectError);
+  const [emailError, setEmailError] = useState('');
+
+  useEffect(() => {
+    if (error) {
+      setEmailError('Email already in use');
+    }
+  }, [error]);
 
   const initialValues = {
-    name: '',
-    email: '',
-    password: '',
+    name: user.name || '',
+    email: user.email || '',
+    password: user.password || '',
   };
 
-  const handleNewUserData = ({ name, email, password }) => {
-    console.log(`name: ${name}, e-mail: ${email}, password: ${password}`);
+  const handleSignUp = ({ name, email, password }, { setFieldError }) => {
     dispatch(setNewUserName(name));
     dispatch(setNewUserEmail(email));
     dispatch(setNewUserPassword(password));
-    navigate('/your-goal');
+
+    const updatedUser = {
+      ...user,
+      name,
+      email,
+      password,
+    };
+
+    if (
+      Object.values(updatedUser).every(
+        value => value !== null && value !== undefined && value !== ''
+      )
+    ) {
+      dispatch(register(updatedUser))
+        .unwrap()
+        .catch(error => {
+          if (error) {
+            setFieldError('email', emailError);
+          }
+        });
+    } else {
+      navigate('/your-goal');
+    }
   };
 
   const showPassword = () => setIsVisiblePassword(true);
@@ -49,7 +81,7 @@ const SignUpForm = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchemaSignUp}
-      onSubmit={handleNewUserData}
+      onSubmit={handleSignUp}
     >
       {({ errors, touched, values }) => (
         <FormWrapper>

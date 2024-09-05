@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 import CardRecommendedProduct from 'components/CardRecommendedProduct';
 import {
@@ -8,27 +8,26 @@ import {
   SeeMoreButton,
 } from './RecommendedFoodOnMain.styled';
 
-import { getRecommentedFood } from "helpers/getRecommentedFood";
-import { randomizeFood } from 'helpers/randomizeFood'
+import { getRecommentedFood } from 'helpers/getRecommentedFood';
+import { randomizeFood } from 'helpers/randomizeFood';
 
 const RecommendedFoodOnMain = () => {
-  
   const [arrayForRender, setArrayForRender] = useState([]);
-  
+
   useEffect(() => {
     getRecommentedFood()
-      .then(responce => {
-        setArrayForRender(randomizeFood(responce))
+      .then(response => {
+        setArrayForRender(randomizeFood(response));
       })
-      .catch(err => console.log(err))
-  }, [])
-  
+      .catch(err => console.log(err));
+  }, []);
+
   return (
     <RecommendedFoodSection>
       <TitleSection>Recommended food</TitleSection>
       <RecommendedFoodList>
         {arrayForRender.map(({ _id, img, name, amount, calories }) => (
-          <CardRecommendedProduct              
+          <CardRecommendedProduct
             key={_id}
             id={_id}
             img={img}
@@ -44,4 +43,3 @@ const RecommendedFoodOnMain = () => {
 };
 
 export default RecommendedFoodOnMain;
-
