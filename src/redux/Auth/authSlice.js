@@ -21,17 +21,22 @@ const initialState = {
     weight: null,
     height: null,
     activity: null,
-    // bmr: null,
-    // fat: null,
-    // protein: null,
-    // carbohydrate: null,
-    // avatarURL: null,
   },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
   error: null,
   isLoading: false,
+};
+
+const handlePending = state => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
 };
 
 const authSlice = createSlice({
@@ -68,23 +73,16 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(register.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.error = action.payload;
         state.isLoading = false;
       })
-      .addCase(logIn.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(register.rejected, handleRejected)
+
+      .addCase(logIn.pending, handlePending)
       .addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
@@ -92,30 +90,25 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(logIn.rejected, (state, action) => {
+      .addCase(logIn.rejected, handleRejected)
+
+      .addCase(logOut.pending, handlePending)
+      .addCase(logOut.fulfilled, state => {
+        state.user = initialState.user;
+        state.token = null;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(logOut.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
-      })
-      .addCase(logOut.fulfilled, state => {
-        state.user = {
-          name: null,
-          email: null,
-          password: null,
-          goal: null,
-          gender: null,
-          age: null,
-          weight: null,
-          height: null,
-          activity: null,
-          bmr: null,
-          fat: null,
-          protein: null,
-          carbohydrate: null,
-          avatarURL: null,
-        };
+        state.user = initialState.user;
         state.token = null;
         state.isLoggedIn = false;
       })
+
       .addCase(currentUser.pending, state => {
         state.isRefreshing = true;
       })
@@ -127,6 +120,7 @@ const authSlice = createSlice({
       .addCase(currentUser.rejected, state => {
         state.isRefreshing = false;
       })
+
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = { ...state.user, ...action.payload };
         state.isLoggedIn = true;

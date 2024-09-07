@@ -30,28 +30,117 @@ export const App = () => {
     dispatch(currentUser());
   }, [dispatch]);
 
-  return (
-    isRefreshing ? (
-      <Loader />
-    ) : (
-      <Routes>
-        <Route path='/' element={<SharedLayout />}>
-          <Route index element={<WelcomePage />} />
-          <Route path='/signup' element={<RestrictedRoute redirectTo='/main' component={<SignUpPage />} />}></Route>
-          <Route path='/your-goal' element={<RestrictedRoute redirectTo='/main' component={<YourGoalPage />} />} />
-          <Route path='/select-gender' element={<RestrictedRoute redirectTo='/main' component={<SelectGenderPage />} />} />
-          <Route path='/body-parameters' element={<RestrictedRoute redirectTo='/main' component={<BodyParametersPage />} />} />
-          <Route path='/your-activity' element={<RestrictedRoute redirectTo='/main' component={<YourActivityPage />} />} />
-          <Route path='/signin' element={<RestrictedRoute redirectTo='/main' component={<SignInPage />} />} />
-          <Route path='/forgot-password' element={<RestrictedRoute redirectTo='/signin' component={<ForgotPasswordPage />} />} />
-          
-          <Route path='/main' element={<PrivateRoute redirectTo='/signin' component={<MainPage />} />} />
-          <Route path='/dashboard' element={<PrivateRoute redirectTo='/signin' component={<DashboardPage />} />} />
-          <Route path='/diary' element={<PrivateRoute redirectTo='/signin' component={<DiaryPage />} />} />
-          <Route path='/recommended-food' element={<PrivateRoute redirectTo='/signin' component={<RecommendedFoodPage />} />} />
-          <Route path='/settings' element={<PrivateRoute redirectTo='/signin' component={<SettingsPage />} />} />
-        </Route>
-      </Routes>
-    )    
-  ); 
+  return isRefreshing ? (
+    <Loader />
+  ) : (
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route
+          index
+          element={
+            <RestrictedRoute redirectTo="/main" component={<WelcomePage />} />
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            <RestrictedRoute redirectTo="/main" component={<SignUpPage />} />
+          }
+        />
+
+        <Route
+          path="/your-goal"
+          element={
+            <RestrictedRoute redirectTo="/main" component={<YourGoalPage />} />
+          }
+        />
+
+        <Route
+          path="/select-gender"
+          element={
+            <RestrictedRoute
+              redirectTo="/main"
+              component={<SelectGenderPage />}
+            />
+          }
+        />
+
+        <Route
+          path="/body-parameters"
+          element={
+            <RestrictedRoute
+              redirectTo="/main"
+              component={<BodyParametersPage />}
+            />
+          }
+        />
+
+        <Route
+          path="/your-activity"
+          element={
+            <RestrictedRoute
+              redirectTo="/main"
+              component={<YourActivityPage />}
+            />
+          }
+        />
+
+        <Route
+          path="/signin"
+          element={
+            <RestrictedRoute redirectTo="/main" component={<SignInPage />} />
+          }
+        />
+
+        <Route
+          path="/forgot-password"
+          element={
+            <RestrictedRoute
+              redirectTo="/signin"
+              component={<ForgotPasswordPage />}
+            />
+          }
+        />
+
+        <Route
+          path="/main"
+          element={
+            <PrivateRoute redirectTo="/signin" component={<MainPage />} />
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute redirectTo="/signin" component={<DashboardPage />} />
+          }
+        />
+
+        <Route
+          path="/diary"
+          element={
+            <PrivateRoute redirectTo="/signin" component={<DiaryPage />} />
+          }
+        />
+
+        <Route
+          path="/recommended-food"
+          element={
+            <PrivateRoute
+              redirectTo="/signin"
+              component={<RecommendedFoodPage />}
+            />
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute redirectTo="/signin" component={<SettingsPage />} />
+          }
+        />
+      </Route>
+    </Routes>
+  );
 };

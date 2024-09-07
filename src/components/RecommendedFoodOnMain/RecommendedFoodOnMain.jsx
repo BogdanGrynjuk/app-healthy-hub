@@ -8,18 +8,18 @@ import {
   SeeMoreButton,
 } from './RecommendedFoodOnMain.styled';
 
-import { getRecommentedFood } from 'helpers/getRecommentedFood';
+import { getRecommendedFood } from 'helpers/getRecommendedFood';
 import { randomizeFood } from 'helpers/randomizeFood';
 
 const RecommendedFoodOnMain = () => {
   const [arrayForRender, setArrayForRender] = useState([]);
 
   useEffect(() => {
-    getRecommentedFood()
+    getRecommendedFood()
       .then(response => {
         setArrayForRender(randomizeFood(response));
       })
-      .catch(err => console.log(err));
+      .catch(error => console.log(error));
   }, []);
 
   return (

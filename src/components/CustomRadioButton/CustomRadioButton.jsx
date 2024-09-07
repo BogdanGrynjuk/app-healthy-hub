@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {
   LabelWithRadio,
   RadioInput,
@@ -19,6 +19,13 @@ const CustomRadioButton = ({ name, value, selectedValue, text }) => {
       {text}
     </LabelWithRadio>
   );
+};
+
+CustomRadioButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default CustomRadioButton;

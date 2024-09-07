@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getRecommentedFood } from 'helpers/getRecommentedFood';
+import { getRecommendedFood } from 'helpers/getRecommendedFood';
 
 import CardRecommendedProduct from 'components/CardRecommendedProduct/CardRecommendedProduct';
 import image from 'images/Ketogenic.png';
@@ -31,9 +31,9 @@ export default function RecommendedFood() {
   const backLinkLocationRef = useRef(location.state?.from ?? '/main');
 
   useEffect(() => {
-    getRecommentedFood()
-      .then(responce => {
-        setArrayForRender(randomizeFood(responce, 10))
+    getRecommendedFood()
+      .then(response => {
+        setArrayForRender(randomizeFood(response, 10));
       })
       .catch(err => console.error(err));
   }, []);
@@ -48,7 +48,7 @@ export default function RecommendedFood() {
           >
             <ArrowReturn src={arrowRight} alt="arrow right" />
           </BackLink>
-          <TitlePage>Recommented food</TitlePage>
+          <TitlePage>Recommended food</TitlePage>
         </HeaderPage>
 
         <InfoBox>
@@ -58,7 +58,7 @@ export default function RecommendedFood() {
 
           <RecommendedFoodList>
             {arrayForRender.map(({ _id, img, name, amount, calories }) => {
-              return (            
+              return (
                 <CardRecommendedProduct
                   key={_id}
                   id={_id}
