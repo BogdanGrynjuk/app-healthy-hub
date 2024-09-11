@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { updateGoal } from '../../redux/Auth/authOperations';
+// import { updateGoal } from '../../redux/Auth/authOperations';
 import { selectUser } from '../../redux/Auth/authSelectors';
 import HeaderOverlay from './HeaderOverlay';
 
@@ -44,8 +44,8 @@ export default function TargetModal({ onCloseModal }) {
   const newGailMuscleGoal = () => setUserGoal('Gain muscle');
 
   const handleNewUserGoal = event => {
-    event.preventDefault();    
-    dispatch(updateGoal(userGoal));
+    event.preventDefault();
+    // dispatch(updateGoal(userGoal));
     onCloseModal();
   };
 

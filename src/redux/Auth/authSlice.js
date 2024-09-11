@@ -1,48 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  register,
-  logIn,
+  signUp,
   logOut,
-  currentUser,
   updateUser,
-  updateAvatar,
-  addWeight,
-  updateGoal,
+  refresh,
+  signIn,
+  checkEmail,
 } from './authOperations';
+import { APP_STATUS } from 'constants/appStatus';
+import {
+  getMyFoodIntake,
+  postMyFoodIntake,
+  postMyWaterIntake,
+  updateMyFoodIntake,
+} from 'redux/foodIntake/foodIntake.Operations';
 
 const initialState = {
   user: {
     name: null,
     email: null,
-    password: null,
     goal: null,
     gender: null,
     age: null,
-    weight: null,
     height: null,
-    activity: null,
+    weight: null,
+    physicalActivityRatio: null,
+    avatarURL: null,
+    BMR: null,
   },
   token: null,
   isLoggedIn: false,
-  isRefreshing: false,
+  appStatus: APP_STATUS.initialLoading,
   error: null,
-  isLoading: false,
-};
-
-const handlePending = state => {
-  state.isLoading = true;
-  state.error = null;
-};
-
-const handleRejected = (state, action) => {
-  state.isLoading = false;
-  state.error = action.payload;
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    updateAppStatus: (state, action) => {
+      state.appStatus = action.payload;
+    },
+
     setNewUserName: (state, action) => {
       state.user.name = action.payload;
     },
@@ -69,81 +68,149 @@ const authSlice = createSlice({
     },
     setNewUserActivity: (state, action) => {
       state.user.activity = action.payload;
+      state.user.physicalActivityRatio = action.payload;
     },
   },
   extraReducers: builder => {
     builder
-      .addCase(register.pending, handlePending)
-      .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.isLoading = false;
-      })
-      .addCase(register.rejected, handleRejected)
-
-      .addCase(logIn.pending, handlePending)
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.isLoading = false;
+      // refresh
+      .addCase(refresh.pending, state => {
+        state.appStatus = APP_STATUS.loading;
         state.error = null;
       })
-      .addCase(logIn.rejected, handleRejected)
-
-      .addCase(logOut.pending, handlePending)
-      .addCase(logOut.fulfilled, state => {
-        state.user = initialState.user;
-        state.token = null;
-        state.isLoggedIn = false;
+      .addCase(refresh.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
         state.isRefreshing = false;
-        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.appStatus = APP_STATUS.idle;
         state.error = null;
       })
-      .addCase(logOut.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = false;
-        state.user = initialState.user;
-        state.token = null;
-        state.isLoggedIn = false;
+      .addCase(refresh.rejected, (state, { payload }) => {
+        state.isRefreshing = false;
+        if (payload === 401) {
+          state.token = null;
+        }
+        state.appStatus = APP_STATUS.idle;
       })
 
-      .addCase(currentUser.pending, state => {
-        state.isRefreshing = true;
+      // signUp
+      .addCase(signUp.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+        state.error = null;
       })
-      .addCase(currentUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(signUp.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+
         state.isLoggedIn = true;
-        state.isRefreshing = false;
+        state.appStatus = APP_STATUS.idle;
+        state.error = null;
       })
-      .addCase(currentUser.rejected, state => {
-        state.isRefreshing = false;
+      .addCase(signUp.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+        state.error = 'Something went wrong';
       })
 
-      .addCase(updateUser.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload };
+      // signIn
+      .addCase(signIn.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(signIn.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+
         state.isLoggedIn = true;
+        state.appStatus = APP_STATUS.idle;
       })
-      .addCase(updateAvatar.fulfilled, (state, action) => {
-        state.user.avatarURL = action.payload;
-        // state.token = action.payload.token;
-        state.isLoggedIn = true;
+      .addCase(signIn.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
       })
-      .addCase(addWeight.fulfilled, (state, action) => {
-        state.user.weight = action.payload.weight;
-        state.user.bmr = action.payload.bmr;
+
+      // logOut
+      .addCase(logOut.pending, state => {
+        state.appStatus = APP_STATUS.loading;
       })
-      .addCase(updateGoal.fulfilled, (state, action) => {
-        state.user.goal = action.payload.goal;
-        state.user.fat = action.payload.fat;
-        state.user.protein = action.payload.protein;
-        state.user.carbohydrate = action.payload.carbohydrate;
+      .addCase(logOut.fulfilled, () => {
+        return { ...initialState };
+      })
+      .addCase(logOut.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // updateUser
+      .addCase(updateUser.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        for (const key in payload) {
+          if (payload.hasOwnProperty(key)) state.user[key] = payload[key];
+        }
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(updateUser.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // getMyFoodIntake
+      .addCase(getMyFoodIntake.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(getMyFoodIntake.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(getMyFoodIntake.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // updateMyFoodIntake
+      .addCase(updateMyFoodIntake.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(updateMyFoodIntake.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(updateMyFoodIntake.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // postMyFoodIntake
+      .addCase(postMyFoodIntake.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(postMyFoodIntake.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(postMyFoodIntake.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // postMyWaterIntake
+      .addCase(postMyWaterIntake.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(postMyWaterIntake.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(postMyWaterIntake.rejected, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+
+      // checkEmail
+      .addCase(checkEmail.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+      })
+      .addCase(checkEmail.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+      })
+      .addCase(checkEmail.rejected, (state, { payload }) => {
+        state.appStatus = APP_STATUS.idle;
+        state.error = payload;
       });
   },
 });
 
 export const {
+  updateAppStatus,
   setNewUserName,
   setNewUserEmail,
   setNewUserPassword,

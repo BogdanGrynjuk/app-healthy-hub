@@ -95,7 +95,7 @@ export const TrackerList = styled.ul`
   }
 `;
 
-export const Tarker = styled.li`
+export const Tracker = styled.li`
   flex-basis: 100%;
 
   &:not(:last-of-type) {

@@ -41,7 +41,7 @@ const YourGoalForm = () => {
             />
             <CustomRadioButton
               name="goal"
-              value="Gain muscle"
+              value="Gain Muscle"
               selectedValue={values.goal}
               text="Gain muscle"
             />

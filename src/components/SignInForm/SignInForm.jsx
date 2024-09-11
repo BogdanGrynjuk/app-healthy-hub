@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
-import { logIn } from '../../redux/Auth/authOperations';
+import { signIn } from '../../redux/Auth/authOperations';
 
 import { ReactComponent as EyeCloseSvg } from '../../images/icons/eye-off.svg';
 import { ReactComponent as EyeOpenSvg } from '../../images/icons/eye.svg';
@@ -33,13 +33,14 @@ const SignInForm = () => {
   const hidePassword = () => setIsVisiblePassword(false);
 
   const handleSubmit = ({ email, password }) => {
-    dispatch(logIn({ email, password }));
+    dispatch(signIn({ email, password }));
   };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchemaSignIn}
+      validateOnBlur={false}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, values }) => (

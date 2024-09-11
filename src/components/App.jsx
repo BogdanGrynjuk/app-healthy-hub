@@ -4,9 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 import SharedLayout from './SharedLayout';
 import { RestrictedRoute } from 'components/Routes/RestrictedRoute';
 import { PrivateRoute } from 'components/Routes/PrivateRoute';
-import { selectIsRefreshing } from 'redux/Auth/authSelectors';
-import { currentUser } from 'redux/Auth/authOperations';
+import { selectAppStatus, selectToken } from 'redux/Auth/authSelectors';
+import { refresh } from 'redux/Auth/authOperations';
 import Loader from './Loader/Loader';
+import { APP_STATUS } from 'constants/appStatus';
+import { updateAppStatus } from 'redux/Auth/authSlice';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage'));
 const SignUpPage = lazy(() => import('../pages/SignUpPage'));
@@ -24,13 +26,19 @@ const SettingsPage = lazy(() => import('../pages/SettingsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
+
+  const token = useSelector(selectToken);
+  const appStatus = useSelector(selectAppStatus);
 
   useEffect(() => {
-    dispatch(currentUser());
-  }, [dispatch]);
+    if (token) {
+      dispatch(refresh(token));
+    } else {
+      dispatch(updateAppStatus(APP_STATUS.idle));
+    }
+  }, [dispatch, token]);
 
-  return isRefreshing ? (
+  return appStatus === 'loading' ? (
     <Loader />
   ) : (
     <Routes>

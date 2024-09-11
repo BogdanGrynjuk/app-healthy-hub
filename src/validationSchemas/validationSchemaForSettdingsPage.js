@@ -20,14 +20,14 @@ const validationSchemaForSettingsPage = yup.object({
     .integer('Age must be an integer'),
   height: yup
     .number()
-    .min(120, 'Height must be at least 120cm')
+    .min(140, 'Height must be at least 140cm')
     .max(220, 'Height must be no more than 220cm')
     .required('Height is required')
     .integer('Height must be an integer'),
   weight: yup
     .number()
     .min(40, 'Weight must be at least 40kg')
-    .max(200, 'Weight must be no more than 200kg')
+    .max(170, 'Weight must be no more than 170kg')
     .required('Weight is required')
     .test('maxDigitsAfterDecimal', 'Must have 1 digits after decimal', number =>
       /^\d+(\.\d{1})?$/.test(number)

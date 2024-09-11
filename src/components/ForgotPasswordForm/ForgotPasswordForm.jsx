@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
-import axios from 'axios';
-
 import {
   FormWrapper,
   FormField,
@@ -12,27 +10,25 @@ import {
 } from './ForgotPasswordForm.styled';
 
 import validationSchemaForgotPassword from 'validationSchemas/validationSchemaForgotPassword';
-import toastifyMessage from 'helpers/toastify';
-
-axios.defaults.baseURL = 'https://healthyhub-z4y1.onrender.com';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from 'redux/Auth/authOperations';
 
 const ForgotPasswordForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     email: '',
   };
 
-  const handleSubmit = async ({ email }, { resetForm }) => {
-    try {
-      // !!! Тут є баг на стороні бекенда (на пошту не приходить оновлений пароль)
-      const response = await axios.patch('/users/forgotpassword', { email });
-      toastifyMessage('success', response.data.message);
-      navigate('/signin');
-      resetForm();
-    } catch (error) {
-      toastifyMessage('error', error.response.data.message);
-    }
+  const handleSubmit = ({ email }, { resetForm }) => {
+    dispatch(resetPassword({ email }))
+      .unwrap()
+      .catch(error => {
+        console.error(error);
+        resetForm();
+        navigate('/signin');
+      });
   };
 
   return (

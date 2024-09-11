@@ -60,7 +60,7 @@ const SettingsPage = () => {
     if (isAvatarChanged) {
       const formData = new FormData();
       formData.append('avatar', avatarFile);
-      dispatch(updateAvatar(formData));
+      // dispatch(updateAvatar(formData));
     }
     dispatch(getStats('today'));
     navigate('/main');

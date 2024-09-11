@@ -1,170 +1,140 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getStats } from 'redux/Statistics/statisticsOperations';
-import toastifyMessage from '../../helpers/toastify';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'https://healthyhub-z4y1.onrender.com';
+import { getMyFoodIntake } from '../foodIntake/foodIntake.Operations';
 
-const setAuthHeader = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+import {
+  axiosAuth,
+  resetGlobalAuthHeader,
+  setGlobalAuthHeader,
+} from 'helpers/network';
+import { sleep } from 'helpers/sleep';
 
-const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
-};
-
-export const register = createAsyncThunk(
-  'auth/register',
-  async (credentials, thunkAPI) => {
+export const signUp = createAsyncThunk(
+  'auth/signUp',
+  async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/users/register', credentials);
-      if (response.data) {
-        const { email, password } = credentials;
-        const { data } = await axios.post('/users/login', { email, password });
-        setAuthHeader(data.token);
-        thunkAPI.dispatch(getStats('today'));
-        return data;
+      const res = await axiosAuth.post('auth/signup', credentials);
+
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response.data.details) {
+        toast.error(error.response.data.details);
       }
-    } catch (error) {
-      toastifyMessage('error', error.response.data.message);
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      return rejectWithValue();
     }
   }
 );
 
-export const logIn = createAsyncThunk(
-  'auth/login',
-  async (credentials, thunkAPI) => {
+export const signIn = createAsyncThunk(
+  'auth/signIn',
+  async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/users/login', credentials);
-      setAuthHeader(response.data.token);
-      thunkAPI.dispatch(getStats('today'));
-      return response.data;
+      const res = await axiosAuth.post('auth/signin', credentials);
+
+      setGlobalAuthHeader(res.data.token);
+
+      return res.data;
     } catch (error) {
-      toastifyMessage('error', error.response.data.message);
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      if (error instanceof AxiosError && error.response.data.message) {
+        toast.error(error.response.data.message);
+      }
+      return rejectWithValue();
     }
   }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  try {
-    await axios.post('/users/logout');
-    clearAuthHeader();
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const currentUser = createAsyncThunk(
+export const refresh = createAsyncThunk(
   'auth/refresh',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const tokenCurrent = state.auth.token;
-
-    if (tokenCurrent === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
-
+  async (token, { rejectWithValue, dispatch }) => {
     try {
-      setAuthHeader(tokenCurrent);
-      const response = await axios.get('/users/current');
-      await thunkAPI.dispatch(getStats('today'));
-      return response.data;
+      setGlobalAuthHeader(token);
+
+      const res = await axiosAuth.get('auth/current');
+
+      dispatch(getMyFoodIntake());
+
+      return res.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error instanceof AxiosError && error.response.status === 401) {
+        await sleep(500);
+        toast.error('Your session has expired. Please log in again.');
+        return rejectWithValue(401);
+      }
+      console.log('backend might be sleeping');
+      return rejectWithValue();
+    }
+  }
+);
+
+export const logOut = createAsyncThunk(
+  'auth/logOut',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axiosAuth.get('auth/logout');
+      resetGlobalAuthHeader();
+
+      return res.status;
+    } catch (error) {
+      toast.error('Something went wrong!');
+      return rejectWithValue();
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (resetData, { rejectWithValue }) => {
+    try {
+      const res = await axiosAuth.post('auth/password', resetData);
+      return res.data;
+    } catch (error) {
+      toast.error('An error occurred during password reset.');
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong!'
+      );
     }
   }
 );
 
 export const updateUser = createAsyncThunk(
   'auth/updateUser',
-  async (data, thunkAPI) => {
+  async (fieldsToUpdate, { rejectWithValue }) => {
     try {
-      const response = await axios.patch('/users/update', data);
-      return response.data;
+      const formData = new FormData();
+      for (const field in fieldsToUpdate) {
+        formData.append(field, fieldsToUpdate[field]);
+      }
+
+      const res = await axiosAuth.patch('user/info', formData);
+      toast.success('Profile updated!');
+
+      return res.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error instanceof AxiosError && error.response.data.message) {
+        toast.error(error.response.data.message);
+      }
+      return rejectWithValue();
     }
   }
 );
 
-export const forgotPassword = createAsyncThunk(
-  'auth/forgotPassword',
-  async (email, thunkAPI) => {
+export const checkEmail = createAsyncThunk(
+  'auth/checkEmail',
+  async (email, { rejectWithValue }) => {
     try {
-      const response = await axios.patch('/users/forgotpassword', email);
-      toastifyMessage('success', response.data.message);
-      return response.data;
-    } catch (error) {
-      toastifyMessage('error', error.response.data.message);
-      return thunkAPI.rejectWithValue(error.response.data.message);
-    }
-  }
-);
+      const res = await axiosAuth.post('auth/email', { email });
 
-export const updateAvatar = createAsyncThunk(
-  'auth/updateAvatar',
-  async (avatarData, thunkAPI) => {
-    try {
-      const response = await axios.patch('/users/avatars', avatarData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(
-        'updated avatarUrl: ',
-        response.data,
-        'this log is for checking data from the backend'
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response.status === 409) {
+        toast.error(error.response.data.message);
+        return rejectWithValue(error.response.data.message);
+      }
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong'
       );
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const addWeight = createAsyncThunk(
-  'auth/weight',
-  async (inputWeight, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const tokenCurrent = state.auth.token;
-
-    if (tokenCurrent === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
-
-    try {
-      setAuthHeader(tokenCurrent);
-      const response = await axios.post('/api/user/weight', {
-        weight: inputWeight,
-      });
-      toastifyMessage('success', 'Weight updated!');
-      return response.data;
-    } catch (error) {
-      toastifyMessage('warn', 'You have already updated your weight!');
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const updateGoal = createAsyncThunk(
-  'auth/goal',
-  async (selectedGoal, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const tokenCurrent = state.auth.token;
-
-    if (tokenCurrent === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
-    }
-
-    try {
-      setAuthHeader(tokenCurrent);
-      const response = await axios.patch('/users/goal', { goal: selectedGoal });
-      toastifyMessage('success', 'Goal updated!');
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

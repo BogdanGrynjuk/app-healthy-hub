@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectUser } from "redux/Auth/authSelectors";
+import { selectUser } from 'redux/Auth/authSelectors';
 
-import { WATER_GOAL } from "constants/constants";
+import { WATER_GOAL } from 'constants/constants';
 import { outNum } from 'helpers/outNum';
 
 import {
@@ -11,22 +11,21 @@ import {
   InfoBox,
   Card,
   CardText,
-  CardTitle, 
-  Counter
-} from "./DailyGoal.styled";
+  CardTitle,
+  Counter,
+} from './BlockDailyGoal.styled';
 
-import img1 from "images/bubble.png";
-import img2 from "images/bubble@2x.png";
-import img3 from "images/bottle.png";
-import img4 from "images/bottle@2x.png";
+import img1 from 'images/bubble.png';
+import img2 from 'images/bubble@2x.png';
+import img3 from 'images/bottle.png';
+import img4 from 'images/bottle@2x.png';
 
-const DailyGoal = () => {
-  
-  const userInfo = useSelector(selectUser);  
-  const caloriesGoal = userInfo.bmr; 
+const BlockDailyGoal = () => {
+  const userInfo = useSelector(selectUser);
+  const caloriesGoal = userInfo.BMR;
 
-  useEffect(() => outNum(caloriesGoal, "calorieCounter"), [caloriesGoal]);
-  useEffect(() => outNum(WATER_GOAL, "waterCounter"), []);
+  useEffect(() => outNum(caloriesGoal, 'calorieCounter'), [caloriesGoal]);
+  useEffect(() => outNum(WATER_GOAL, 'waterCounter'), []);
 
   return (
     <Wrapper>
@@ -42,11 +41,11 @@ const DailyGoal = () => {
           />
           <CardText>
             <CardTitle>Calories</CardTitle>
-            <Counter id="calorieCounter"/>            
+            <Counter id="calorieCounter" />
           </CardText>
-        </Card>        
+        </Card>
         <Card>
-          <img            
+          <img
             srcSet={`${img3} 1x, ${img4} 2x`}
             width={80}
             height={80}
@@ -55,16 +54,15 @@ const DailyGoal = () => {
           />
           <CardText>
             <CardTitle>Water</CardTitle>
-            <Counter >
+            <Counter>
               <span id="waterCounter"></span>
               <span>ml</span>
             </Counter>
           </CardText>
-        </Card>            
+        </Card>
       </InfoBox>
     </Wrapper>
-
   );
 };
 
-export default DailyGoal;
+export default BlockDailyGoal;

@@ -12,7 +12,7 @@ import {
 } from './YourActivityForm.styled';
 import CustomRadioButton from 'components/CustomRadioButton';
 import { setNewUserActivity } from 'redux/Auth/authSlice';
-import { register } from 'redux/Auth/authOperations';
+import { signUp } from 'redux/Auth/authOperations';
 import { selectError, selectUser } from 'redux/Auth/authSelectors';
 
 const YourActivityForm = () => {
@@ -28,7 +28,9 @@ const YourActivityForm = () => {
 
   const handleClickNext = ({ activity }) => {
     dispatch(setNewUserActivity(activity));
-    dispatch(register({ ...user, activity }));
+    dispatch(
+      signUp({ ...user, activity, physicalActivityRatio: Number(activity) })
+    );
   };
 
   const handleClickBack = () => {

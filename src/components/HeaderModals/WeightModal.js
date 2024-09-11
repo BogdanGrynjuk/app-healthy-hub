@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { addWeight } from '../../redux/Auth/authOperations';
+// import { addWeight } from '../../redux/Auth/authOperations';
 import HeaderOverlay from './HeaderOverlay';
 
 import {
@@ -33,7 +33,7 @@ export default function WeightModal({ onCloseModal }) {
 
   const handleNewUserWeight = event => {
     event.preventDefault();
-    dispatch(addWeight(newWeight));
+    // dispatch(addWeight(newWeight));
     onCloseModal();
   };
 
