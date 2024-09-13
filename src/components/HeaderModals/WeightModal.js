@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import { addWeight } from '../../redux/Auth/authOperations';
@@ -27,8 +27,8 @@ export default function WeightModal({ onCloseModal }) {
   // const dispatch = useDispatch();
 
   const handleInputChange = event => {
-    const { value } = event.target;
-    setNewWeight(value);
+    // const { value } = event.target;
+    // setNewWeight(value);
   };
 
   const handleNewUserWeight = event => {
