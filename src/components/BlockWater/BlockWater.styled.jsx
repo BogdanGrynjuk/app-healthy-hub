@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -7,13 +7,13 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const Title = styled.h3`  
+export const Title = styled.h3`
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${props => props.theme.fontSizes.m};
   font-weight: ${props => props.theme.fontWeights.regular};
   line-height: 24px;
   letter-spacing: 0em;
-  color: ${props => props.theme.colors.white};  
+  color: ${props => props.theme.colors.white};
 `;
 
 export const InfoBox = styled.div`
@@ -29,7 +29,7 @@ export const InfoBox = styled.div`
 
 export const Card = styled.div`
   display: flex;
-  gap: 20px;   
+  gap: 20px;
 `;
 
 export const WaterTracker = styled.div`
@@ -43,8 +43,9 @@ export const WaterTracker = styled.div`
   padding: 8px;
   box-sizing: border-box;
   background-color: ${props => props.theme.colors.black};
-  border: ${props => props.theme.borders.normal} ${props => props.theme.colors.gray1};
-  border-radius: ${props => props.theme.radii.normal};   
+  border: ${props => props.theme.borders.normal}
+    ${props => props.theme.colors.gray1};
+  border-radius: ${props => props.theme.radii.normal};
 `;
 
 export const CounterOfConsumedWaterInPercentage = styled.span`
@@ -53,17 +54,19 @@ export const CounterOfConsumedWaterInPercentage = styled.span`
   font-weight: ${props => props.theme.fontWeights.semiBold};
   line-height: 22px;
   letter-spacing: 0em;
-  color: ${props => props.theme.colors.violet};
+  color: ${props =>
+    props.$warning ? props.theme.colors.error : props.theme.colors.violet};
 `;
 
 export const Chart = styled.span`
   width: 100%;
-  height: 100%;
+  height: 0%;
   border-radius: ${props => props.theme.radii.normal};
-  background-color: ${props => props.theme.colors.violet};  
+  background-color: ${props =>
+    props.$warning ? props.theme.colors.error : props.theme.colors.violet};
   -webkit-transition: all 1s ease;
   -o-transition: all 1s ease;
-  transition: all 1s ease;  
+  transition: all 1s ease;
 `;
 
 export const CardText = styled.div`
@@ -88,7 +91,7 @@ export const CounterList = styled.div`
   gap: 8px;
   margin-bottom: 16px;
 
-   @media screen and (${props => props.theme.mq.tablet}) {
+  @media screen and (${props => props.theme.mq.tablet}) {
     flex-direction: row;
     align-items: center;
     gap: 40px;
@@ -99,16 +102,17 @@ export const CounterOfConsumedWaterInMl = styled.p`
   display: flex;
   gap: 8px;
   font-family: ${props => props.theme.fontFamily.poppins};
-  font-size: 28px;
-  font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.xs};
+
   line-height: 34px;
+  font-weight: ${props => props.theme.fontWeights.medium};
   letter-spacing: 0em;
-  color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.gray};
 
   & > span {
-    font-size: ${props => props.theme.fontSizes.xs};
-    color: ${props => props.theme.colors.gray};
-  } 
+    font-size: 28px;
+    color: ${props => props.theme.colors.white};
+  }
 `;
 
 export const CounterOfWaterLeftToDrinkInMl = styled.p`
@@ -117,8 +121,9 @@ export const CounterOfWaterLeftToDrinkInMl = styled.p`
   font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 20px;
   letter-spacing: 0em;
-  color: ${props => props.theme.colors.gray};
-  
+  color: ${props =>
+    props.$warning ? props.theme.colors.error : props.theme.colors.violet};
+
   & > span {
     color: ${props => props.theme.colors.white};
   }
@@ -141,4 +146,3 @@ export const Btn = styled.button`
   color: ${props => props.theme.colors.black2};
   cursor: pointer;
 `;
-

@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   items: [],
-  waterIntake: null,
+  waterIntake: 0,
   error: null,
 };
 
@@ -35,4 +35,4 @@ const foodIntakeSlice = createSlice({
   },
 });
 
-export default foodIntakeSlice.reducer;
+export const foodIntakeReducer = foodIntakeSlice.reducer;

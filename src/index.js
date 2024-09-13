@@ -11,16 +11,16 @@ import './index.css';
 import ToastPortal from 'components/ToastPortal';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter basename="/app-healthy-hub">
-            <App />
-            <ToastPortal />
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter basename="/app-healthy-hub">
+          <App />
+          <ToastPortal />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  </ThemeProvider>
+  // </React.StrictMode>
 );

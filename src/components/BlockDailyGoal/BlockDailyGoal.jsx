@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'redux/Auth/authSelectors';
 
@@ -24,8 +24,20 @@ const BlockDailyGoal = () => {
   const userInfo = useSelector(selectUser);
   const caloriesGoal = userInfo.BMR;
 
-  useEffect(() => outNum(caloriesGoal, 'calorieCounter'), [caloriesGoal]);
-  useEffect(() => outNum(WATER_GOAL, 'waterCounter'), []);
+  const calorieCounterRef = useRef(null);
+  const waterCounterRef = useRef(null);
+
+  useEffect(() => {
+    if (calorieCounterRef.current) {
+      outNum(caloriesGoal, calorieCounterRef.current);
+    }
+  }, [caloriesGoal]);
+
+  useEffect(() => {
+    if (waterCounterRef.current) {
+      outNum(WATER_GOAL, waterCounterRef.current);
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -41,7 +53,7 @@ const BlockDailyGoal = () => {
           />
           <CardText>
             <CardTitle>Calories</CardTitle>
-            <Counter id="calorieCounter" />
+            <Counter ref={calorieCounterRef} />
           </CardText>
         </Card>
         <Card>
@@ -55,7 +67,7 @@ const BlockDailyGoal = () => {
           <CardText>
             <CardTitle>Water</CardTitle>
             <Counter>
-              <span id="waterCounter"></span>
+              <span ref={waterCounterRef}></span>
               <span>ml</span>
             </Counter>
           </CardText>

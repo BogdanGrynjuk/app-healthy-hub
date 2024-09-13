@@ -2,8 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth } from 'helpers/network';
 import { toast } from 'react-toastify';
 
-// import { axiosAuth } from '@/utils/network';
-
 export const getMyFoodIntake = createAsyncThunk(
   'foodIntake/get',
   async (_, { rejectWithValue }) => {
@@ -12,7 +10,11 @@ export const getMyFoodIntake = createAsyncThunk(
 
       return res.data;
     } catch (error) {
-      rejectWithValue(error);
+      toast.error('Something went wrong...');
+      console.error(error.response.data.message);
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong'
+      );
     }
   }
 );
@@ -22,12 +24,13 @@ export const postMyFoodIntake = createAsyncThunk(
   async (foodIntake, { rejectWithValue }) => {
     try {
       const res = await axiosAuth.post('user/food-intake', foodIntake);
-
-      toast.success('Food intake saved!');
       return res.data;
     } catch (error) {
       toast.error('Something went wrong...');
-      return rejectWithValue();
+      console.error(error.response.data.message);
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong'
+      );
     }
   }
 );
@@ -40,12 +43,13 @@ export const updateMyFoodIntake = createAsyncThunk(
         `user/food-intake/${id}`,
         updatedFoodIntake
       );
-
-      toast.success('Food intake updated!');
       return res.data;
     } catch (error) {
       toast.error('Something went wrong...');
-      return rejectWithValue();
+      console.error(error.response.data.message);
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong'
+      );
     }
   }
 );
@@ -55,12 +59,13 @@ export const postMyWaterIntake = createAsyncThunk(
   async (waterIntake, { rejectWithValue }) => {
     try {
       const res = await axiosAuth.post('user/water-intake', waterIntake);
-
-      toast.success('Water intake saved!');
       return res.data.volume;
     } catch (error) {
       toast.error('Something went wrong...');
-      return rejectWithValue();
+      console.error(error.response.data.message);
+      return rejectWithValue(
+        error.response.data.message || 'Something went wrong'
+      );
     }
   }
 );

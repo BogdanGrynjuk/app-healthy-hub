@@ -1,13 +1,11 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { createPortal } from 'react-dom';
-
-import { addWater } from "redux/Water/waterOperations";
-import { getStats } from "redux/Statistics/statisticsOperations";
-
 import { Formik } from 'formik';
-import * as yup from 'yup';
+
+import { postMyWaterIntake } from 'redux/foodIntake/foodIntake.Operations';
+import validationSchemaForWater from 'validationSchemas/validationSchemaForWater';
 
 import {
   Backdrop,
@@ -21,15 +19,6 @@ import {
   ErrorMes,
 } from './addWater.styled';
 
-const schema = yup.object({
-  water: yup.number()
-    .required("Required")
-    .typeError("Must be a number")
-    .positive("Must be a positive number")
-    .max(1500, "The maximum allowable value is 1500")
-    .integer("Must be an integer"),
-});
-
 const initialValues = {
   water: '',
 };
@@ -37,64 +26,56 @@ const initialValues = {
 const modalRoot = document.querySelector('#modal-root');
 
 const AddWater = ({ onClose }) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch(); 
-  
-  const handleKeyDown = (event) => {
-    if (event.code === "Escape") {      
-      onClose();      
-    };
-  };
-
-  const handleBackdropClick = (event) => {
-    if (event.currentTarget === event.target) {
+  const handleKeyDown = event => {
+    if (event.code === 'Escape') {
       onClose();
-    };
+    }
   };
-  
-  const handleSubmit = async (values, { resetForm }) => {
-    await dispatch(addWater(values));
-    await dispatch(getStats('today'));
-    resetForm();
-    onClose();
+
+  const handleSubmit = async values => {
+    dispatch(postMyWaterIntake({ volume: Number(values.water) }));
   };
-  
+
   useEffect(() => {
     document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflowY = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
-    }
-
+    };
   });
 
   return createPortal(
-    <Backdrop onClick={handleBackdropClick}>
+    <Backdrop>
       <Modal>
         <Title>Add water intake</Title>
         <Formik
           initialValues={initialValues}
+          validateOnBlur={false}
           onSubmit={handleSubmit}
-          validationSchema={schema}
+          validationSchema={validationSchemaForWater}
         >
           <FormFormic autoComplete="off">
             <Label htmlFor="water">How much water</Label>
-            <Input name="water" type="number" placeholder="Enter milliliters"/>
+            <Input name="water" type="number" placeholder="Enter milliliters" />
             <ErrorMes name="water" component="div" />
 
             <Button type="submit">Confirm</Button>
-            <ButtonCancel type="button" onClick={onClose}>Cancel</ButtonCancel>
+            <ButtonCancel type="button" onClick={onClose}>
+              Cancel
+            </ButtonCancel>
           </FormFormic>
         </Formik>
       </Modal>
     </Backdrop>,
-    modalRoot    
+    modalRoot
   );
 };
 
 AddWater.propTypes = {
   onClose: PropTypes.func.isRequired,
-}
+};
 
 export default AddWater;

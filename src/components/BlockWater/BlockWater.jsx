@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { selectStatsConsumedWaterPerDay } from 'redux/Statistics/statisticsSelectors';
 import { calcPercent, calcRemainder, calcSurplus } from 'helpers/calculations';
 import { WATER_GOAL } from 'constants/constants';
 
@@ -27,78 +25,89 @@ import AddWater from 'components/Modals/AddWater/addWater';
 
 import img1 from 'images/add.png';
 import img2 from 'images/add@2x.png';
-// import { selectWaterIntake } from 'redux/foodIntake/foodIntakeSelectors';
+import { selectWaterIntake } from 'redux/foodIntake/foodIntakeSelectors';
+import { outNum } from 'helpers/outNum';
+import toastifyMessage from 'helpers/toastify';
 
 const BlockWater = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const chartRef = useRef(null);
+  const counterRef = useRef(null);
+  const hasNotified = useRef(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-  const consumedWaterMl = useSelector(selectStatsConsumedWaterPerDay);
 
-  // const waterIntake = useSelector(selectWaterIntake);
-  // console.log(waterIntake);
+  const consumedWaterMl = useSelector(selectWaterIntake);
 
-  const consumedWaterPercent = calcPercent(WATER_GOAL, consumedWaterMl) + '%';
-  const leftToConsumeWater = calcRemainder(WATER_GOAL, consumedWaterMl);
-  const excessConsumptionWater = calcSurplus(WATER_GOAL, consumedWaterMl);
+  const consumedWaterPercent = useMemo(
+    () => calcPercent(WATER_GOAL, consumedWaterMl) + '%',
+    [consumedWaterMl]
+  );
+  const leftToConsumeWater = useMemo(
+    () => calcRemainder(WATER_GOAL, consumedWaterMl),
+    [consumedWaterMl]
+  );
+  const excessConsumptionWater = useMemo(
+    () => calcSurplus(WATER_GOAL, consumedWaterMl),
+    [consumedWaterMl]
+  );
+  const exceededWaterLimit = useMemo(
+    () => consumedWaterMl > WATER_GOAL,
+    [consumedWaterMl]
+  );
 
-  const warning = consumedWaterMl > WATER_GOAL;
+  useEffect(() => {
+    if (chartRef.current) {
+      setTimeout(() => {
+        chartRef.current.style.height = consumedWaterPercent;
+      }, 0);
+    }
+  }, [consumedWaterMl, consumedWaterPercent]);
 
-  const notifyWarn = message => {
-    toast.error(message, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: 'dark',
-      autoClose: 3000,
-    });
-  };
+  useEffect(() => {
+    if (counterRef.current) {
+      outNum(consumedWaterMl, counterRef.current);
+    }
+  }, [consumedWaterMl]);
 
-  setTimeout(() => {
-    document.querySelector('#chart').style.height = consumedWaterPercent;
-  }, 0);
-
-  if (warning) {
-    notifyWarn(
-      `Maximum water consumption. If you continue to consume, you will not reach your goal`
-    );
-  }
+  useEffect(() => {
+    if (exceededWaterLimit && !hasNotified.current) {
+      toastifyMessage(
+        'warn',
+        `Maximum water consumption. If you continue to consume, you will not reach your goal`
+      );
+      hasNotified.current = true;
+    }
+  }, [exceededWaterLimit]);
 
   return (
     <>
-      <ToastContainer />
       <Wrapper>
         <Title>Water</Title>
         <InfoBox>
           <Card>
             <WaterTracker>
-              {/* лічильник спожитої води у відсотках*/}
-              <CounterOfConsumedWaterInPercentage
-                style={{ color: `${warning && '#E74A3B'}` }}
-              >
+              {/* лічильник спожитої води у відсотках */}
+              <CounterOfConsumedWaterInPercentage $warning={exceededWaterLimit}>
                 {consumedWaterPercent}
               </CounterOfConsumedWaterInPercentage>
-              <Chart
-                id="chart"
-                style={{
-                  height: 0,
-                  backgroundColor: `${warning && '#E74A3B'}`,
-                }}
-              />
+              <Chart ref={chartRef} $warning={exceededWaterLimit} />
             </WaterTracker>
             <CardText>
               <CardTitle>Water consumption</CardTitle>
               <CounterList>
                 {/* лічильник випитої води у мл */}
                 <CounterOfConsumedWaterInMl>
-                  {/* {(consumedWaterMl > WATER_GOAL) ? WATER_GOAL : consumedWaterMl} */}
-                  {consumedWaterMl}
-                  <span>ml</span>
+                  <span ref={counterRef}>{consumedWaterMl}</span>
+                  ml
                 </CounterOfConsumedWaterInMl>
                 {/* лічильник води, що залишилось випити у мл */}
-                <CounterOfWaterLeftToDrinkInMl
-                  style={{ color: `${warning && '#E74A3B'}` }}
-                >
-                  <span>{warning ? 'excess:' : 'left:'}</span>{' '}
-                  {warning ? excessConsumptionWater : leftToConsumeWater} ml
+                <CounterOfWaterLeftToDrinkInMl $warning={exceededWaterLimit}>
+                  <span>{exceededWaterLimit ? 'excess:' : 'left:'}</span>{' '}
+                  {exceededWaterLimit
+                    ? excessConsumptionWater
+                    : leftToConsumeWater}{' '}
+                  ml
                 </CounterOfWaterLeftToDrinkInMl>
               </CounterList>
               {/* кнопка, що відкриває модальне вікно додати воду */}

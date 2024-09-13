@@ -13,6 +13,7 @@ import { authReducer } from './Auth/authSlice';
 import { statsReducer } from './Statistics/statisticsSlice';
 import { waterReducer } from './Water/waterSlice';
 import { foodsReducer } from './Foods/foodsSlice';
+import { foodIntakeReducer } from './foodIntake/foodIntakeSlice';
 
 const persistConfig = {
   key: 'auth',
@@ -25,6 +26,9 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    foodIntake: foodIntakeReducer,
+
+    // !!! Слід видалити редюсери Stats water, foods
     stats: statsReducer,
     water: waterReducer,
     foods: foodsReducer,

@@ -1,8 +1,8 @@
-import { createSelector } from '@reduxjs/toolkit';
+// import { createSelector } from '@reduxjs/toolkit';
 
 // import { calculateNutrientGoal } from '@/utils/calculateNutrientGoal';
 
-export const selectWaterIntake = state => state.foodIntake.waterIntake;
+export const selectWaterIntake = state => state.foodIntake?.waterIntake || 0;
 
 // export const selectNutrientSums = createSelector(
 //   state => state.foodIntake.items,
