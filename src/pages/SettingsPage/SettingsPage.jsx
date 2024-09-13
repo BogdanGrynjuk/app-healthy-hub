@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
-import { updateUser, updateAvatar } from 'redux/Auth/authOperations';
+import { updateUser } from 'redux/Auth/authOperations';
 import { selectUser } from 'redux/Auth/authSelectors';
 import { getStats } from 'redux/Statistics/statisticsOperations';
 import validationSchemaForSettingsPage from 'validationSchemas/validationSchemaForSettdingsPage';

@@ -29,7 +29,7 @@ import muscle from '../../images/icons/Gain-muscle.svg';
 import close from '../../images/icons/close-circle.svg';
 
 export default function TargetModal({ onCloseModal }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userGender = user.gender;
   const currentUserGoal = user.goal;

@@ -23,8 +23,8 @@ import {
 import close from '../../images/icons/close-circle.svg';
 
 export default function WeightModal({ onCloseModal }) {
-  const [newWeight, setNewWeight] = useState('');
-  const dispatch = useDispatch();
+  // const [newWeight, setNewWeight] = useState('');
+  // const dispatch = useDispatch();
 
   const handleInputChange = event => {
     const { value } = event.target;
