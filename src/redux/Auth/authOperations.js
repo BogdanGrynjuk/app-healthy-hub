@@ -50,9 +50,7 @@ export const refresh = createAsyncThunk(
   async (token, { rejectWithValue, dispatch }) => {
     try {
       setGlobalAuthHeader(token);
-
       const res = await axiosAuth.get('auth/current');
-
       dispatch(getMyFoodIntake());
 
       return res.data;

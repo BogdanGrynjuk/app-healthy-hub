@@ -16,6 +16,9 @@ const initialState = {
 const foodIntakeSlice = createSlice({
   name: 'foodIntake',
   initialState,
+  reducers: {
+    resetFoodIntakeState: () => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(getMyFoodIntake.fulfilled, (state, { payload }) => {
@@ -35,4 +38,5 @@ const foodIntakeSlice = createSlice({
   },
 });
 
+export const { resetFoodIntakeState } = foodIntakeSlice.actions;
 export const foodIntakeReducer = foodIntakeSlice.reducer;

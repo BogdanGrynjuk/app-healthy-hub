@@ -38,37 +38,36 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateAppStatus: (state, action) => {
-      state.appStatus = action.payload;
+    updateAppStatus: (state, { payload }) => {
+      state.appStatus = payload;
     },
 
-    setNewUserName: (state, action) => {
-      state.user.name = action.payload;
+    setNewUserName: (state, { payload }) => {
+      state.user.name = payload;
     },
-    setNewUserEmail: (state, action) => {
-      state.user.email = action.payload;
+    setNewUserEmail: (state, { payload }) => {
+      state.user.email = payload;
     },
-    setNewUserPassword: (state, action) => {
-      state.user.password = action.payload;
+    setNewUserPassword: (state, { payload }) => {
+      state.user.password = payload;
     },
-    setNewUserGoal: (state, action) => {
-      state.user.goal = action.payload;
+    setNewUserGoal: (state, { payload }) => {
+      state.user.goal = payload;
     },
-    setNewUserAge: (state, action) => {
-      state.user.age = action.payload;
+    setNewUserAge: (state, { payload }) => {
+      state.user.age = payload;
     },
-    setNewUserGender: (state, action) => {
-      state.user.gender = action.payload;
+    setNewUserGender: (state, { payload }) => {
+      state.user.gender = payload;
     },
-    setNewUserHeight: (state, action) => {
-      state.user.height = action.payload;
+    setNewUserHeight: (state, { payload }) => {
+      state.user.height = payload;
     },
-    setNewUserWeight: (state, action) => {
-      state.user.weight = action.payload;
+    setNewUserWeight: (state, { payload }) => {
+      state.user.weight = payload;
     },
-    setNewUserActivity: (state, action) => {
-      state.user.activity = action.payload;
-      state.user.physicalActivityRatio = action.payload;
+    setNewUserActivity: (state, { payload }) => {
+      state.user.physicalActivityRatio = payload;
     },
   },
   extraReducers: builder => {
