@@ -11,7 +11,7 @@ import {
 
 // import DailyGoal from 'components/BlockDailyGoal';
 // import Water from 'components/Water';
-// import Food from 'components/Food';
+import BlockFood from 'components/BlockFood';
 // import DiaryOnMain from 'components/DiaryOnMain';
 // import RecommendedFoodOnMain from 'components/RecommendedFoodOnMain';
 
@@ -47,7 +47,9 @@ const MainPage = () => {
           <Tracker>
             <BlockWater />
           </Tracker>
-          <Tracker>{/* <Food /> */}</Tracker>
+          <Tracker>
+            <BlockFood />
+          </Tracker>
         </TrackerList>
 
         <Wrapper>

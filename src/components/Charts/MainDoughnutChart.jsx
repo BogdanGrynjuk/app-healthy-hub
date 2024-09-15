@@ -1,19 +1,12 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { calcRemainder } from 'helpers/calculations';
 import { Doughnut } from 'react-chartjs-2';
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { selectUser } from 'redux/Auth/authSelectors';
-import { selectConsumedCaloriesPerDay } from 'redux/Statistics/statisticsSelectors';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutForCalorie = () => {
-  const userInfo = useSelector(selectUser);
-  const goal = userInfo.bmr;
-  const consumed = useSelector(selectConsumedCaloriesPerDay);
+const MainDoughnutChart = ({ goal, consumed }) => {
   const leftConsumed = calcRemainder(goal, consumed);
 
   const warning = consumed > goal;
@@ -50,7 +43,7 @@ const DoughnutForCalorie = () => {
 
   const textCenter = {
     id: 'textCenter',
-    beforeDatasetsDraw(chart, args, pluginOptions) {
+    beforeDatasetsDraw(chart) {
       const { ctx, data } = chart;
       const xCoor = chart.getDatasetMeta(0).data[0].x;
       const yCoor = chart.getDatasetMeta(0).data[0].y;
@@ -64,7 +57,7 @@ const DoughnutForCalorie = () => {
 
       ctx.font = `400 14px sans-serif`;
       ctx.fillStyle = '#B6B6B6';
-      ctx.fillText('caliories', xCoor, yCoor + 20);
+      ctx.fillText('calories', xCoor, yCoor + 20);
     },
   };
 
@@ -94,15 +87,12 @@ const DoughnutForCalorie = () => {
   }
 
   return (
-    <>
-      <ToastContainer />
-      <Doughnut
-        data={data}
-        options={options}
-        plugins={[textCenter, backgroundCircle]}
-      />
-    </>
+    <Doughnut
+      data={data}
+      options={options}
+      plugins={[textCenter, backgroundCircle]}
+    />
   );
 };
 
-export default DoughnutForCalorie;
+export default MainDoughnutChart;

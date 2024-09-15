@@ -1,4 +1,6 @@
-// import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
+
+import { calculateNutrientGoal } from 'helpers/calculations';
 
 // import { calculateNutrientGoal } from '@/utils/calculateNutrientGoal';
 
@@ -31,50 +33,49 @@ export const selectWaterIntake = state => state.foodIntake?.waterIntake || 0;
 //   }
 // );
 
-// export const selectFoodStatistics = createSelector(
-//   [
-//     state => state.foodIntake.items,
-//     state => state.auth.user.BMR,
-//     state => state.auth.user.goal,
-//   ],
-//   (items, BMR, userGoal) => {
-//     const { caloriesFact, carbFact, proteinFact, fatFact } = items.reduce(
-//       (accumulator, { carbonohidrates, protein, fat, calories }) => {
-//         accumulator.caloriesFact += calories;
-//         accumulator.carbFact += carbonohidrates;
-//         accumulator.proteinFact += protein;
-//         accumulator.fatFact += fat;
-//         return accumulator;
-//       },
-//       { caloriesFact: 0, carbFact: 0, proteinFact: 0, fatFact: 0 }
-//     );
+export const selectFoodStatistics = createSelector(
+  [
+    state => state.foodIntake.items,
+    state => state.auth.user.BMR,
+    state => state.auth.user.goal,
+  ],
+  (items, BMR, userGoal) => {
+    const { caloriesFact, carbsFact, proteinFact, fatFact } = items.reduce(
+      (accumulator, { carbohydrates, protein, fat, calories }) => {
+        accumulator.caloriesFact += calories;
+        accumulator.carbsFact += carbohydrates;
+        accumulator.proteinFact += protein;
+        accumulator.fatFact += fat;
+        return accumulator;
+      },
+      { caloriesFact: 0, carbsFact: 0, proteinFact: 0, fatFact: 0 }
+    );
 
-//     const { carbsGoal, proteinGoal, fatGoal } = calculateNutrientGoal(
-//       BMR,
-//       userGoal
-//     );
+    const { carbsGoal, proteinGoal, fatGoal } = calculateNutrientGoal(
+      BMR,
+      userGoal
+    );
 
-//     // console.log('foodStatistics calculation');
-//     return {
-//       Calories: {
-//         fact: caloriesFact,
-//         goal: BMR,
-//       },
-//       Carbonohidrates: {
-//         fact: carbFact,
-//         goal: carbsGoal,
-//       },
-//       Protein: {
-//         fact: proteinFact,
-//         goal: proteinGoal,
-//       },
-//       Fat: {
-//         fact: fatFact,
-//         goal: fatGoal,
-//       },
-//     };
-//   }
-// );
+    return {
+      Calories: {
+        consumed: caloriesFact,
+        goal: BMR,
+      },
+      Carbohydrates: {
+        consumed: carbsFact,
+        goal: carbsGoal,
+      },
+      Protein: {
+        consumed: proteinFact,
+        goal: proteinGoal,
+      },
+      Fat: {
+        consumed: fatFact,
+        goal: fatGoal,
+      },
+    };
+  }
+);
 
 // export const selectFoodIntakeByCategory = createSelector(
 //   state => state.foodIntake.items,

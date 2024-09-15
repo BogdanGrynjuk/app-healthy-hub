@@ -6,14 +6,9 @@ import {
   refresh,
   signIn,
   checkEmail,
+  resetPassword,
 } from './authOperations';
 import { APP_STATUS } from 'constants/appStatus';
-import {
-  getMyFoodIntake,
-  postMyFoodIntake,
-  postMyWaterIntake,
-  updateMyFoodIntake,
-} from 'redux/foodIntake/foodIntake.Operations';
 
 const initialState = {
   user: {
@@ -30,7 +25,7 @@ const initialState = {
   },
   token: null,
   isLoggedIn: false,
-  appStatus: APP_STATUS.initialLoading,
+  appStatus: APP_STATUS.loading,
   error: null,
 };
 
@@ -41,7 +36,6 @@ const authSlice = createSlice({
     updateAppStatus: (state, { payload }) => {
       state.appStatus = payload;
     },
-
     setNewUserName: (state, { payload }) => {
       state.user.name = payload;
     },
@@ -85,11 +79,12 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(refresh.rejected, (state, { payload }) => {
+        state.appStatus = APP_STATUS.idle;
         state.isRefreshing = false;
         if (payload === 401) {
           state.token = null;
         }
-        state.appStatus = APP_STATUS.idle;
+        state.error = payload;
       })
 
       // signUp
@@ -100,108 +95,88 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
-
         state.isLoggedIn = true;
         state.appStatus = APP_STATUS.idle;
         state.error = null;
       })
-      .addCase(signUp.rejected, state => {
+      .addCase(signUp.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
-        state.error = 'Something went wrong';
+        state.error = payload;
       })
 
       // signIn
       .addCase(signIn.pending, state => {
         state.appStatus = APP_STATUS.loading;
+        state.isLoggedIn = false;
+        state.error = null;
       })
       .addCase(signIn.fulfilled, (state, { payload }) => {
+        state.appStatus = APP_STATUS.idle;
         state.user = payload.user;
         state.token = payload.token;
-
         state.isLoggedIn = true;
-        state.appStatus = APP_STATUS.idle;
+        state.error = null;
       })
-      .addCase(signIn.rejected, state => {
+      .addCase(signIn.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
+        state.isLoggedIn = false;
+        state.error = payload;
       })
 
       // logOut
       .addCase(logOut.pending, state => {
         state.appStatus = APP_STATUS.loading;
+        state.error = null;
       })
       .addCase(logOut.fulfilled, () => {
         return { ...initialState };
       })
-      .addCase(logOut.rejected, state => {
+      .addCase(logOut.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
+        state.error = payload;
       })
 
       // updateUser
       .addCase(updateUser.pending, state => {
         state.appStatus = APP_STATUS.loading;
+        state.error = null;
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
+        state.appStatus = APP_STATUS.idle;
         for (const key in payload) {
           if (payload.hasOwnProperty(key)) state.user[key] = payload[key];
         }
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
-      })
-      .addCase(updateUser.rejected, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-
-      // getMyFoodIntake
-      .addCase(getMyFoodIntake.pending, state => {
-        state.appStatus = APP_STATUS.loading;
-      })
-      .addCase(getMyFoodIntake.fulfilled, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-      .addCase(getMyFoodIntake.rejected, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-
-      // updateMyFoodIntake
-      .addCase(updateMyFoodIntake.pending, state => {
-        state.appStatus = APP_STATUS.loading;
-      })
-      .addCase(updateMyFoodIntake.fulfilled, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-      .addCase(updateMyFoodIntake.rejected, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-
-      // postMyFoodIntake
-      .addCase(postMyFoodIntake.pending, state => {
-        state.appStatus = APP_STATUS.loading;
-      })
-      .addCase(postMyFoodIntake.fulfilled, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-      .addCase(postMyFoodIntake.rejected, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-
-      // postMyWaterIntake
-      .addCase(postMyWaterIntake.pending, state => {
-        state.appStatus = APP_STATUS.loading;
-      })
-      .addCase(postMyWaterIntake.fulfilled, state => {
-        state.appStatus = APP_STATUS.idle;
-      })
-      .addCase(postMyWaterIntake.rejected, state => {
-        state.appStatus = APP_STATUS.idle;
+        state.error = payload;
       })
 
       // checkEmail
       .addCase(checkEmail.pending, state => {
         state.appStatus = APP_STATUS.loading;
+        state.error = null;
       })
       .addCase(checkEmail.fulfilled, state => {
         state.appStatus = APP_STATUS.idle;
+        state.error = null;
       })
       .addCase(checkEmail.rejected, (state, { payload }) => {
+        state.appStatus = APP_STATUS.idle;
+        state.error = payload;
+      })
+
+      // resetPassword
+      .addCase(resetPassword.pending, state => {
+        state.appStatus = APP_STATUS.loading;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, state => {
+        state.appStatus = APP_STATUS.idle;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
         state.error = payload;
       });

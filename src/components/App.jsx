@@ -33,7 +33,7 @@ export const App = () => {
 
   useEffect(() => {
     if (token) {
-      dispatch(refresh(token));
+      dispatch(refresh());
     } else {
       dispatch(resetFoodIntakeState());
       dispatch(updateAppStatus(APP_STATUS.idle));

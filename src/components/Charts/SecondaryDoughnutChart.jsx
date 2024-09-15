@@ -1,21 +1,14 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { calcRemainder, calcPercent } from 'helpers/calculations';
 import { Doughnut } from 'react-chartjs-2';
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { selectUser } from 'redux/Auth/authSelectors';
-import { selectConsumedCarbonohidratesPerDay } from 'redux/Statistics/statisticsSelectors';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChartForCarbonohidrates = () => {
-  const userInfo = useSelector(selectUser);
-  const goal = userInfo.carbohydrate;
-  const consumed = useSelector(selectConsumedCarbonohidratesPerDay);
+const SecondaryDoughnutChart = ({ goal, consumed, color }) => {
   const leftConsumed = calcRemainder(goal, consumed);
-  const consumedPercent = calcPercent(goal, consumed) + '%';
+  const consumedPercent = calcPercent(goal, consumed);
 
   const warning = consumed > goal;
 
@@ -31,7 +24,7 @@ const DoughnutChartForCarbonohidrates = () => {
     datasets: [
       {
         data: [consumed, leftConsumed >= 0 ? leftConsumed : 0],
-        backgroundColor: [`${warning ? '#E74A3B' : '#FFC4F7'}`, '#292928'],
+        backgroundColor: [`${warning ? '#E74A3B' : color}`, '#292928'],
         borderRadius: `${leftConsumed > 0 ? 12 : 0}`,
         borderWidth: 0,
         cutout: '80%',
@@ -49,7 +42,7 @@ const DoughnutChartForCarbonohidrates = () => {
 
   const textCenter = {
     id: 'textCenter',
-    beforeDatasetsDraw(chart, args, pluginOptions) {
+    beforeDatasetsDraw(chart) {
       const { ctx } = chart;
       const xCoor = chart.getDatasetMeta(0).data[0].x;
       const yCoor = chart.getDatasetMeta(0).data[0].y;
@@ -59,7 +52,7 @@ const DoughnutChartForCarbonohidrates = () => {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#B6B6B6';
-      ctx.fillText(consumedPercent, xCoor, yCoor);
+      ctx.fillText(consumedPercent + '%', xCoor, yCoor);
     },
   };
 
@@ -84,20 +77,17 @@ const DoughnutChartForCarbonohidrates = () => {
 
   if (warning) {
     notifyWarn(
-      'Maximum carbonohidrates consumption. If you continue to consume, you will not reach your goal'
+      'Maximum protein consumption. If you continue to consume, you will not reach your goal'
     );
   }
 
   return (
-    <>
-      <ToastContainer />
-      <Doughnut
-        data={data}
-        options={options}
-        plugins={[textCenter, backgroundCircle]}
-      />
-    </>
+    <Doughnut
+      data={data}
+      options={options}
+      plugins={[textCenter, backgroundCircle]}
+    />
   );
 };
 
-export default DoughnutChartForCarbonohidrates;
+export default SecondaryDoughnutChart;
