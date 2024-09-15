@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'redux/Auth/authSelectors';
 
-import { WATER_GOAL } from 'constants/constants';
 import { outNum } from 'helpers/outNum';
 
 import {
@@ -19,8 +18,10 @@ import img1 from 'images/bubble.png';
 import img2 from 'images/bubble@2x.png';
 import img3 from 'images/bottle.png';
 import img4 from 'images/bottle@2x.png';
+import { selectDailyWaterGoal } from 'redux/FoodIntake/foodIntakeSelectors';
 
 const BlockDailyGoal = () => {
+  const dailyWaterGoal = useSelector(selectDailyWaterGoal);
   const userInfo = useSelector(selectUser);
   const caloriesGoal = userInfo.BMR;
 
@@ -35,9 +36,9 @@ const BlockDailyGoal = () => {
 
   useEffect(() => {
     if (waterCounterRef.current) {
-      outNum(WATER_GOAL, waterCounterRef.current);
+      outNum(dailyWaterGoal, waterCounterRef.current);
     }
-  }, []);
+  }, [dailyWaterGoal]);
 
   return (
     <Wrapper>

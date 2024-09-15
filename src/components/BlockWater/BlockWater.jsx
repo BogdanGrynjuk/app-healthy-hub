@@ -1,8 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import { calcPercent, calcRemainder, calcSurplus } from 'helpers/calculations';
-import { WATER_GOAL } from 'constants/constants';
 
 import {
   Wrapper,
@@ -24,7 +21,13 @@ import AddWater from 'components/Modals/AddWater/addWater';
 
 import img1 from 'images/add.png';
 import img2 from 'images/add@2x.png';
-import { selectWaterIntake } from 'redux/FoodIntake/foodIntakeSelectors';
+import {
+  selectConsumedWaterAmount,
+  selectExceededWaterLimit,
+  selectWaterConsumptionPercentage,
+  selectWaterExcess,
+  selectWaterRemainingToGoal,
+} from 'redux/FoodIntake/foodIntakeSelectors';
 import { outNum } from 'helpers/outNum';
 import toastifyMessage from 'helpers/toastify';
 
@@ -36,32 +39,21 @@ const BlockWater = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-  const consumedWaterMl = useSelector(selectWaterIntake);
-
-  const consumedWaterPercent = useMemo(
-    () => calcPercent(WATER_GOAL, consumedWaterMl) + '%',
-    [consumedWaterMl]
+  const consumedWaterMl = useSelector(selectConsumedWaterAmount);
+  const waterConsumptionPercentage = useSelector(
+    selectWaterConsumptionPercentage
   );
-  const leftToConsumeWater = useMemo(
-    () => calcRemainder(WATER_GOAL, consumedWaterMl),
-    [consumedWaterMl]
-  );
-  const excessConsumptionWater = useMemo(
-    () => calcSurplus(WATER_GOAL, consumedWaterMl),
-    [consumedWaterMl]
-  );
-  const exceededWaterLimit = useMemo(
-    () => consumedWaterMl > WATER_GOAL,
-    [consumedWaterMl]
-  );
+  const waterRemainingToGoal = useSelector(selectWaterRemainingToGoal);
+  const waterExcess = useSelector(selectWaterExcess);
+  const exceededWaterLimit = useSelector(selectExceededWaterLimit);
 
   useEffect(() => {
     if (chartRef.current) {
       setTimeout(() => {
-        chartRef.current.style.height = consumedWaterPercent;
+        chartRef.current.style.height = waterConsumptionPercentage;
       }, 0);
     }
-  }, [consumedWaterMl, consumedWaterPercent]);
+  }, [consumedWaterMl, waterConsumptionPercentage]);
 
   useEffect(() => {
     if (counterRef.current) {
@@ -87,7 +79,7 @@ const BlockWater = () => {
           <Card>
             <WaterTracker>
               <CounterOfConsumedWaterInPercentage $warning={exceededWaterLimit}>
-                {consumedWaterPercent}
+                {waterConsumptionPercentage}
               </CounterOfConsumedWaterInPercentage>
               <Chart ref={chartRef} $warning={exceededWaterLimit} />
             </WaterTracker>
@@ -100,10 +92,7 @@ const BlockWater = () => {
                 </CounterOfConsumedWaterInMl>
                 <CounterOfWaterLeftToDrinkInMl $warning={exceededWaterLimit}>
                   <span>{exceededWaterLimit ? 'excess:' : 'left:'}</span>{' '}
-                  {exceededWaterLimit
-                    ? excessConsumptionWater
-                    : leftToConsumeWater}{' '}
-                  ml
+                  {exceededWaterLimit ? waterExcess : waterRemainingToGoal} ml
                 </CounterOfWaterLeftToDrinkInMl>
               </CounterList>
               <Btn type="button" onClick={toggleModal}>

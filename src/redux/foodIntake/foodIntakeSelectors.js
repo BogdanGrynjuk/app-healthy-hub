@@ -1,8 +1,41 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { calcNutrientGoal, calcStatistics } from 'helpers/calculations';
+import {
+  calcDailyWaterIntake,
+  calcNutrientGoal,
+  calcPercent,
+  calcRemainder,
+  calcStatistics,
+  calcSurplus,
+} from 'helpers/calculations';
 
-export const selectWaterIntake = state => state.foodIntake?.waterIntake || 0;
+export const selectDailyWaterGoal = createSelector(
+  [state => state.auth.user.weight],
+  weight => calcDailyWaterIntake(weight)
+);
+
+export const selectConsumedWaterAmount = state =>
+  state.foodIntake?.waterIntake || 0;
+
+export const selectWaterConsumptionPercentage = createSelector(
+  [selectDailyWaterGoal, selectConsumedWaterAmount],
+  (waterGoal, consumedWaterMl) => calcPercent(waterGoal, consumedWaterMl) + '%'
+);
+
+export const selectWaterRemainingToGoal = createSelector(
+  [selectDailyWaterGoal, selectConsumedWaterAmount],
+  (waterGoal, consumedWaterMl) => calcRemainder(waterGoal, consumedWaterMl)
+);
+
+export const selectWaterExcess = createSelector(
+  [selectDailyWaterGoal, selectConsumedWaterAmount],
+  (waterGoal, consumedWaterMl) => calcSurplus(waterGoal, consumedWaterMl)
+);
+
+export const selectExceededWaterLimit = createSelector(
+  [selectDailyWaterGoal, selectConsumedWaterAmount],
+  (waterGoal, consumedWaterMl) => consumedWaterMl > waterGoal
+);
 
 // export const selectNutrientSums = createSelector(
 //   state => state.foodIntake.items,

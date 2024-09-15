@@ -1,4 +1,11 @@
-import { NUTRITION_GOAL_MAP } from 'constants/constants';
+import {
+  NUTRITION_GOAL_MAP,
+  WATER_CONSUMPTION_RATE_ML_PER_KG,
+} from 'constants/constants';
+
+export const calcDailyWaterIntake = weight => {
+  return weight * WATER_CONSUMPTION_RATE_ML_PER_KG;
+};
 
 export const calcNutrientGoal = (BMR, goal) => {
   const { protein: proteinPercentage, fat: fatPercentage } =
