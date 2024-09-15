@@ -1,31 +1,42 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { calcRemainder, calcPercent } from 'helpers/calculations';
+import toastifyMessage from 'helpers/toastify';
+import { useEffect, useRef } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const SecondaryDoughnutChart = ({ goal, consumed, color }) => {
-  const leftConsumed = calcRemainder(goal, consumed);
-  const consumedPercent = calcPercent(goal, consumed);
+const SecondaryDoughnutChart = ({
+  nameNutrient,
+  nutrient,
+  colorDoughnutChart,
+}) => {
+  const {
+    consumedAmount,
+    remainingAmount,
+    consumptionPercentage,
+    isGoalExceeded,
+  } = nutrient;
+  const hasNotified = useRef(false);
 
-  const warning = consumed > goal;
-
-  const notifyWarn = message => {
-    toast.error(message, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: 'dark',
-      autoClose: 3000,
-    });
-  };
+  useEffect(() => {
+    if (isGoalExceeded && !hasNotified.current) {
+      toastifyMessage(
+        'warn',
+        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
+      );
+      hasNotified.current = true;
+    }
+  }, [isGoalExceeded, nameNutrient]);
 
   const data = {
     datasets: [
       {
-        data: [consumed, leftConsumed >= 0 ? leftConsumed : 0],
-        backgroundColor: [`${warning ? '#E74A3B' : color}`, '#292928'],
-        borderRadius: `${leftConsumed > 0 ? 12 : 0}`,
+        data: [consumedAmount, remainingAmount >= 0 ? remainingAmount : 0],
+        backgroundColor: [
+          `${isGoalExceeded ? '#E74A3B' : colorDoughnutChart}`,
+          '#292928',
+        ],
+        borderRadius: `${remainingAmount > 0 ? 12 : 0}`,
         borderWidth: 0,
         cutout: '80%',
       },
@@ -44,15 +55,15 @@ const SecondaryDoughnutChart = ({ goal, consumed, color }) => {
     id: 'textCenter',
     beforeDatasetsDraw(chart) {
       const { ctx } = chart;
-      const xCoor = chart.getDatasetMeta(0).data[0].x;
-      const yCoor = chart.getDatasetMeta(0).data[0].y;
+      const xCoord = chart.getDatasetMeta(0).data[0].x;
+      const yCoord = chart.getDatasetMeta(0).data[0].y;
 
       ctx.save();
       ctx.font = `400 12px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#B6B6B6';
-      ctx.fillText(consumedPercent + '%', xCoor, yCoor);
+      ctx.fillText(consumptionPercentage + '%', xCoord, yCoord);
     },
   };
 
@@ -61,8 +72,8 @@ const SecondaryDoughnutChart = ({ goal, consumed, color }) => {
     beforeDatasetsDraw(chart) {
       const { ctx } = chart;
       ctx.save();
-      const xCoor = chart.getDatasetMeta(0).data[0].x;
-      const yCoor = chart.getDatasetMeta(0).data[0].y;
+      const xCoord = chart.getDatasetMeta(0).data[0].x;
+      const yCoord = chart.getDatasetMeta(0).data[0].y;
       const innerRadius = chart.getDatasetMeta(0).data[0].innerRadius;
       const outerRadius = chart.getDatasetMeta(0).data[0].outerRadius;
       const width = outerRadius - innerRadius;
@@ -70,16 +81,10 @@ const SecondaryDoughnutChart = ({ goal, consumed, color }) => {
       ctx.beginPath();
       ctx.lineWidth = width;
       ctx.strokeStyle = 'rgba(41, 41, 40, 1)';
-      ctx.arc(xCoor, yCoor, outerRadius - width / 2, 0, angle * 360, false);
+      ctx.arc(xCoord, yCoord, outerRadius - width / 2, 0, angle * 360, false);
       ctx.stroke();
     },
   };
-
-  if (warning) {
-    notifyWarn(
-      'Maximum protein consumption. If you continue to consume, you will not reach your goal'
-    );
-  }
 
   return (
     <Doughnut

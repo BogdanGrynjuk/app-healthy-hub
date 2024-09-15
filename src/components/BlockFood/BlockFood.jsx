@@ -1,49 +1,16 @@
 import { useSelector } from 'react-redux';
-import { selectFoodStatistics } from 'redux/foodIntake/foodIntakeSelectors';
+import { selectFoodStatistics } from 'redux/FoodIntake/foodIntakeSelectors';
 
 import {
   Wrapper,
   Title,
   InfoBox,
-  MainChartBox,
-  CardList,
-  Card,
   ChartBox,
-  CardText,
-  CardTitle,
-  CounterList,
-  Counter,
+  NutrientList,
 } from './BlockFood.styled';
 
-import { calcRemainder, calcSurplus } from 'helpers/calculations';
 import MainDoughnutChart from 'components/Charts/MainDoughnutChart';
-import SecondaryDoughnutChart from 'components/Charts/SecondaryDoughnutChart';
-
-const MacroCard = ({ title, goal, consumed, doughnutChart }) => {
-  const leftConsumed = calcRemainder(goal, consumed);
-  const excessConsumption = calcSurplus(goal, consumed);
-  const exceededLimit = consumed > goal;
-
-  return (
-    <Card>
-      <ChartBox>{doughnutChart}</ChartBox>
-      <CardText>
-        <CardTitle>{title}</CardTitle>
-        <CounterList>
-          <Counter>
-            Goal: <span>{goal}</span>
-          </Counter>
-          <Counter>
-            {exceededLimit ? 'excess:' : 'left:'}{' '}
-            <span style={{ color: exceededLimit ? '#E74A3B' : 'inherit' }}>
-              {exceededLimit ? excessConsumption : leftConsumed}
-            </span>
-          </Counter>
-        </CounterList>
-      </CardText>
-    </Card>
-  );
-};
+import NutrientInfoCard from 'components/NutrientInfoCard';
 
 const BlockFood = () => {
   const { Calories, Carbohydrates, Fat, Protein } =
@@ -53,50 +20,30 @@ const BlockFood = () => {
     <Wrapper>
       <Title>Food</Title>
       <InfoBox>
-        <MainChartBox>
+        <ChartBox>
           <MainDoughnutChart
-            consumed={Calories.consumed}
-            goal={Calories.goal}
+            nameNutrient="Calories"
+            nutrient={Calories}
+            colorDoughnutChart={'#45FFBC'}
           />
-        </MainChartBox>
-        <CardList>
-          <MacroCard
+        </ChartBox>
+        <NutrientList>
+          <NutrientInfoCard
             title="Carbohydrates"
-            goal={Carbohydrates.goal}
-            consumed={Carbohydrates.consumed}
-            doughnutChart={
-              <SecondaryDoughnutChart
-                color={'#FFC4F7'}
-                goal={Protein.goal}
-                consumed={Protein.consumed}
-              />
-            }
+            nutrient={Carbohydrates}
+            colorDoughnutChart={'#FFC4F7'}
           />
-          <MacroCard
+          <NutrientInfoCard
             title="Protein"
-            goal={Protein.goal}
-            consumed={Protein.consumed}
-            doughnutChart={
-              <SecondaryDoughnutChart
-                color={'#FFF3B7'}
-                goal={Protein.goal}
-                consumed={Protein.consumed}
-              />
-            }
+            nutrient={Protein}
+            colorDoughnutChart={'#FFF3B7'}
           />
-          <MacroCard
+          <NutrientInfoCard
             title="Fat"
-            goal={Fat.goal}
-            consumed={Fat.consumed}
-            doughnutChart={
-              <SecondaryDoughnutChart
-                color={'#B6B6B6'}
-                goal={Protein.goal}
-                consumed={Protein.consumed}
-              />
-            }
+            nutrient={Fat}
+            colorDoughnutChart={'#B6B6B6'}
           />
-        </CardList>
+        </NutrientList>
       </InfoBox>
     </Wrapper>
   );

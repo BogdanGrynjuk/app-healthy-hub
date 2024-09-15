@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { calcPercent, calcRemainder, calcSurplus } from 'helpers/calculations';
 import { WATER_GOAL } from 'constants/constants';
@@ -25,7 +24,7 @@ import AddWater from 'components/Modals/AddWater/addWater';
 
 import img1 from 'images/add.png';
 import img2 from 'images/add@2x.png';
-import { selectWaterIntake } from 'redux/foodIntake/foodIntakeSelectors';
+import { selectWaterIntake } from 'redux/FoodIntake/foodIntakeSelectors';
 import { outNum } from 'helpers/outNum';
 import toastifyMessage from 'helpers/toastify';
 
@@ -87,7 +86,6 @@ const BlockWater = () => {
         <InfoBox>
           <Card>
             <WaterTracker>
-              {/* лічильник спожитої води у відсотках */}
               <CounterOfConsumedWaterInPercentage $warning={exceededWaterLimit}>
                 {consumedWaterPercent}
               </CounterOfConsumedWaterInPercentage>
@@ -96,12 +94,10 @@ const BlockWater = () => {
             <CardText>
               <CardTitle>Water consumption</CardTitle>
               <CounterList>
-                {/* лічильник випитої води у мл */}
                 <CounterOfConsumedWaterInMl>
                   <span ref={counterRef}>{consumedWaterMl}</span>
                   ml
                 </CounterOfConsumedWaterInMl>
-                {/* лічильник води, що залишилось випити у мл */}
                 <CounterOfWaterLeftToDrinkInMl $warning={exceededWaterLimit}>
                   <span>{exceededWaterLimit ? 'excess:' : 'left:'}</span>{' '}
                   {exceededWaterLimit
@@ -110,7 +106,6 @@ const BlockWater = () => {
                   ml
                 </CounterOfWaterLeftToDrinkInMl>
               </CounterList>
-              {/* кнопка, що відкриває модальне вікно додати воду */}
               <Btn type="button" onClick={toggleModal}>
                 <img
                   srcSet={`${img1} 1x, ${img2} 2x`}
@@ -124,7 +119,6 @@ const BlockWater = () => {
             </CardText>
           </Card>
         </InfoBox>
-
         {isModalOpen && <AddWater onClose={toggleModal} />}
       </Wrapper>
     </>

@@ -1,24 +1,8 @@
-export const calculateNutrientGoal = (BMR, goal) => {
-  let proteinPercentage, fatPercentage;
+import { NUTRITION_GOAL_MAP } from 'constants/constants';
 
-  switch (goal) {
-    case 'Lose fat':
-      proteinPercentage = 0.25;
-      fatPercentage = 0.2;
-      break;
-    case 'Gain Muscle':
-      proteinPercentage = 0.3;
-      fatPercentage = 0.2;
-      break;
-    case 'Maintain':
-      proteinPercentage = 0.2;
-      fatPercentage = 0.25;
-      break;
-    default:
-      proteinPercentage = 0.25;
-      fatPercentage = 0.2;
-  }
-
+export const calcNutrientGoal = (BMR, goal) => {
+  const { protein: proteinPercentage, fat: fatPercentage } =
+    NUTRITION_GOAL_MAP[goal];
   const carbsPercentage = 1 - (proteinPercentage + fatPercentage);
 
   const carbsGoal = Math.round((carbsPercentage * BMR) / 4);
@@ -42,3 +26,12 @@ export const calcSurplus = (goal, consumed) => {
   const res = 0 - calcRemainder(goal, consumed);
   return res;
 };
+
+export const calcStatistics = (goal, consumed) => ({
+  consumptionGoal: goal,
+  consumedAmount: consumed,
+  remainingAmount: calcRemainder(goal, consumed),
+  consumptionPercentage: calcPercent(goal, consumed),
+  excessAmount: calcSurplus(goal, consumed),
+  isGoalExceeded: goal < consumed,
+});

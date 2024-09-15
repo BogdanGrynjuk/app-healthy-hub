@@ -1,32 +1,35 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { calcRemainder } from 'helpers/calculations';
+import toastifyMessage from 'helpers/toastify';
+import { useEffect, useRef } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const MainDoughnutChart = ({ goal, consumed }) => {
-  const leftConsumed = calcRemainder(goal, consumed);
+const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
+  const { consumedAmount, remainingAmount, isGoalExceeded } = nutrient;
+  const hasNotified = useRef(false);
 
-  const warning = consumed > goal;
-
-  const notifyWarn = message => {
-    toast.error(message, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: 'dark',
-      autoClose: 3000,
-    });
-  };
+  useEffect(() => {
+    if (isGoalExceeded && !hasNotified.current) {
+      toastifyMessage(
+        'warn',
+        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
+      );
+      hasNotified.current = true;
+    }
+  }, [isGoalExceeded, nameNutrient]);
 
   const data = {
     labels: ['Consumed:', 'Left:'],
     datasets: [
       {
-        data: [consumed, leftConsumed >= 0 ? leftConsumed : 0],
-        backgroundColor: [`${warning ? '#E74A3B' : '#45FFBC'}`, '#292928'],
+        data: [consumedAmount, remainingAmount >= 0 ? remainingAmount : 0],
+        backgroundColor: [
+          `${isGoalExceeded ? '#E74A3B' : colorDoughnutChart}`,
+          '#292928',
+        ],
         borderColor: ['rgba(69, 255, 188, 0)'],
-        borderRadius: `${leftConsumed > 0 ? 12 : 0}`,
+        borderRadius: `${remainingAmount > 0 ? 12 : 0}`,
         borderWidth: 0,
         cutout: '80%',
       },
@@ -45,19 +48,19 @@ const MainDoughnutChart = ({ goal, consumed }) => {
     id: 'textCenter',
     beforeDatasetsDraw(chart) {
       const { ctx, data } = chart;
-      const xCoor = chart.getDatasetMeta(0).data[0].x;
-      const yCoor = chart.getDatasetMeta(0).data[0].y;
+      const xCoord = chart.getDatasetMeta(0).data[0].x;
+      const yCoord = chart.getDatasetMeta(0).data[0].y;
 
       ctx.save();
       ctx.font = `500 32px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillStyle = `${warning ? '#E74A3B' : '#FFFFFF'}`;
-      ctx.fillText(data.datasets[0].data[0], xCoor, yCoor - 5);
+      ctx.fillStyle = `${isGoalExceeded ? '#E74A3B' : '#FFFFFF'}`;
+      ctx.fillText(data.datasets[0].data[0], xCoord, yCoord - 5);
 
       ctx.font = `400 14px sans-serif`;
       ctx.fillStyle = '#B6B6B6';
-      ctx.fillText('calories', xCoor, yCoor + 20);
+      ctx.fillText('calories', xCoord, yCoord + 20);
     },
   };
 
@@ -66,8 +69,8 @@ const MainDoughnutChart = ({ goal, consumed }) => {
     beforeDatasetsDraw(chart) {
       const { ctx } = chart;
       ctx.save();
-      const xCoor = chart.getDatasetMeta(0).data[0].x;
-      const yCoor = chart.getDatasetMeta(0).data[0].y;
+      const xCoord = chart.getDatasetMeta(0).data[0].x;
+      const yCoord = chart.getDatasetMeta(0).data[0].y;
       const innerRadius = chart.getDatasetMeta(0).data[0].innerRadius;
       const outerRadius = chart.getDatasetMeta(0).data[0].outerRadius;
       const width = outerRadius - innerRadius;
@@ -75,16 +78,10 @@ const MainDoughnutChart = ({ goal, consumed }) => {
       ctx.beginPath();
       ctx.lineWidth = width;
       ctx.strokeStyle = 'rgba(41, 41, 40, 1)';
-      ctx.arc(xCoor, yCoor, outerRadius - width / 2, 0, angle * 360, false);
+      ctx.arc(xCoord, yCoord, outerRadius - width / 2, 0, angle * 360, false);
       ctx.stroke();
     },
   };
-
-  if (warning) {
-    notifyWarn(
-      'Maximum calories consumption. If you continue to consume, you will not reach your goal'
-    );
-  }
 
   return (
     <Doughnut

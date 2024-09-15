@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createPortal } from 'react-dom';
 import { Formik } from 'formik';
 
-import { postMyWaterIntake } from 'redux/foodIntake/foodIntake.Operations';
+import { postMyWaterIntake } from 'redux/FoodIntake/foodIntake.Operations';
 import validationSchemaForWater from 'validationSchemas/validationSchemaForWater';
 
 import {
@@ -34,8 +34,9 @@ const AddWater = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = async values => {
+  const handleSubmit = values => {
     dispatch(postMyWaterIntake({ volume: Number(values.water) }));
+    onClose();
   };
 
   useEffect(() => {
@@ -61,7 +62,6 @@ const AddWater = ({ onClose }) => {
             <Label htmlFor="water">How much water</Label>
             <Input name="water" type="number" placeholder="Enter milliliters" />
             <ErrorMes name="water" component="div" />
-
             <Button type="submit">Confirm</Button>
             <ButtonCancel type="button" onClick={onClose}>
               Cancel

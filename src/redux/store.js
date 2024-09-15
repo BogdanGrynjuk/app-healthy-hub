@@ -13,7 +13,7 @@ import { authReducer } from './Auth/authSlice';
 import { statsReducer } from './Statistics/statisticsSlice';
 import { waterReducer } from './Water/waterSlice';
 import { foodsReducer } from './Foods/foodsSlice';
-import { foodIntakeReducer } from './foodIntake/foodIntakeSlice';
+import { foodIntakeReducer } from './FoodIntake/foodIntakeSlice';
 
 const persistConfig = {
   key: 'auth',

@@ -1,8 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { calculateNutrientGoal } from 'helpers/calculations';
-
-// import { calculateNutrientGoal } from '@/utils/calculateNutrientGoal';
+import { calcNutrientGoal, calcStatistics } from 'helpers/calculations';
 
 export const selectWaterIntake = state => state.foodIntake?.waterIntake || 0;
 
@@ -41,38 +39,24 @@ export const selectFoodStatistics = createSelector(
   ],
   (items, BMR, userGoal) => {
     const { caloriesFact, carbsFact, proteinFact, fatFact } = items.reduce(
-      (accumulator, { carbohydrates, protein, fat, calories }) => {
-        accumulator.caloriesFact += calories;
-        accumulator.carbsFact += carbohydrates;
-        accumulator.proteinFact += protein;
-        accumulator.fatFact += fat;
-        return accumulator;
+      (acc, { carbohydrates, protein, fat, calories }) => {
+        acc.caloriesFact += calories;
+        acc.carbsFact += carbohydrates;
+        acc.proteinFact += protein;
+        acc.fatFact += fat;
+        return acc;
       },
       { caloriesFact: 0, carbsFact: 0, proteinFact: 0, fatFact: 0 }
     );
 
-    const { carbsGoal, proteinGoal, fatGoal } = calculateNutrientGoal(
-      BMR,
-      userGoal
-    );
+    const caloriesGoal = BMR;
+    const { carbsGoal, proteinGoal, fatGoal } = calcNutrientGoal(BMR, userGoal);
 
     return {
-      Calories: {
-        consumed: caloriesFact,
-        goal: BMR,
-      },
-      Carbohydrates: {
-        consumed: carbsFact,
-        goal: carbsGoal,
-      },
-      Protein: {
-        consumed: proteinFact,
-        goal: proteinGoal,
-      },
-      Fat: {
-        consumed: fatFact,
-        goal: fatGoal,
-      },
+      Calories: calcStatistics(caloriesGoal, caloriesFact),
+      Carbohydrates: calcStatistics(carbsGoal, carbsFact),
+      Protein: calcStatistics(proteinGoal, proteinFact),
+      Fat: calcStatistics(fatGoal, fatFact),
     };
   }
 );
