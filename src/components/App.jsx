@@ -9,7 +9,7 @@ import { refresh } from 'redux/Auth/authOperations';
 import Loader from './Loader/Loader';
 import { APP_STATUS } from 'constants/appStatus';
 import { updateAppStatus } from 'redux/Auth/authSlice';
-import { resetFoodIntakeState } from 'redux/FoodIntake/foodIntakeSlice';
+import { resetFoodIntakeState } from 'redux/foodIntake/foodIntakeSlice';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage'));
 const SignUpPage = lazy(() => import('../pages/SignUpPage'));

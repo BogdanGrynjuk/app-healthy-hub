@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { getMyFoodIntake } from '../FoodIntake/foodIntake.Operations';
+import { getMyFoodIntake } from '../foodIntake/foodIntake.Operations';
 
 import {
   axiosAuth,

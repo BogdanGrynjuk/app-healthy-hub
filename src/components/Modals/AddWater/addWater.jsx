@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createPortal } from 'react-dom';
 import { Formik } from 'formik';
 
-import { postMyWaterIntake } from 'redux/FoodIntake/foodIntake.Operations';
+import { postMyWaterIntake } from 'redux/foodIntake/foodIntake.Operations';
 import validationSchemaForWater from 'validationSchemas/validationSchemaForWater';
 
 import {

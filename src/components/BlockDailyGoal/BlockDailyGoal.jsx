@@ -18,7 +18,7 @@ import img1 from 'images/bubble.png';
 import img2 from 'images/bubble@2x.png';
 import img3 from 'images/bottle.png';
 import img4 from 'images/bottle@2x.png';
-import { selectDailyWaterGoal } from 'redux/FoodIntake/foodIntakeSelectors';
+import { selectDailyWaterGoal } from 'redux/foodIntake/foodIntakeSelectors';
 
 const BlockDailyGoal = () => {
   const dailyWaterGoal = useSelector(selectDailyWaterGoal);

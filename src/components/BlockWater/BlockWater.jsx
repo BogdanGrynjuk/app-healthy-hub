@@ -27,7 +27,7 @@ import {
   selectWaterConsumptionPercentage,
   selectWaterExcess,
   selectWaterRemainingToGoal,
-} from 'redux/FoodIntake/foodIntakeSelectors';
+} from 'redux/foodIntake/foodIntakeSelectors';
 import { outNum } from 'helpers/outNum';
 import toastifyMessage from 'helpers/toastify';
 
