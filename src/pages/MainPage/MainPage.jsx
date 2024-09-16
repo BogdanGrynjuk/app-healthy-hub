@@ -4,20 +4,16 @@ import {
   HeaderMainPage,
   TitlePage,
   LinkToDashboard,
-  TrackerList,
-  Tracker,
   Wrapper,
 } from './MainPage.styled';
 
-// import DiaryOnMain from 'components/DiaryOnMain';
 // import RecommendedFoodOnMain from 'components/RecommendedFoodOnMain';
 
 import img1 from 'images/arrow-right.png';
 import img2 from 'images/arrow-right@2x.png';
 
 import SectionDailyConsumptionSummary from 'components/SectionDailyConsumptionSummary';
-// import { selectStatsIsLoading } from 'redux/Statistics/statisticsSelectors';
-// import Loader from 'components/Loader';
+import SectionDiary from 'components/SectionDiary';
 
 const MainPage = () => {
   return (
@@ -40,7 +36,7 @@ const MainPage = () => {
         <SectionDailyConsumptionSummary />
 
         <Wrapper>
-          {/* <DiaryOnMain /> */}
+          <SectionDiary />
           {/* <RecommendedFoodOnMain /> */}
         </Wrapper>
       </Content>

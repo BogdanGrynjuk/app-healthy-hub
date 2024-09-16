@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const CardWrap = styled.li`
-  @media screen and (${ p => p.theme.mq.tablet}) {
+export const Container = styled.div`
+  @media screen and (${p => p.theme.mq.tablet}) {
     display: flex;
     column-gap: 8px;
     align-items: center;
@@ -14,11 +14,10 @@ export const TitleWrap = styled.div`
   align-items: center;
   column-gap: 12px;
   margin-bottom: 8px;
-
   color: ${props => props.theme.colors.white};
-  font-family: ${props => props.theme.fontFamily.poppins};  
+  font-family: ${props => props.theme.fontFamily.poppins};
 
-  @media screen and (${ p => p.theme.mq.tablet}) {
+  @media screen and (${p => p.theme.mq.tablet}) {
     margin-bottom: 0px;
   }
 `;
@@ -29,7 +28,7 @@ export const Title = styled.h3`
   line-height: 24px;
 `;
 
-export const InfoWrap = styled.div`
+export const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
@@ -39,21 +38,21 @@ export const InfoWrap = styled.div`
   font-weight: ${p => p.theme.fontWeights.regular};
   line-height: 20px;
 
-  @media screen and (${ p => p.theme.mq.tablet}) {
+  @media screen and (${p => p.theme.mq.tablet}) {
     flex-direction: row;
     column-gap: 20px;
   }
 `;
 
-export const CarbonohidratesWrap = styled.p`
+export const Carbohydrates = styled.p`
   min-width: 190px;
 `;
 
-export const ProteinWrap = styled.p`
+export const Protein = styled.p`
   width: 110px;
 `;
 
-export const FatWrap = styled.p`
+export const Fat = styled.p`
   width: 60px;
 `;
 

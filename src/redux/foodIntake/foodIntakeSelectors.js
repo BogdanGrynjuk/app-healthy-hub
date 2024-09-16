@@ -37,32 +37,31 @@ export const selectExceededWaterLimit = createSelector(
   (waterGoal, consumedWaterMl) => consumedWaterMl > waterGoal
 );
 
-// export const selectNutrientSums = createSelector(
-//   state => state.foodIntake.items,
-//   foodIntakes => {
-//     const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+export const selectNutrientSums = createSelector(
+  [state => state.foodIntake.items],
+  foodIntakeItems => {
+    const mealCategories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
-//     const mealSumsArray = mealTypes.map(mealType => ({
-//       mealType,
-//       carbonohidrates: 0,
-//       protein: 0,
-//       fat: 0,
-//     }));
+    const nutrientSums = mealCategories.map(category => ({
+      mealType: category,
+      carbohydrates: 0,
+      protein: 0,
+      fat: 0,
+    }));
 
-//     foodIntakes.forEach(item => {
-//       const { mealType, carbonohidrates, protein, fat } = item;
+    foodIntakeItems.forEach(item => {
+      const { mealType, carbohydrates, protein, fat } = item;
+      const mealIndex = mealCategories.indexOf(mealType);
+      if (mealIndex !== -1) {
+        nutrientSums[mealIndex].carbohydrates += carbohydrates;
+        nutrientSums[mealIndex].protein += protein;
+        nutrientSums[mealIndex].fat += fat;
+      }
+    });
 
-//       const index = mealTypes.indexOf(mealType);
-//       if (index !== -1) {
-//         mealSumsArray[index].carbonohidrates += carbonohidrates;
-//         mealSumsArray[index].protein += protein;
-//         mealSumsArray[index].fat += fat;
-//       }
-//     });
-//     // console.log(mealSumsArray);
-//     return mealSumsArray;
-//   }
-// );
+    return nutrientSums;
+  }
+);
 
 export const selectFoodStatistics = createSelector(
   [
