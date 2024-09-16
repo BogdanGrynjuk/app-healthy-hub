@@ -1,23 +1,15 @@
+import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import toastifyMessage from 'helpers/toastify';
-import { useEffect, useRef } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
-  const { consumedAmount, remainingAmount, isGoalExceeded } = nutrient;
   const hasNotified = useRef(false);
 
-  useEffect(() => {
-    if (isGoalExceeded && !hasNotified.current) {
-      toastifyMessage(
-        'warn',
-        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
-      );
-      hasNotified.current = true;
-    }
-  }, [isGoalExceeded, nameNutrient]);
+  const { consumedAmount, remainingAmount, isGoalExceeded } = nutrient;
 
   const data = {
     labels: ['Consumed:', 'Left:'],
@@ -83,6 +75,16 @@ const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
     },
   };
 
+  useEffect(() => {
+    if (isGoalExceeded && !hasNotified.current) {
+      toastifyMessage(
+        'warn',
+        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
+      );
+      hasNotified.current = true;
+    }
+  }, [isGoalExceeded, nameNutrient]);
+
   return (
     <Doughnut
       data={data}
@@ -90,6 +92,16 @@ const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
       plugins={[textCenter, backgroundCircle]}
     />
   );
+};
+
+MainDoughnutChart.propTypes = {
+  nameNutrient: PropTypes.string.isRequired,
+  nutrient: PropTypes.shape({
+    consumedAmount: PropTypes.number.isRequired,
+    remainingAmount: PropTypes.number.isRequired,
+    isGoalExceeded: PropTypes.bool.isRequired,
+  }).isRequired,
+  colorDoughnutChart: PropTypes.string.isRequired,
 };
 
 export default MainDoughnutChart;

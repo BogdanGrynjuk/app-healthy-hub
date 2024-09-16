@@ -1,5 +1,3 @@
-export const WATER_GOAL = 1500;
-
 export const WATER_CONSUMPTION_RATE_ML_PER_KG = 30;
 
 export const NUTRITION_GOAL_MAP = {

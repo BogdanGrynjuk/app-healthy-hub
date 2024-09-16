@@ -4,7 +4,9 @@ import {
 } from 'constants/constants';
 
 export const calcDailyWaterIntake = weight => {
-  return weight * WATER_CONSUMPTION_RATE_ML_PER_KG;
+  const intake = weight * WATER_CONSUMPTION_RATE_ML_PER_KG;
+  const roundedIntake = Math.round(intake / 10) * 10;
+  return roundedIntake;
 };
 
 export const calcNutrientGoal = (BMR, goal) => {

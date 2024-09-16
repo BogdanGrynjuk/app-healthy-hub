@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import SecondaryDoughnutChart from 'components/Charts/SecondaryDoughnutChart';
 import {
   Wrapper,
@@ -38,6 +39,17 @@ const NutrientInfoCard = ({ title, nutrient, colorDoughnutChart }) => {
       </TextBox>
     </Wrapper>
   );
+};
+
+NutrientInfoCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  nutrient: PropTypes.shape({
+    consumptionGoal: PropTypes.number.isRequired,
+    remainingAmount: PropTypes.number.isRequired,
+    excessAmount: PropTypes.number.isRequired,
+    isGoalExceeded: PropTypes.bool.isRequired,
+  }).isRequired,
+  colorDoughnutChart: PropTypes.string.isRequired,
 };
 
 export default NutrientInfoCard;
