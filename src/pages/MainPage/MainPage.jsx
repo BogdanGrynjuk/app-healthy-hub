@@ -9,16 +9,13 @@ import {
   Wrapper,
 } from './MainPage.styled';
 
-// import DailyGoal from 'components/BlockDailyGoal';
-// import Water from 'components/Water';
-import BlockFood from 'components/BlockFood';
 // import DiaryOnMain from 'components/DiaryOnMain';
 // import RecommendedFoodOnMain from 'components/RecommendedFoodOnMain';
 
 import img1 from 'images/arrow-right.png';
 import img2 from 'images/arrow-right@2x.png';
-import BlockDailyGoal from 'components/BlockDailyGoal';
-import BlockWater from 'components/BlockWater';
+
+import SectionDailyConsumptionSummary from 'components/SectionDailyConsumptionSummary';
 // import { selectStatsIsLoading } from 'redux/Statistics/statisticsSelectors';
 // import Loader from 'components/Loader';
 
@@ -40,17 +37,7 @@ const MainPage = () => {
           </LinkToDashboard>
         </HeaderMainPage>
 
-        <TrackerList>
-          <Tracker>
-            <BlockDailyGoal />
-          </Tracker>
-          <Tracker>
-            <BlockWater />
-          </Tracker>
-          <Tracker>
-            <BlockFood />
-          </Tracker>
-        </TrackerList>
+        <SectionDailyConsumptionSummary />
 
         <Wrapper>
           {/* <DiaryOnMain /> */}
