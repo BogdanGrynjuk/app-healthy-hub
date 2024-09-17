@@ -1,17 +1,16 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
   Value,
   ProductName,
   ProductDescription,
   Img,
   ImgThumb,
-  ProductCard
-} from "./CardRecommendedProduct.styled";
+  ProductCard,
+} from './CardRecommendedProduct.styled';
 
-const CardRecommendedProduct = ({ id, img, name, amount, calories }) => {
-  
+const CardRecommendedProduct = ({ img, name, amount, calories }) => {
   return (
-    <ProductCard key={id}>
+    <ProductCard>
       <ImgThumb>
         <Img src={img} alt={name} />
       </ImgThumb>
@@ -27,11 +26,10 @@ const CardRecommendedProduct = ({ id, img, name, amount, calories }) => {
 };
 
 CardRecommendedProduct.propTypes = {
-  id: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   amount: PropTypes.string.isRequired,
   calories: PropTypes.number.isRequired,
-}
+};
 
 export default CardRecommendedProduct;

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import { axiosAuth } from './network';
 
 export const getRecommendedFood = async () => {
   try {
-    const { data } = await axios.get('/api/user/recommended-food', {
+    const { data } = await axiosAuth.get('/user/recomended-food', {
       headers: {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',

@@ -28,6 +28,7 @@ export const SectionTitle = styled.h2`
 `;
 
 export const LinkToDiaryPage = styled(Link)`
+  padding: 0;
   color: ${props => props.theme.colors.gray};
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${p => p.theme.fontSizes.xs};

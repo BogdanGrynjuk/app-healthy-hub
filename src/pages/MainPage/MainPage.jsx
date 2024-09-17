@@ -7,13 +7,12 @@ import {
   Wrapper,
 } from './MainPage.styled';
 
-// import RecommendedFoodOnMain from 'components/RecommendedFoodOnMain';
-
 import img1 from 'images/arrow-right.png';
 import img2 from 'images/arrow-right@2x.png';
 
 import SectionDailyConsumptionSummary from 'components/SectionDailyConsumptionSummary';
 import SectionDiary from 'components/SectionDiary';
+import SectionRecommendedFood from 'components/SectionRecommendedFood';
 
 const MainPage = () => {
   return (
@@ -37,7 +36,7 @@ const MainPage = () => {
 
         <Wrapper>
           <SectionDiary />
-          {/* <RecommendedFoodOnMain /> */}
+          <SectionRecommendedFood />
         </Wrapper>
       </Content>
     </Container>

@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const RecommendedFoodSection = styled.div`
-
-  @media screen and (${ p => p.theme.mq.desktop}) {
+export const Section = styled.div`
+  @media screen and (${p => p.theme.mq.desktop}) {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
   }
 `;
 
-export const TitleSection = styled.h2`
+export const SectionTitle = styled.h2`
   margin-bottom: 16px;
   font-family: ${props => props.theme.fontFamily.poppins};
   color: ${props => props.theme.colors.white};
@@ -24,19 +23,7 @@ export const TitleSection = styled.h2`
   }
 `;
 
-export const RecommendedFoodList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-
-  @media screen and (${props => props.theme.mq.tablet}) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-`;
-
-export const SeeMoreButton = styled(Link)`
+export const ButtonSeeMore = styled(Link)`
   margin-top: 16px;
   display: flex;
   align-items: center;

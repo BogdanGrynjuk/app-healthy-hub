@@ -22,6 +22,7 @@ export const signUp = createAsyncThunk(
       if (error instanceof AxiosError && error.response.data.details) {
         toastifyMessage('error', error.response.data.details);
       }
+      console.log(error.response.data.message);
       return rejectWithValue(error.response.data.details);
     }
   }
@@ -38,6 +39,7 @@ export const signIn = createAsyncThunk(
       if (error instanceof AxiosError && error.response.data.message) {
         toastifyMessage('error', error.response.data.message);
       }
+      console.log(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -66,6 +68,7 @@ export const refresh = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
       );
       return thunkAPI.rejectWithValue('Session expired');
     }
+    console.log(error.response.data.message);
     return thunkAPI.rejectWithValue(
       error.response?.data?.message || error.message
     );

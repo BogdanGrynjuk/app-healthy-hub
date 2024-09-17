@@ -1,9 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getRecommendedFood } from 'helpers/getRecommendedFood';
 
-import CardRecommendedProduct from 'components/CardRecommendedProduct/CardRecommendedProduct';
 import image from 'images/Ketogenic.png';
 import {
   Container,
@@ -15,37 +12,20 @@ import {
   InfoBox,
   BannerThumb,
   Img,
-  RecommendedFoodList,
 } from './RecommendedFoodPage.styled';
 
-import { randomizeFood } from 'helpers/randomizeFood';
-
 import arrowRight from 'images/icons/arrow-right.svg';
-import { getStats } from 'redux/Statistics/statisticsOperations';
+import ListRecommendedFood from 'components/ListRecommendedFood';
 
 export default function RecommendedFood() {
-  const [arrayForRender, setArrayForRender] = useState([]);
-
-  const dispatch = useDispatch();
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/main');
-
-  useEffect(() => {
-    getRecommendedFood()
-      .then(response => {
-        setArrayForRender(randomizeFood(response, 10));
-      })
-      .catch(err => console.error(err));
-  }, []);
 
   return (
     <Container>
       <Content>
         <HeaderPage>
-          <BackLink
-            to={backLinkLocationRef.current}
-            onClick={() => dispatch(getStats('today'))}
-          >
+          <BackLink to={backLinkLocationRef.current}>
             <ArrowReturn src={arrowRight} alt="arrow right" />
           </BackLink>
           <TitlePage>Recommended food</TitlePage>
@@ -56,20 +36,7 @@ export default function RecommendedFood() {
             <Img src={image} alt="Banner recommended food" />
           </BannerThumb>
 
-          <RecommendedFoodList>
-            {arrayForRender.map(({ _id, img, name, amount, calories }) => {
-              return (
-                <CardRecommendedProduct
-                  key={_id}
-                  id={_id}
-                  img={img}
-                  name={name}
-                  amount={amount}
-                  calories={calories}
-                />
-              );
-            })}
-          </RecommendedFoodList>
+          <ListRecommendedFood itemLimit={10} />
         </InfoBox>
       </Content>
     </Container>
