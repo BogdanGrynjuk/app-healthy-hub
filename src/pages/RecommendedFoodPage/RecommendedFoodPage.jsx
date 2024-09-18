@@ -12,9 +12,10 @@ import {
   InfoBox,
   BannerThumb,
   Img,
+  TextContainer,
 } from './RecommendedFoodPage.styled';
 
-import arrowRight from 'images/icons/arrow-right.svg';
+import arrowLeft from 'images/icons/arrow-left.svg';
 import ListRecommendedFood from 'components/ListRecommendedFood';
 
 export default function RecommendedFood() {
@@ -26,7 +27,7 @@ export default function RecommendedFood() {
       <Content>
         <HeaderPage>
           <BackLink to={backLinkLocationRef.current}>
-            <ArrowReturn src={arrowRight} alt="arrow right" />
+            <ArrowReturn src={arrowLeft} alt="arrow right" />
           </BackLink>
           <TitlePage>Recommended food</TitlePage>
         </HeaderPage>
@@ -36,7 +37,9 @@ export default function RecommendedFood() {
             <Img src={image} alt="Banner recommended food" />
           </BannerThumb>
 
-          <ListRecommendedFood itemLimit={10} />
+          <TextContainer>
+            <ListRecommendedFood itemLimit={10} />
+          </TextContainer>
         </InfoBox>
       </Content>
     </Container>

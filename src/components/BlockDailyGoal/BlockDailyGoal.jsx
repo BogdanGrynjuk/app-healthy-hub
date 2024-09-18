@@ -14,10 +14,8 @@ import {
   Counter,
 } from './BlockDailyGoal.styled';
 
-import img1 from 'images/bubble.png';
-import img2 from 'images/bubble@2x.png';
-import img3 from 'images/bottle.png';
-import img4 from 'images/bottle@2x.png';
+import bubble from 'images/icons/bubble.svg';
+import bottle from 'images/icons/bottle.svg';
 import { selectDailyWaterGoal } from 'redux/foodIntake/foodIntakeSelectors';
 
 const BlockDailyGoal = () => {
@@ -45,26 +43,14 @@ const BlockDailyGoal = () => {
       <Title>Daily goal</Title>
       <InfoBox>
         <Card>
-          <img
-            srcSet={`${img1} 1x, ${img2} 2x`}
-            width={80}
-            height={80}
-            src={img1}
-            alt="Bubbles"
-          />
+          <img src={bubble} width={80} height={80} alt="Bubbles" />
           <CardText>
             <CardTitle>Calories</CardTitle>
             <Counter ref={calorieCounterRef} />
           </CardText>
         </Card>
         <Card>
-          <img
-            srcSet={`${img3} 1x, ${img4} 2x`}
-            width={80}
-            height={80}
-            src={img3}
-            alt="Bottle"
-          />
+          <img width={80} height={80} src={bottle} alt="Bottle" />
           <CardText>
             <CardTitle>Water</CardTitle>
             <Counter>
