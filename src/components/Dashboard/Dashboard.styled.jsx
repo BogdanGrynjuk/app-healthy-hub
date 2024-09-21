@@ -1,27 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-export const DashboardSection = styled.section`  
-  background-color: ${props => props.theme.colors.black};
-  color: ${props => props.theme.colors.white};
-  font-family: ${props => props.theme.fontFamily.poppins};
-`;
-
-export const DashboardContainer = styled.div`
-  margin: 0 auto;
-  @media screen and (${props => props.theme.mq.mobile}) {
-    width: 320px;
-    padding: 16px 10px 60px;    
-  }
-  @media screen and (${props => props.theme.mq.tablet}) {
-    width: 834px;
-    padding: 24px 27px 60px;    
-  }
-  @media screen and (${props => props.theme.mq.desktop}) {
-    width: 1440px;
-    padding: 20px 34px 40px;   
-  }
-`;
 
 export const HeaderBlock = styled.div`
   display: flex;
@@ -35,7 +13,7 @@ export const MainHeaderBlock = styled.div`
   display: flex;
 `;
 
-export const BackLink = styled(NavLink)`
+export const BackLink = styled(Link)`
   display: flex;
   @media screen and (${props => props.theme.mq.mobile}) {
     margin-right: 8px;
@@ -71,8 +49,9 @@ export const Button = styled.button`
   margin-left: 12px;
   padding: 0;
   border: ${props => props.theme.borders.none};
-  background-color: inherit;
-  color: inherit;
+  background-color: transparent;
+  color: transparent;
+  cursor: pointer;
 `;
 
 export const ToggleButton = styled.button`
@@ -109,6 +88,8 @@ export const ToggleButton = styled.button`
 export const Arrow = styled.img`
   width: 16px;
   height: 16px;
+  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transition: transform 0.3s ease;
 `;
 
 export const SecondHeader = styled.h3`

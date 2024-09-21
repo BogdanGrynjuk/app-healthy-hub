@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectStatsInfo } from '../../redux/Statistics/statisticsSelectors';
-import { monthName } from '../../constants/monthName';
+import { MONTH_NAME } from 'constants/monthName.js';
 
 import {
   TitleContainer,
@@ -26,6 +25,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { selectStatisticInfo } from 'redux/Stats/statsSelectors';
 
 ChartJS.register(
   CategoryScale,
@@ -37,59 +37,53 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({ dataFormat, type }) => {
+const LineChart = ({ isYearData, type }) => {
   const [time, setTime] = useState([]);
   const [information, setInformation] = useState([]);
   const [average, setAverage] = useState(0);
 
-  const info = useSelector(selectStatsInfo);
+  const info = useSelector(selectStatisticInfo);
 
   useEffect(() => {
-    if (Object.keys(info).length === 0) {
+    if (!info || Object.keys(info).length === 0) {
       return;
     }
 
     const infoArray = [];
     const timesArray = [];
+    const statistic = info[type] || [];
 
-    if (Object.keys(info).length !== 0) {
-      const keys = Object.keys(info);
+    statistic.forEach(item => {
+      const formattedDate = isYearData
+        ? MONTH_NAME.SHORT[item._id.month]
+        : `${item._id.day}`;
 
-      for (const key of keys) {
-        if (key === type) {
-          if (!dataFormat) {
-            for (const entry of info[key]) {
-              timesArray.push(entry._id);
-              infoArray.push(entry.amount);
-            }
-          }
+      const value = isYearData ? Math.round(item.avgMonth) : item[type];
 
-          if (dataFormat) {
-            for (const entry of info[key]) {
-              const entryMonth = new Date(entry._id).getMonth() + 1;
+      timesArray.push(formattedDate);
+      infoArray.push(value);
+    });
 
-              const average = entry.amount / entry.count;
+    const total =
+      infoArray.length > 0
+        ? Math.round(
+            infoArray.reduce((prev, curr) => prev + curr, 0) / infoArray.length
+          )
+        : 0;
 
-              timesArray.push(monthName.short[entryMonth]);
-              infoArray.push(Math.round(average));
-            }
-          }
-        }
-      }
-    }
-
-    if (infoArray.length > 0) {
-      const total = Math.round(
-        infoArray.reduce((previousValue, number) => {
-          return previousValue + number;
-        }, 0) / infoArray.length
+    if (infoArray.length === 0) {
+      const currentDate = new Date().getDate();
+      const currentMonth = new Date().getMonth() + 1;
+      timesArray.push(
+        isYearData ? MONTH_NAME.SHORT[currentMonth] : currentDate
       );
-      setAverage(total);
+      infoArray.push(0);
     }
 
+    setAverage(total);
     setInformation(infoArray);
     setTime(timesArray);
-  }, [info, dataFormat, type]);
+  }, [info, isYearData, type]);
 
   let caption = type === 'water' ? 'L' : 'K';
   const yScaleMax = Math.max(...information) + 1000;
@@ -142,9 +136,7 @@ const LineChart = ({ dataFormat, type }) => {
           },
         },
         grid: {
-          display: true,
           color: '#292928',
-          offset: true,
         },
       },
       y: {
@@ -159,7 +151,7 @@ const LineChart = ({ dataFormat, type }) => {
           },
           color: '#B6B6B6',
           stepSize: 1000,
-          callback: function (value, index, ticks) {
+          callback: function (value) {
             if (String(value).length === 1) {
               return value;
             }
@@ -175,7 +167,6 @@ const LineChart = ({ dataFormat, type }) => {
           display: false,
         },
         grid: {
-          display: true,
           color: '#292928',
         },
       },
@@ -224,7 +215,7 @@ const LineChart = ({ dataFormat, type }) => {
 };
 
 LineChart.propTypes = {
-  dataFormat: PropTypes.bool.isRequired,
+  isYearData: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
 };
 

@@ -17,7 +17,7 @@ import {
   ButtonCancel,
   Input,
   ErrorMes,
-} from './addWater.styled';
+} from './ModalAddWater.styled';
 
 const initialValues = {
   water: '',

@@ -28,7 +28,7 @@ const short = {
   12: 'Dec',
 };
 
-export const monthName = {
-  full,
-  short,
+export const MONTH_NAME = {
+  FULL: full,
+  SHORT: short,
 };

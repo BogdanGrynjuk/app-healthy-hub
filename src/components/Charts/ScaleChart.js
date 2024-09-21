@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectStatsInfo } from '../../redux/Statistics/statisticsSelectors';
-import { monthName } from '../../constants/monthName';
+import { selectStatisticInfo } from 'redux/Stats/statsSelectors';
+import { MONTH_NAME } from '../../constants/monthName';
 import {
   List,
   Item,
@@ -16,72 +16,45 @@ import {
   Scale,
 } from './ScaleLineCharts.styled';
 
-const ScaleChart = ({ dataFormat }) => {
+const ScaleChart = ({ isYearData }) => {
   const [weight, setWeight] = useState([]);
   const [average, setAverage] = useState(0);
-
-  const info = useSelector(selectStatsInfo);
+  const info = useSelector(selectStatisticInfo);
 
   useEffect(() => {
-    if (Object.keys(info).length === 0) {
-      return;
-    }
+    if (!info || Object.keys(info).length === 0) return;
 
-    const infoArray = [];
+    const weightData = info.weight || [];
 
-    if (Object.keys(info).length !== 0) {
-      const keys = Object.keys(info);
-      for (const key of keys) {
-        if (key === 'weight') {
-          const value = [];
+    const weightArray = [];
+    const valueArray = [];
 
-          if (!dataFormat) {
-            for (const entry of info[key]) {
-              if (entry.count) {
-                return;
-              }
-              // const average = (entry.amount / entry.count).toFixed(1);
+    weightData.forEach(item => {
+      if (!isYearData) {
+        const { _id, weight } = item;
+        const formattedDate = `${_id.day}`;
 
-              value.push(entry.amount);
-              // value.push(Number(average));
-            }
-            setWeight(info[key]);
-          }
-
-          if (dataFormat) {
-            for (const entry of info[key]) {
-              const entryMonth = new Date(entry._id).getMonth() + 1;
-
-              if (!entry.count) {
-                return;
-              }
-
-              const average = (entry.amount / entry.count).toFixed(1);
-
-              if (average) {
-                const newInfo = {
-                  _id: monthName.full[entryMonth],
-                  amount: average,
-                };
-                infoArray.push(newInfo);
-                value.push(Number(average));
-              }
-            }
-            setWeight(infoArray);
-          }
-
-          if (value.length > 0) {
-            const total = Math.round(
-              value.reduce((previousValue, number) => {
-                return previousValue + number;
-              }, 0) / value.length
-            );
-            setAverage(total);
-          }
+        weightArray.push({ _id: formattedDate, amount: weight });
+        valueArray.push(weight);
+      } else {
+        const { _id, avgMonth } = item;
+        if (avgMonth !== undefined) {
+          const formattedDate = MONTH_NAME.FULL[_id.month];
+          weightArray.push({ _id: formattedDate, amount: avgMonth });
+          valueArray.push(avgMonth);
         }
       }
+    });
+
+    if (valueArray.length > 0) {
+      const total = Math.round(
+        valueArray.reduce((prev, curr) => prev + curr, 0) / valueArray.length
+      );
+      setAverage(total);
     }
-  }, [dataFormat, info]);
+
+    setWeight(weightArray);
+  }, [isYearData, info]);
 
   return (
     <>
@@ -93,14 +66,12 @@ const ScaleChart = ({ dataFormat }) => {
       </TitleContainer>
       <Scale>
         <List>
-          {weight.map(({ _id, amount }) => {
-            return (
-              <Item key={`${_id}+${amount}`}>
-                <WeightTitle>{amount}</WeightTitle>
-                <DataTitle>{_id}</DataTitle>
-              </Item>
-            );
-          })}
+          {weight.map(({ _id, amount }) => (
+            <Item key={`${_id}+${amount}`}>
+              <WeightTitle>{amount} kg</WeightTitle>
+              <DataTitle>{_id}</DataTitle>
+            </Item>
+          ))}
         </List>
       </Scale>
     </>
@@ -108,7 +79,7 @@ const ScaleChart = ({ dataFormat }) => {
 };
 
 ScaleChart.propTypes = {
-  dataFormat: PropTypes.bool.isRequired,
+  isYearData: PropTypes.bool.isRequired,
 };
 
 export default ScaleChart;

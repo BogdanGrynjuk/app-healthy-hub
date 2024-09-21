@@ -11,9 +11,10 @@ import {
 } from 'redux-persist';
 import { authReducer } from './Auth/authSlice';
 import { statsReducer } from './Statistics/statisticsSlice';
-import { waterReducer } from './Water/waterSlice';
+
 import { foodsReducer } from './Foods/foodsSlice';
 import { foodIntakeReducer } from './foodIntake/foodIntakeSlice';
+import { statisticReducer } from './Stats/statsSlice';
 
 const persistConfig = {
   key: 'auth',
@@ -27,10 +28,10 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
     foodIntake: foodIntakeReducer,
+    statistic: statisticReducer,
 
     // !!! Слід видалити редюсери Stats water, foods
     stats: statsReducer,
-    water: waterReducer,
     foods: foodsReducer,
   },
   middleware: getDefaultMiddleware =>

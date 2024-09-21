@@ -17,7 +17,7 @@ import {
   Btn,
 } from './BlockWater.styled';
 
-import AddWater from 'components/Modals/AddWater/addWater';
+import ModalAddWater from 'components/Modals/ModalAddWater/ModalAddWater';
 
 import img1 from 'images/add.png';
 import img2 from 'images/add@2x.png';
@@ -108,7 +108,7 @@ const BlockWater = () => {
             </CardText>
           </Card>
         </InfoBox>
-        {isModalOpen && <AddWater onClose={toggleModal} />}
+        {isModalOpen && <ModalAddWater onClose={toggleModal} />}
       </Wrapper>
     </>
   );
