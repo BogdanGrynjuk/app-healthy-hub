@@ -121,16 +121,33 @@ export const ChartGrid = styled.div`
   @media screen and (${props => props.theme.mq.mobile}) {
     display: flex;
     flex-direction: column;
+    padding-bottom: 10px;
     overflow-x: scroll;
     &:not(:last-child) {
       margin-bottom: 27px;
     }
   }
   @media screen and (${props => props.theme.mq.tablet}) {
-    display: imline-block;
+    display: inline-block;
     overflow-x: hidden;
     &:not(:last-child) {
       margin-bottom: 40px;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 100px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 150px;
+    background-color: rgba(41, 41, 40, 0.2);
+    border-radius: ${p => p.theme.radii.normal};
+    border: 1px solid rgba(227, 255, 168, 0.2);
+
+    &:hover {
+      background-color: rgba(227, 255, 168, 0.2);
     }
   }
 `;
@@ -141,6 +158,7 @@ export const ScaleChartBlock = styled.div`
     flex-direction: column;
     overflow-x: scroll;
     margin-top: 27px;
+    padding-bottom: 10px;
   }
   @media screen and (${props => props.theme.mq.tablet}) {
     margin-top: 40px;
@@ -148,5 +166,20 @@ export const ScaleChartBlock = styled.div`
   }
   @media screen and (${props => props.theme.mq.desktop}) {
     margin-top: 20px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 150px;
+    background-color: rgba(41, 41, 40, 0.2);
+    border-radius: ${p => p.theme.radii.normal};
+    border: 1px solid rgba(227, 255, 168, 0.2);
+
+    &:hover {
+      background-color: rgba(227, 255, 168, 0.2);
+    }
   }
 `;

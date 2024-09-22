@@ -12,7 +12,7 @@ import {
   Chart,
   ChartLabelBlock,
   ChartLabelContent,
-} from './ScaleLineCharts.styled.js';
+} from './ScaleLineCharts.styled.jsx';
 
 import {
   Chart as ChartJS,
@@ -105,17 +105,26 @@ const LineChart = ({ isYearData, type }) => {
           const { chart, tooltip } = context;
           let tooltipEl = chart.canvas.parentNode.querySelector('div');
           let tooltipTitle = chart.canvas.parentNode.querySelector('#value');
+          const tabletMediaQuery = window.matchMedia(
+            '(min-width: 768px) and (max-width: 1439px)'
+          );
 
           if (tooltip.opacity === 0) {
             tooltipEl.style.opacity = 0;
             return;
           }
-
           const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
+          const tooltipWidth = tooltipEl.offsetWidth;
+          const tooltipHeight = tooltipEl.offsetHeight;
+          const caretX = tooltip.caretX;
+          const caretY = tooltip.caretY;
 
           tooltipEl.style.opacity = 1;
-          tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-          tooltipEl.style.top = positionY + tooltip.caretY - '84' + 'px';
+          tooltipEl.style.left = tabletMediaQuery.matches
+            ? positionX + caretX + 'px'
+            : positionX + caretX - tooltipWidth / 2 + 'px';
+          tooltipEl.style.top = positionY + caretY - tooltipHeight - 10 + 'px';
+          tooltipEl.style.backgroundColor = 'rgb(15, 15, 15)';
           tooltipTitle.textContent =
             context.tooltip.dataPoints[0].formattedValue;
         },
