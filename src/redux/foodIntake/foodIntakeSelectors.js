@@ -44,16 +44,16 @@ export const selectNutrientSums = createSelector(
 
     const nutrientSums = mealCategories.map(category => ({
       mealType: category,
-      carbohydrates: 0,
+      carbonohidrates: 0,
       protein: 0,
       fat: 0,
     }));
 
     foodIntakeItems.forEach(item => {
-      const { mealType, carbohydrates, protein, fat } = item;
+      const { mealType, carbonohidrates, protein, fat } = item;
       const mealIndex = mealCategories.indexOf(mealType);
       if (mealIndex !== -1) {
-        nutrientSums[mealIndex].carbohydrates += carbohydrates;
+        nutrientSums[mealIndex].carbonohidrates += carbonohidrates;
         nutrientSums[mealIndex].protein += protein;
         nutrientSums[mealIndex].fat += fat;
       }
@@ -71,9 +71,9 @@ export const selectFoodStatistics = createSelector(
   ],
   (items, BMR, userGoal) => {
     const { caloriesFact, carbsFact, proteinFact, fatFact } = items.reduce(
-      (acc, { carbohydrates, protein, fat, calories }) => {
+      (acc, { carbonohidrates, protein, fat, calories }) => {
         acc.caloriesFact += calories;
-        acc.carbsFact += carbohydrates;
+        acc.carbsFact += carbonohidrates;
         acc.proteinFact += protein;
         acc.fatFact += fat;
         return acc;
@@ -83,13 +83,14 @@ export const selectFoodStatistics = createSelector(
 
     const caloriesGoal = BMR;
     const { carbsGoal, proteinGoal, fatGoal } = calcNutrientGoal(BMR, userGoal);
-
-    return {
+    const res = {
       Calories: calcStatistics(caloriesGoal, caloriesFact),
       Carbohydrates: calcStatistics(carbsGoal, carbsFact),
       Protein: calcStatistics(proteinGoal, proteinFact),
       Fat: calcStatistics(fatGoal, fatFact),
     };
+
+    return res;
   }
 );
 

@@ -72,8 +72,8 @@ const LineChart = ({ isYearData, type }) => {
         : 0;
 
     if (infoArray.length === 0) {
-      const currentDate = new Date().getDate();
-      const currentMonth = new Date().getMonth() + 1;
+      const currentDate = new Date().getUTCDate();
+      const currentMonth = new Date().getUTCMonth() + 1;
       timesArray.push(
         isYearData ? MONTH_NAME.SHORT[currentMonth] : currentDate
       );

@@ -14,7 +14,7 @@ const Loader = () => {
         secondaryColor="#292928"
         visible={true}
       />
-       <Text>Loading</Text>
+      <Text>Loading...</Text>
     </Wrapper>
   );
 };

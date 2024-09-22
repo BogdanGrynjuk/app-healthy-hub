@@ -35,7 +35,7 @@ export const CounterList = styled.div`
 
 export const Counter = styled.p`
   display: flex;
-  gap: 2px;
+  column-gap: 4px;
   width: calc((100% - 12px) / 2);
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${props => props.theme.fontSizes.xs};

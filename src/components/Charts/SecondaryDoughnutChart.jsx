@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import toastifyMessage from 'helpers/toastify';
@@ -12,6 +12,7 @@ const SecondaryDoughnutChart = ({
   colorDoughnutChart,
 }) => {
   const hasNotified = useRef(false);
+  const [chartKey, setChartKey] = useState(0);
 
   const {
     consumedAmount,
@@ -79,6 +80,10 @@ const SecondaryDoughnutChart = ({
   };
 
   useEffect(() => {
+    setChartKey(prevKey => prevKey + 1);
+  }, [nutrient]);
+
+  useEffect(() => {
     if (isGoalExceeded && !hasNotified.current) {
       toastifyMessage(
         'warn',
@@ -90,6 +95,7 @@ const SecondaryDoughnutChart = ({
 
   return (
     <Doughnut
+      key={chartKey}
       data={data}
       options={options}
       plugins={[textCenter, backgroundCircle]}

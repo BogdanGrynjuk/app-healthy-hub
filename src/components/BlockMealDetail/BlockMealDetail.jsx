@@ -13,14 +13,14 @@ import {
   Protein,
   Fat,
 } from './BlockMealDetail.styled';
-import RecordDiaryModal from 'components/Modals/RecordDiaryModal';
+import ModalRecordDiary from 'components/Modals/ModalRecordDiary';
 
 const MealDetail = ({ imageSrc, info }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-  const { mealType, carbohydrates, protein, fat } = info;
+  const { mealType, carbonohidrates, protein, fat } = info;
 
   return (
     <Container>
@@ -28,10 +28,10 @@ const MealDetail = ({ imageSrc, info }) => {
         <DiaryImage src={imageSrc} alt={`image of ${mealType}`} />
         <Title>{mealType}</Title>
       </TitleWrap>
-      {carbohydrates !== 0 || protein !== 0 || fat !== 0 ? (
+      {carbonohidrates !== 0 || protein !== 0 || fat !== 0 ? (
         <InfoBox>
           <Carbohydrates>
-            Carbohydrates: <Value>{carbohydrates}</Value>
+            Carbohydrates: <Value>{carbonohidrates}</Value>
           </Carbohydrates>
           <Protein>
             Protein: <Value>{protein}</Value>
@@ -45,7 +45,7 @@ const MealDetail = ({ imageSrc, info }) => {
       )}
 
       {isModalOpen && (
-        <RecordDiaryModal
+        <ModalRecordDiary
           onClose={toggleModal}
           image={imageSrc}
           mealType={mealType}
@@ -59,7 +59,7 @@ MealDetail.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   info: PropTypes.shape({
     mealType: PropTypes.string.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
+    carbonohidrates: PropTypes.number.isRequired,
     protein: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
   }).isRequired,

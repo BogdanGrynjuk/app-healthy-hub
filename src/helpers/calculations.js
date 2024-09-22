@@ -22,25 +22,28 @@ export const calcNutrientGoal = (BMR, goal) => {
 };
 
 export const calcPercent = (goal, consumed) => {
-  const res = Math.floor((consumed * 100) / goal);
-  return res;
+  const percent = Math.floor((consumed * 100) / goal);
+  return percent;
 };
 
 export const calcRemainder = (goal, consumed) => {
-  const res = goal - consumed;
-  return res;
+  const remainder = Math.round((goal - consumed) * 10) / 10;
+  return remainder;
 };
 
 export const calcSurplus = (goal, consumed) => {
-  const res = 0 - calcRemainder(goal, consumed);
-  return res;
+  const surplus = Math.round((0 - calcRemainder(goal, consumed)) * 10) / 10;
+  return surplus;
 };
 
-export const calcStatistics = (goal, consumed) => ({
-  consumptionGoal: goal,
-  consumedAmount: consumed,
-  remainingAmount: calcRemainder(goal, consumed),
-  consumptionPercentage: calcPercent(goal, consumed),
-  excessAmount: calcSurplus(goal, consumed),
-  isGoalExceeded: goal < consumed,
-});
+export const calcStatistics = (goal, consumed) => {
+  const res = {
+    consumptionGoal: goal,
+    consumedAmount: consumed,
+    remainingAmount: calcRemainder(goal, consumed),
+    consumptionPercentage: calcPercent(goal, consumed),
+    excessAmount: calcSurplus(goal, consumed),
+    isGoalExceeded: goal < consumed,
+  };
+  return res;
+};
