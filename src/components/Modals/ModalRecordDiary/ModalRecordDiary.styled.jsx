@@ -46,7 +46,7 @@ export const ModalTitle = styled.h1`
   }
 `;
 
-export const WrapperFormTitle = styled.div`
+export const FormTitleContainer = styled.div`
   display: flex;
   gap: 12px;
   margin-bottom: 16px;
@@ -71,7 +71,7 @@ export const Title = styled.h2`
   }
 `;
 
-export const FormFormic = styled(Form)`
+export const FormWrapper = styled(Form)`
   width: 100%;
   height: 100%;
   display: flex;
@@ -79,7 +79,7 @@ export const FormFormic = styled(Form)`
   justify-content: space-between;
 `;
 
-export const ContentWrapper = styled.div`
+export const FormsContainer = styled.div`
   max-height: 300px;
   margin-bottom: 16px;
 
@@ -88,10 +88,10 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const ProductList = styled.ul`
+export const ProductFormList = styled.ul`
   padding: 10px;
   overflow-y: auto;
-  height: 210px;
+  height: 225px;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
@@ -117,7 +117,7 @@ export const ProductList = styled.ul`
   }
 `;
 
-export const Product = styled.li`
+export const ProductFormItem = styled.li`
   display: grid;
   grid-gap: 12px;
   grid-template-columns: repeat(2, 1fr);
@@ -156,7 +156,12 @@ export const WrapperInput = styled.div`
 export const Input = styled(Field)`
   padding: 8px 10px;
   width: 100%;
-  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  border: ${p =>
+    p.error
+      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
+      : p.value === ''
+      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
+      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
   border-radius: ${p => p.theme.radii.normal};
   background-color: ${p => p.theme.colors.black2};
   font-family: ${props => props.theme.fontFamily.poppins};

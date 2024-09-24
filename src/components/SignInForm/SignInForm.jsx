@@ -4,8 +4,8 @@ import { Formik } from 'formik';
 
 import { signIn } from '../../redux/Auth/authOperations';
 
-import { ReactComponent as EyeCloseSvg } from '../../images/icons/eye-off.svg';
-import { ReactComponent as EyeOpenSvg } from '../../images/icons/eye.svg';
+import { ReactComponent as EyeCloseSvg } from 'images/icons/eye-off.svg';
+import { ReactComponent as EyeOpenSvg } from 'images/icons/eye.svg';
 
 import {
   Input,
@@ -43,50 +43,52 @@ const SignInForm = () => {
       validateOnBlur={false}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched, values }) => (
-        <FormWrapper>
-          <FormField>
-            <Input
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              autoComplete="email"
-              error={touched.email && errors.email}
-              value={values.email}
-            />
-            <ErrorMsg name="email" component="div" />
-          </FormField>
-
-          <FormField>
-            <InputWrapper>
+      {({ errors, touched, values }) => {
+        return (
+          <FormWrapper>
+            <FormField>
               <Input
-                type={isVisiblePassword ? 'text' : 'password'}
-                name="password"
-                placeholder="Password"
-                autoComplete="current-password"
-                error={touched.password && errors.password}
-                value={values.password}
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                autoComplete="email"
+                error={touched.email && errors.email}
+                value={values.email}
               />
-              <IconWrapper
-                onMouseEnter={showPassword}
-                onMouseLeave={hidePassword}
-              >
-                {isVisiblePassword ? (
-                  <EyeOpenSvg width={16} height={16} />
-                ) : (
-                  <EyeCloseSvg width={16} height={16} />
-                )}
-              </IconWrapper>
-            </InputWrapper>
-            <ErrorMsg name="password" component="div" />
-          </FormField>
+              <ErrorMsg name="email" component="div" />
+            </FormField>
 
-          <FormButton type="submit">Sign In</FormButton>
-          <ForgotPasswordLink to={'/forgot-password'}>
-            Forgot your password?
-          </ForgotPasswordLink>
-        </FormWrapper>
-      )}
+            <FormField>
+              <InputWrapper>
+                <Input
+                  type={isVisiblePassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  error={touched.password && errors.password}
+                  value={values.password}
+                />
+                <IconWrapper
+                  onMouseEnter={showPassword}
+                  onMouseLeave={hidePassword}
+                >
+                  {isVisiblePassword ? (
+                    <EyeOpenSvg width={16} height={16} />
+                  ) : (
+                    <EyeCloseSvg width={16} height={16} />
+                  )}
+                </IconWrapper>
+              </InputWrapper>
+              <ErrorMsg name="password" component="div" />
+            </FormField>
+
+            <FormButton type="submit">Sign In</FormButton>
+            <ForgotPasswordLink to={'/forgot-password'}>
+              Forgot your password?
+            </ForgotPasswordLink>
+          </FormWrapper>
+        );
+      }}
     </Formik>
   );
 };

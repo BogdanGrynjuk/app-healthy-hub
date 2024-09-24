@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import { FieldArray, Formik } from 'formik';
@@ -8,13 +8,9 @@ import {
   Backdrop,
   Modal,
   ModalTitle,
-  WrapperFormTitle,
+  FormTitleContainer,
   Image,
   Title,
-  FormFormic,
-  ContentWrapper,
-  ProductList,
-  Product,
   WrapperInput,
   Input,
   BtnRemoveProduct,
@@ -23,10 +19,14 @@ import {
   ContainerForBtns,
   BtnConfirm,
   BtnCancel,
+  FormWrapper,
+  FormsContainer,
+  ProductFormList,
+  ProductFormItem,
 } from './ModalRecordDiary.styled';
 
-import img1 from 'images/trash.png';
-import img2 from 'images/trash@2x.png';
+import trash1x from 'images/trash.png';
+import trash2x from 'images/trash@2x.png';
 
 import validationSchemaForNutrients from 'validationSchemas/validationSchemaForNutrients';
 import {
@@ -37,12 +37,14 @@ import {
 const modalRoot = document.querySelector('#modal-root');
 
 const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     productList: [
       {
         mealType: mealType,
         mealName: item?.mealName ?? '',
-        carbonohidrates: item?.carbohydrates ?? '',
+        carbonohidrates: item?.carbonohidrates ?? '',
         protein: item?.protein ?? '',
         fat: item?.fat ?? '',
         calories: item?.calories ?? '',
@@ -50,20 +52,21 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
     ],
   };
 
-  const dispatch = useDispatch();
+  const handleKeyDown = useCallback(
+    event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      onClose();
-    }
-  };
-
-  const handleSubmit = async (values, { resetForm }) => {
-    await values.productList.forEach(
+  const handleSubmit = (values, { resetForm }) => {
+    values.productList.forEach(
       ({ mealType, mealName, carbonohidrates, protein, fat, calories }) => {
         const data = {
-          mealType: mealType.toString(),
-          mealName: mealName.toString(),
+          mealType,
+          mealName,
           carbonohidrates: parseFloat(carbonohidrates.toFixed(1)),
           protein: parseFloat(protein.toFixed(1)),
           fat: parseFloat(fat.toFixed(1)),
@@ -93,10 +96,10 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
     <Backdrop>
       <Modal>
         <ModalTitle>Record your meal</ModalTitle>
-        <WrapperFormTitle>
+        <FormTitleContainer>
           <Image src={image} alt={`image of ${mealType}`} />
           <Title>{mealType}</Title>
-        </WrapperFormTitle>
+        </FormTitleContainer>
 
         <Formik
           initialValues={initialValues}
@@ -104,22 +107,27 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
           validationSchema={validationSchemaForNutrients}
         >
           {({ errors, touched, values }) => (
-            <FormFormic autoComplete="off">
+            <FormWrapper autoComplete="off">
               <FieldArray
                 name="productList"
                 render={({ insert, remove }) => {
                   return (
-                    <ContentWrapper>
-                      <ProductList>
+                    <FormsContainer>
+                      <ProductFormList>
                         {values.productList.map((product, index) => {
                           return (
-                            <Product key={index}>
+                            <ProductFormItem key={index}>
                               <WrapperInput>
                                 <Input
                                   type="text"
                                   id={`productList.${index}.mealName`}
                                   name={`productList.${index}.mealName`}
                                   placeholder="The name of the product or dish"
+                                  value={values?.productList?.[index]?.mealName}
+                                  error={
+                                    touched?.productList?.[index]?.mealName &&
+                                    errors?.productList?.[index]?.mealName
+                                  }
                                 />
                                 <ErrorMsg
                                   name={`productList.${index}.mealName`}
@@ -133,6 +141,16 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                                   id={`productList.${index}.carbonohidrates`}
                                   name={`productList.${index}.carbonohidrates`}
                                   placeholder="Carbohydrates"
+                                  value={
+                                    values?.productList?.[index]
+                                      ?.carbonohidrates
+                                  }
+                                  error={
+                                    touched?.productList?.[index]
+                                      ?.carbonohidrates &&
+                                    errors?.productList?.[index]
+                                      ?.carbonohidrates
+                                  }
                                 />
                                 <ErrorMsg
                                   name={`productList.${index}.carbonohidrates`}
@@ -146,6 +164,11 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                                   id={`productList.${index}.protein`}
                                   name={`productList.${index}.protein`}
                                   placeholder="Protein"
+                                  value={values?.productList?.[index]?.protein}
+                                  error={
+                                    touched?.productList?.[index]?.protein &&
+                                    errors?.productList?.[index]?.protein
+                                  }
                                 />
                                 <ErrorMsg
                                   name={`productList.${index}.protein`}
@@ -159,6 +182,11 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                                   id={`productList.${index}.fat`}
                                   name={`productList.${index}.fat`}
                                   placeholder="Fat"
+                                  value={values?.productList?.[index]?.fat}
+                                  error={
+                                    touched?.productList?.[index]?.fat &&
+                                    errors?.productList?.[index]?.fat
+                                  }
                                 />
                                 <ErrorMsg
                                   name={`productList.${index}.fat`}
@@ -172,6 +200,11 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                                   id={`productList.${index}.calories`}
                                   name={`productList.${index}.calories`}
                                   placeholder="Calories"
+                                  value={values?.productList?.[index]?.calories}
+                                  error={
+                                    touched?.productList?.[index]?.calories &&
+                                    errors?.productList?.[index]?.calories
+                                  }
                                 />
                                 <ErrorMsg
                                   name={`productList.${index}.calories`}
@@ -185,18 +218,18 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                                   onClick={() => remove(index)}
                                 >
                                   <img
-                                    srcSet={`${img1} 1x, ${img2} 2x`}
+                                    srcSet={`${trash1x} 1x, ${trash2x} 2x`}
                                     width={20}
                                     height={20}
-                                    src={img1}
+                                    src={trash1x}
                                     alt="Trash"
                                   />
                                 </BtnRemoveProduct>
                               )}
-                            </Product>
+                            </ProductFormItem>
                           );
                         })}
-                      </ProductList>
+                      </ProductFormList>
                       {!item && (
                         <BtnAddNewProduct
                           type="button"
@@ -214,7 +247,7 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                           + Add more
                         </BtnAddNewProduct>
                       )}
-                    </ContentWrapper>
+                    </FormsContainer>
                   );
                 }}
               />
@@ -225,7 +258,7 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                   Cancel
                 </BtnCancel>
               </ContainerForBtns>
-            </FormFormic>
+            </FormWrapper>
           )}
         </Formik>
       </Modal>

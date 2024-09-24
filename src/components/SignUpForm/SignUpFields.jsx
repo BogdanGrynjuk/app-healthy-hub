@@ -14,8 +14,8 @@ import {
   IconWrapper,
 } from './SignUpForm.styled';
 
-import { ReactComponent as EyeCloseSvg } from '../../images/icons/eye-off.svg';
-import { ReactComponent as EyeOpenSvg } from '../../images/icons/eye.svg';
+import { ReactComponent as EyeCloseSvg } from 'images/icons/eye-off.svg';
+import { ReactComponent as EyeOpenSvg } from 'images/icons/eye.svg';
 
 const SignUpFormFields = ({
   values,
