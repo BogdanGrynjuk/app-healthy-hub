@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import { FieldArray, Formik } from 'formik';
-
 import {
   Backdrop,
   Modal,
@@ -11,32 +10,26 @@ import {
   FormTitleContainer,
   Image,
   Title,
-  WrapperInput,
-  Input,
-  BtnRemoveProduct,
-  BtnAddNewProduct,
-  ErrorMsg,
-  ContainerForBtns,
-  BtnConfirm,
-  BtnCancel,
   FormWrapper,
   FormsContainer,
-  ProductFormList,
-  ProductFormItem,
+  FormList,
+  BtnAddNewProduct,
+  ButtonsContainer,
+  BtnConfirm,
+  BtnCancel,
 } from './ModalRecordDiary.styled';
-
-import trash1x from 'images/trash.png';
-import trash2x from 'images/trash@2x.png';
-
 import validationSchemaForNutrients from 'validationSchemas/validationSchemaForNutrients';
 import {
   postMyFoodIntake,
   updateMyFoodIntake,
 } from 'redux/foodIntake/foodIntake.Operations';
+import NutritionInfoForm from 'components/NutritionInfoForm';
 
 const modalRoot = document.querySelector('#modal-root');
 
 const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
+  const [isActive, setIsActive] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -52,13 +45,21 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
     ],
   };
 
+  const closeModal = useCallback(() => {
+    setIsActive(false);
+    setTimeout(() => {
+      setIsVisible(false);
+      onClose();
+    }, 300);
+  }, [onClose]);
+
   const handleKeyDown = useCallback(
     event => {
       if (event.code === 'Escape') {
-        onClose();
+        closeModal();
       }
     },
-    [onClose]
+    [closeModal]
   );
 
   const handleSubmit = (values, { resetForm }) => {
@@ -67,9 +68,9 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
         const data = {
           mealType,
           mealName,
-          carbonohidrates: parseFloat(carbonohidrates.toFixed(1)),
-          protein: parseFloat(protein.toFixed(1)),
-          fat: parseFloat(fat.toFixed(1)),
+          carbonohidrates: Number(carbonohidrates.toFixed(1)),
+          protein: Number(protein.toFixed(1)),
+          fat: Number(fat.toFixed(1)),
           calories,
         };
         if (item) {
@@ -80,27 +81,33 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
       }
     );
     resetForm();
-    onClose();
+    closeModal();
   };
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.style.overflowY = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  });
+  }, [handleKeyDown]);
+
+  useEffect(() => {
+    setIsActive(true);
+  }, []);
+
+  if (!isVisible) return null;
 
   return createPortal(
     <Backdrop>
-      <Modal>
+      <Modal className={isActive ? 'active' : ''}>
         <ModalTitle>Record your meal</ModalTitle>
         <FormTitleContainer>
           <Image src={image} alt={`image of ${mealType}`} />
           <Title>{mealType}</Title>
         </FormTitleContainer>
-
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -110,154 +117,47 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
             <FormWrapper autoComplete="off">
               <FieldArray
                 name="productList"
-                render={({ insert, remove }) => {
-                  return (
-                    <FormsContainer>
-                      <ProductFormList>
-                        {values.productList.map((product, index) => {
-                          return (
-                            <ProductFormItem key={index}>
-                              <WrapperInput>
-                                <Input
-                                  type="text"
-                                  id={`productList.${index}.mealName`}
-                                  name={`productList.${index}.mealName`}
-                                  placeholder="The name of the product or dish"
-                                  value={values?.productList?.[index]?.mealName}
-                                  error={
-                                    touched?.productList?.[index]?.mealName &&
-                                    errors?.productList?.[index]?.mealName
-                                  }
-                                />
-                                <ErrorMsg
-                                  name={`productList.${index}.mealName`}
-                                  component="div"
-                                />
-                              </WrapperInput>
-
-                              <WrapperInput>
-                                <Input
-                                  type="number"
-                                  id={`productList.${index}.carbonohidrates`}
-                                  name={`productList.${index}.carbonohidrates`}
-                                  placeholder="Carbohydrates"
-                                  value={
-                                    values?.productList?.[index]
-                                      ?.carbonohidrates
-                                  }
-                                  error={
-                                    touched?.productList?.[index]
-                                      ?.carbonohidrates &&
-                                    errors?.productList?.[index]
-                                      ?.carbonohidrates
-                                  }
-                                />
-                                <ErrorMsg
-                                  name={`productList.${index}.carbonohidrates`}
-                                  component="div"
-                                />
-                              </WrapperInput>
-
-                              <WrapperInput>
-                                <Input
-                                  type="number"
-                                  id={`productList.${index}.protein`}
-                                  name={`productList.${index}.protein`}
-                                  placeholder="Protein"
-                                  value={values?.productList?.[index]?.protein}
-                                  error={
-                                    touched?.productList?.[index]?.protein &&
-                                    errors?.productList?.[index]?.protein
-                                  }
-                                />
-                                <ErrorMsg
-                                  name={`productList.${index}.protein`}
-                                  component="div"
-                                />
-                              </WrapperInput>
-
-                              <WrapperInput>
-                                <Input
-                                  type="number"
-                                  id={`productList.${index}.fat`}
-                                  name={`productList.${index}.fat`}
-                                  placeholder="Fat"
-                                  value={values?.productList?.[index]?.fat}
-                                  error={
-                                    touched?.productList?.[index]?.fat &&
-                                    errors?.productList?.[index]?.fat
-                                  }
-                                />
-                                <ErrorMsg
-                                  name={`productList.${index}.fat`}
-                                  component="div"
-                                />
-                              </WrapperInput>
-
-                              <WrapperInput>
-                                <Input
-                                  type="number"
-                                  id={`productList.${index}.calories`}
-                                  name={`productList.${index}.calories`}
-                                  placeholder="Calories"
-                                  value={values?.productList?.[index]?.calories}
-                                  error={
-                                    touched?.productList?.[index]?.calories &&
-                                    errors?.productList?.[index]?.calories
-                                  }
-                                />
-                                <ErrorMsg
-                                  name={`productList.${index}.calories`}
-                                  component="div"
-                                />
-                              </WrapperInput>
-
-                              {values.productList.length > 1 && (
-                                <BtnRemoveProduct
-                                  type="button"
-                                  onClick={() => remove(index)}
-                                >
-                                  <img
-                                    srcSet={`${trash1x} 1x, ${trash2x} 2x`}
-                                    width={20}
-                                    height={20}
-                                    src={trash1x}
-                                    alt="Trash"
-                                  />
-                                </BtnRemoveProduct>
-                              )}
-                            </ProductFormItem>
-                          );
-                        })}
-                      </ProductFormList>
-                      {!item && (
-                        <BtnAddNewProduct
-                          type="button"
-                          onClick={() => {
-                            insert(values.productList.length + 1, {
-                              mealType: mealType,
-                              mealName: '',
-                              carbonohidrates: '',
-                              protein: '',
-                              fat: '',
-                              calories: '',
-                            });
-                          }}
-                        >
-                          + Add more
-                        </BtnAddNewProduct>
-                      )}
-                    </FormsContainer>
-                  );
-                }}
+                render={({ insert, remove }) => (
+                  <FormsContainer>
+                    <FormList>
+                      {values.productList.map((_, index) => (
+                        <li key={index}>
+                          <NutritionInfoForm
+                            indexForm={index}
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            handleRemove={() => remove(index)}
+                          />
+                        </li>
+                      ))}
+                    </FormList>
+                    {!item && (
+                      <BtnAddNewProduct
+                        type="button"
+                        onClick={() => {
+                          insert(values.productList.length + 1, {
+                            mealType: mealType,
+                            mealName: '',
+                            carbonohidrates: '',
+                            protein: '',
+                            fat: '',
+                            calories: '',
+                          });
+                        }}
+                      >
+                        + Add more
+                      </BtnAddNewProduct>
+                    )}
+                  </FormsContainer>
+                )}
               />
-
-              <ContainerForBtns>
+              <ButtonsContainer>
                 <BtnConfirm type="submit">Confirm</BtnConfirm>
-                <BtnCancel type="button" onClick={onClose}>
+                <BtnCancel type="button" onClick={closeModal}>
                   Cancel
                 </BtnCancel>
-              </ContainerForBtns>
+              </ButtonsContainer>
             </FormWrapper>
           )}
         </Formik>

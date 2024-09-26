@@ -20,14 +20,25 @@ export const Modal = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: ${p => p.theme.colors.black2};
-  border-radius: ${p => p.theme.radii.normal};  
-  transform: translate(-50%, -50%) scale(1);
+  border-radius: ${p => p.theme.radii.normal};
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms;
 
-    @media screen and (${ p => p.theme.mq.tablet}) {
+  @media screen and (${p => p.theme.mq.tablet}) {
     width: 338px;
     min-height: 280px;
-  };
+  }
+
+  &.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  &:not(.active) {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
 `;
 export const Title = styled.h1`
   margin-bottom: 24px;
@@ -35,53 +46,52 @@ export const Title = styled.h1`
   font-size: 24px;
   font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 36px;
-  letter-spacing: 0em;  
-  color: ${p => p.theme.colors.white};    
+  letter-spacing: 0em;
   color: ${p => p.theme.colors.white};
-  
-    @media screen and (${ p => p.theme.mq.tablet}) {
+  color: ${p => p.theme.colors.white};
+
+  @media screen and (${p => p.theme.mq.tablet}) {
     font-size: ${props => props.theme.fontSizes.xl};
-  };
+  }
 `;
 
-export const FormFormic = styled(Form)`  
+export const FormFormic = styled(Form)`
   width: 100%;
-  
-    @media screen and (${ p => p.theme.mq.tablet}) {
-    width: 212px;   
-  };
+
+  @media screen and (${p => p.theme.mq.tablet}) {
+    width: 212px;
+  }
 `;
 export const Label = styled.label`
-  
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 20px;
-  letter-spacing: 0em;  
-  color: ${p => p.theme.colors.white};  
+  letter-spacing: 0em;
+  color: ${p => p.theme.colors.white};
 `;
 
 export const Input = styled(Field)`
   margin-top: 12px;
   margin-bottom: 5px;
   padding: 8px 10px;
-  width: 100%;  
+  width: 100%;
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${p => p.theme.radii.normal};
-  background-color: ${p => p.theme.colors.black2};  
+  background-color: ${p => p.theme.colors.black2};
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.regular};
   line-height: 20px;
   letter-spacing: 0em;
-  color: ${p => p.theme.colors.white};  
+  color: ${p => p.theme.colors.white};
 
   &::placeholder {
     color: ${p => p.theme.colors.gray};
   }
 
-  &[type="number"]::-webkit-outer-spin-button,
-  &[type="number"]::-webkit-inner-spin-button {
+  &[type='number']::-webkit-outer-spin-button,
+  &[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -94,12 +104,12 @@ export const ErrorMes = styled(ErrorMessage)`
   font-weight: ${props => props.theme.fontWeights.regular};
   line-height: 12px;
   letter-spacing: 0em;
-  color: ${p => p.theme.colors.error};   
+  color: ${p => p.theme.colors.error};
 `;
 
 export const Button = styled.button`
   margin-top: 16px;
-  padding: 8px 10px;  
+  padding: 8px 10px;
   width: 100%;
   background-color: ${p => p.theme.colors.greenLite};
   color: ${p => p.theme.colors.black2};
@@ -117,7 +127,7 @@ export const ButtonCancel = styled.button`
   margin-top: 8px;
   padding: 8px 10px;
   width: 100%;
-  background-color: transparent;  
+  background-color: transparent;
   border: ${p => p.theme.borders.normal} transparent;
   border-radius: ${p => p.theme.radii.normal};
   font-family: ${props => props.theme.fontFamily.poppins};
@@ -132,4 +142,3 @@ export const ButtonCancel = styled.button`
     border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   }
 `;
-
