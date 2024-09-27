@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.li`
+export const Wrapper = styled.div`
   display: flex;
   column-gap: 16px;
   color: ${p => p.theme.colors.white};
@@ -72,7 +72,7 @@ export const Carbonohidrates = styled.p`
   & > span {
     color: ${props => props.theme.colors.gray};
   }
-  
+
   @media screen and (${p => p.theme.mq.tablet}) {
     width: 80px;
 

@@ -35,4 +35,5 @@ const RecommendedFoodList = ({ itemLimit }) => {
 RecommendedFoodList.propTypes = {
   itemLimit: PropTypes.number.isRequired,
 };
+
 export default RecommendedFoodList;

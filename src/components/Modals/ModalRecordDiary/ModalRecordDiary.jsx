@@ -27,7 +27,7 @@ import NutritionInfoForm from 'components/NutritionInfoForm';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
+const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const dispatch = useDispatch();
@@ -36,11 +36,11 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
     productList: [
       {
         mealType: mealType,
-        mealName: item?.mealName ?? '',
-        carbonohidrates: item?.carbonohidrates ?? '',
-        protein: item?.protein ?? '',
-        fat: item?.fat ?? '',
-        calories: item?.calories ?? '',
+        mealName: mealDetails?.mealName ?? '',
+        carbonohidrates: mealDetails?.carbonohidrates ?? '',
+        protein: mealDetails?.protein ?? '',
+        fat: mealDetails?.fat ?? '',
+        calories: mealDetails?.calories ?? '',
       },
     ],
   };
@@ -73,8 +73,8 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
           fat: Number(fat.toFixed(1)),
           calories,
         };
-        if (item) {
-          dispatch(updateMyFoodIntake({ foodId: item._id, data }));
+        if (mealDetails) {
+          dispatch(updateMyFoodIntake({ foodId: mealDetails._id, data }));
         } else {
           dispatch(postMyFoodIntake(data));
         }
@@ -103,11 +103,15 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
   return createPortal(
     <Backdrop>
       <Modal className={isActive ? 'active' : ''}>
-        <ModalTitle>Record your meal</ModalTitle>
-        <FormTitleContainer>
-          <Image src={image} alt={`image of ${mealType}`} />
-          <Title>{mealType}</Title>
-        </FormTitleContainer>
+        <ModalTitle>
+          {!mealDetails ? 'Record your meal' : 'Edit meal'}
+        </ModalTitle>
+        {!mealDetails && (
+          <FormTitleContainer>
+            <Image src={image} alt={`image of ${mealType}`} />
+            <Title>{mealType}</Title>
+          </FormTitleContainer>
+        )}
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -132,7 +136,7 @@ const RecordDiaryModal = ({ onClose, image, mealType, item }) => {
                         </li>
                       ))}
                     </FormList>
-                    {!item && (
+                    {!mealDetails && (
                       <BtnAddNewProduct
                         type="button"
                         onClick={() => {

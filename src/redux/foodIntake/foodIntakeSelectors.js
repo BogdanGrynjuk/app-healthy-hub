@@ -94,29 +94,49 @@ export const selectFoodStatistics = createSelector(
   }
 );
 
-// export const selectFoodIntakeByCategory = createSelector(
-//   state => state.foodIntake.items,
-//   items => {
-//     const categorizedItems = {
-//       Breakfast: [],
-//       Lunch: [],
-//       Dinner: [],
-//       Snack: [],
-//     };
+export const selectFoodIntakeByCategory = createSelector(
+  state => state.foodIntake.items,
+  items => {
+    const categorizedItems = {
+      Breakfast: [],
+      Lunch: [],
+      Dinner: [],
+      Snack: [],
+    };
 
-//     items.forEach(item => {
-//       const mealType = item.mealType;
-//       if (categorizedItems[mealType]) {
-//         categorizedItems[mealType].push(item);
-//       }
-//     });
+    items.forEach(item => {
+      const mealType = item.mealType;
+      if (categorizedItems[mealType]) {
+        categorizedItems[mealType].push(item);
+      }
+    });
 
-//     return Object.keys(categorizedItems).map(type => ({
-//       type,
-//       data: categorizedItems[type],
-//     }));
-//   }
-// );
+    return Object.keys(categorizedItems).map(type => ({
+      type,
+      data: categorizedItems[type],
+    }));
+  }
+);
+
+export const selectTotalNutrientsByMealType = mealType =>
+  createSelector(
+    state => state.foodIntake.items,
+    items => {
+      const filteredItems = items.filter(item => item.mealType === mealType);
+
+      const totalNutrients = filteredItems.reduce(
+        (totals, item) => {
+          totals.carbonohidrates += item.carbonohidrates;
+          totals.protein += item.protein;
+          totals.fat += item.fat;
+          return totals;
+        },
+        { carbonohidrates: 0, protein: 0, fat: 0 }
+      );
+
+      return totalNutrients;
+    }
+  );
 
 // export const selectFoodIntakeByMealType = createSelector(
 //   state => state.foodIntake.items,

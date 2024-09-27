@@ -15,7 +15,6 @@ export const Container = styled.main`
 
   @media screen and (${props => props.theme.mq.desktop}) {
     padding-top: 20px;
-    padding-bottom: 40px;
   }
 `;
 

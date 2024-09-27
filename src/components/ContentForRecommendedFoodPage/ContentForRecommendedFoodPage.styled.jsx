@@ -34,7 +34,7 @@ export const Content = styled.div`
   }
 `;
 
-export const HeaderPage = styled.header`
+export const HeaderPage = styled.div`
   display: flex;
   margin-bottom: 16px;
 `;
@@ -56,14 +56,14 @@ export const ArrowReturn = styled.img`
 `;
 
 export const TitlePage = styled.h1`
-  font-size: 24px;
+  font-size: ${p => p.theme.fontSizes.l2};
   font-weight: ${props => props.theme.fontWeights.medium};
-  line-height: 30px;
+  line-height: 1.25;
   letter-spacing: 0em;
 
   @media screen and (${props => props.theme.mq.tablet}) {
     font-size: ${props => props.theme.fontSizes.xl};
-    line-height: 36px;
+    line-height: 1.2;
   }
 `;
 

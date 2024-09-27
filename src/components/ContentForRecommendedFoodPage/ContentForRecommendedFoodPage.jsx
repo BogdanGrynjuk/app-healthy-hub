@@ -24,7 +24,7 @@ const ContentForRecommendedFoodPage = () => {
     <>
       <HeaderPage>
         <LinkToBack to={backLinkLocationRef.current}>
-          <ArrowReturn src={arrowLeft} alt="arrow right" />
+          <ArrowReturn src={arrowLeft} alt="arrow left" />
         </LinkToBack>
         <TitlePage>Recommended food</TitlePage>
       </HeaderPage>

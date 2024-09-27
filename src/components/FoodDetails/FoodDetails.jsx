@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import RecordDiaryModal from 'components/Modals/ModalRecordDiary/ModalRecordDiary.jsx';
+import RecordDiaryModal from 'components/Modals/ModalRecordDiary/ModalRecordDiary';
 import UpdateMealModal from 'components/Modals/UpdateMealModal/UpdateMealModal';
 
 import edit from 'images/diaryPageImages/edit-2.svg';
@@ -16,16 +17,17 @@ import {
   Carbonohidrates,
   Protein,
   Fat,
-} from './ElementOfFood.styled';
+} from './FoodDetails.styled';
 
-const ElementOfFood = ({ item, index, img }) => {
+const FoodDetails = ({ mealDetails, index, img }) => {
   const [isRecordModalOpen, setIsRecordModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const toggleModalRecord = () => setIsRecordModalOpen(!isRecordModalOpen);
   const toggleModalEdit = () => setIsEditModalOpen(!isEditModalOpen);
 
-  const { carbohydrate, protein, fat, mealName, mealType, showButton } = item;
+  const { carbonohidrates, protein, fat, mealName, mealType, showButton } =
+    mealDetails;
 
   return (
     <>
@@ -55,15 +57,15 @@ const ElementOfFood = ({ item, index, img }) => {
               </EditButton>
               <BlockInfo>
                 <Carbonohidrates>
-                  <span>Carb.</span>
-                  {carbohydrate}
+                  <span>Carb.:</span>
+                  {carbonohidrates}
                 </Carbonohidrates>
                 <Protein>
-                  <span>Prot.</span>
+                  <span>Prot.:</span>
                   {protein}
                 </Protein>
                 <Fat>
-                  <span>Fat.</span>
+                  <span>Fat:</span>
                   {fat}
                 </Fat>
               </BlockInfo>
@@ -73,7 +75,7 @@ const ElementOfFood = ({ item, index, img }) => {
             <UpdateMealModal
               onClose={toggleModalEdit}
               mealType={mealType}
-              item={item}
+              item={mealDetails}
             />
           )}
         </Wrapper>
@@ -82,4 +84,23 @@ const ElementOfFood = ({ item, index, img }) => {
   );
 };
 
-export default ElementOfFood;
+FoodDetails.propTypes = {
+  mealDetails: PropTypes.oneOfType([
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      mealName: PropTypes.string.isRequired,
+      carbonohidrates: PropTypes.number.isRequired,
+      protein: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+    }),
+    PropTypes.shape({
+      mealType: PropTypes.string.isRequired,
+      showButton: PropTypes.bool.isRequired,
+    }),
+    PropTypes.object,
+  ]).isRequired,
+  index: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+};
+
+export default FoodDetails;
