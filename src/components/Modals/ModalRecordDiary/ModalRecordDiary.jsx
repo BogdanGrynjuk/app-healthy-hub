@@ -30,6 +30,8 @@ const modalRoot = document.querySelector('#modal-root');
 const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const isEditMode = !!mealDetails;
+
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -73,8 +75,10 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
           fat: Number(fat.toFixed(1)),
           calories,
         };
-        if (mealDetails) {
-          dispatch(updateMyFoodIntake({ foodId: mealDetails._id, data }));
+        if (isEditMode) {
+          dispatch(
+            updateMyFoodIntake({ id: mealDetails._id, updatedFoodIntake: data })
+          );
         } else {
           dispatch(postMyFoodIntake(data));
         }
@@ -123,10 +127,11 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
                 name="productList"
                 render={({ insert, remove }) => (
                   <FormsContainer>
-                    <FormList>
+                    <FormList $isEditMode={isEditMode}>
                       {values.productList.map((_, index) => (
                         <li key={index}>
                           <NutritionInfoForm
+                            isEditMode={isEditMode}
                             indexForm={index}
                             values={values}
                             errors={errors}
@@ -173,8 +178,17 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
 
 RecordDiaryModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   mealType: PropTypes.string.isRequired,
+  mealDetails: PropTypes.shape({
+    calories: PropTypes.number.isRequired,
+    carbonohidrates: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    mealName: PropTypes.string.isRequired,
+    mealType: PropTypes.string.isRequired,
+    protein: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
+  }),
 };
 
 export default RecordDiaryModal;

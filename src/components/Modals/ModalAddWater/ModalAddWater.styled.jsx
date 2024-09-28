@@ -55,7 +55,7 @@ export const Title = styled.h1`
   }
 `;
 
-export const FormFormic = styled(Form)`
+export const FormWrapper = styled(Form)`
   width: 100%;
 
   @media screen and (${p => p.theme.mq.tablet}) {
@@ -76,7 +76,12 @@ export const Input = styled(Field)`
   margin-bottom: 5px;
   padding: 8px 10px;
   width: 100%;
-  border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  border: ${p =>
+    p.error
+      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
+      : p.value === ''
+      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
+      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
   border-radius: ${p => p.theme.radii.normal};
   background-color: ${p => p.theme.colors.black2};
   font-family: ${props => props.theme.fontFamily.poppins};

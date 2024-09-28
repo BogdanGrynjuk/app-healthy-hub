@@ -102,14 +102,14 @@ export const FormsContainer = styled.div`
 export const FormList = styled.ul`
   padding: 10px;
   overflow-y: auto;
-  height: 225px;
+  height: ${p => (p.$isEditMode ? 'auto' : '225px')};
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   gap: 30px;
 
   @media screen and (${p => p.theme.mq.tablet}) {
-    height: calc(100% - 44px);
+    height: ${p => (p.$isEditMode ? 'auto' : 'calc(100% - 44px)')};
     gap: 24px;
   }
 

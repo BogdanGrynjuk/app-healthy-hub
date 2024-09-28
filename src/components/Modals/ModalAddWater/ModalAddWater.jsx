@@ -11,7 +11,7 @@ import {
   Backdrop,
   Modal,
   Title,
-  FormFormic,
+  FormWrapper,
   Label,
   Button,
   ButtonCancel,
@@ -75,19 +75,26 @@ const AddWater = ({ onClose }) => {
         <Title>Add water intake</Title>
         <Formik
           initialValues={initialValues}
-          validateOnBlur={false}
           onSubmit={handleSubmit}
           validationSchema={validationSchemaForWater}
         >
-          <FormFormic autoComplete="off">
-            <Label htmlFor="water">How much water</Label>
-            <Input name="water" type="number" placeholder="Enter milliliters" />
-            <ErrorMes name="water" component="div" />
-            <Button type="submit">Confirm</Button>
-            <ButtonCancel type="button" onClick={closeModal}>
-              Cancel
-            </ButtonCancel>
-          </FormFormic>
+          {({ errors, touched, values }) => (
+            <FormWrapper autoComplete="off">
+              <Label htmlFor="water">How much water</Label>
+              <Input
+                error={errors.water && touched.water}
+                value={values.water}
+                name="water"
+                type="number"
+                placeholder="Enter milliliters"
+              />
+              <ErrorMes name="water" component="div" />
+              <Button type="submit">Confirm</Button>
+              <ButtonCancel type="button" onClick={closeModal}>
+                Cancel
+              </ButtonCancel>
+            </FormWrapper>
+          )}
         </Formik>
       </Modal>
     </Backdrop>,

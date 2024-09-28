@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import RecordDiaryModal from 'components/Modals/ModalRecordDiary/ModalRecordDiary';
-import UpdateMealModal from 'components/Modals/UpdateMealModal/UpdateMealModal';
 
 import edit from 'images/diaryPageImages/edit-2.svg';
 
@@ -72,10 +71,10 @@ const FoodDetails = ({ mealDetails, index, img }) => {
             </Dish>
           )}
           {isEditModalOpen && (
-            <UpdateMealModal
+            <RecordDiaryModal
               onClose={toggleModalEdit}
               mealType={mealType}
-              item={mealDetails}
+              mealDetails={mealDetails}
             />
           )}
         </Wrapper>

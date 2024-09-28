@@ -40,6 +40,15 @@ export const InputWrapper = styled.div`
   gap: 5px;
 `;
 
+export const Label = styled.label`
+  margin-left: 5px;
+  font-size: ${props => props.theme.fontSizes.xs};
+  font-weight: ${props => props.theme.fontWeights.regular};
+  line-height: 26px;
+  letter-spacing: 0em;
+  color: ${p => p.theme.colors.white};
+`;
+
 export const Input = styled(Field)`
   padding: 8px 10px;
   width: 100%;

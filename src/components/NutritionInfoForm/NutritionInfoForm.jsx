@@ -6,12 +6,14 @@ import {
   ErrorMsg,
   Input,
   InputWrapper,
+  Label,
 } from './NutritionInfoForm.styled';
 
 import trash1x from 'images/trash.png';
 import trash2x from 'images/trash@2x.png';
 
 const NutritionInfoForm = ({
+  isEditMode,
   indexForm,
   values,
   errors,
@@ -23,6 +25,11 @@ const NutritionInfoForm = ({
   return (
     <Container $hasRemoveButton={hasRemoveButton}>
       <InputWrapper>
+        {isEditMode && (
+          <Label htmlFor={`productList.${indexForm}.mealName`}>
+            Product or dish name
+          </Label>
+        )}
         <Input
           type="text"
           id={`productList.${indexForm}.mealName`}
@@ -38,6 +45,11 @@ const NutritionInfoForm = ({
       </InputWrapper>
 
       <InputWrapper>
+        {isEditMode && (
+          <Label htmlFor={`productList.${indexForm}.carbonohidrates`}>
+            Carb.
+          </Label>
+        )}
         <Input
           type="number"
           id={`productList.${indexForm}.carbonohidrates`}
@@ -56,6 +68,9 @@ const NutritionInfoForm = ({
       </InputWrapper>
 
       <InputWrapper>
+        {isEditMode && (
+          <Label htmlFor={`productList.${indexForm}.protein`}>Protein</Label>
+        )}
         <Input
           type="number"
           id={`productList.${indexForm}.protein`}
@@ -71,6 +86,9 @@ const NutritionInfoForm = ({
       </InputWrapper>
 
       <InputWrapper>
+        {isEditMode && (
+          <Label htmlFor={`productList.${indexForm}.fat`}>Fat</Label>
+        )}
         <Input
           type="number"
           id={`productList.${indexForm}.fat`}
@@ -86,6 +104,9 @@ const NutritionInfoForm = ({
       </InputWrapper>
 
       <InputWrapper>
+        {isEditMode && (
+          <Label htmlFor={`productList.${indexForm}.calories`}>Calories</Label>
+        )}
         <Input
           type="number"
           id={`productList.${indexForm}.calories`}
@@ -116,6 +137,7 @@ const NutritionInfoForm = ({
 };
 
 NutritionInfoForm.propTypes = {
+  isEditMode: PropTypes.bool,
   indexForm: PropTypes.number.isRequired,
   values: PropTypes.shape({
     productList: PropTypes.arrayOf(
