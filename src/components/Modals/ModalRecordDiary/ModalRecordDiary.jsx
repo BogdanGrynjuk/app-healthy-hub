@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import { FieldArray, Formik } from 'formik';
@@ -30,7 +30,9 @@ const modalRoot = document.querySelector('#modal-root');
 const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [formCount, setFormCount] = useState(1);
   const isEditMode = !!mealDetails;
+  const lastFormRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -102,6 +104,12 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
     setIsActive(true);
   }, []);
 
+  useEffect(() => {
+    if (lastFormRef.current) {
+      lastFormRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [formCount]);
+
   if (!isVisible) return null;
 
   return createPortal(
@@ -129,7 +137,14 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
                   <FormsContainer>
                     <FormList $isEditMode={isEditMode}>
                       {values.productList.map((_, index) => (
-                        <li key={index}>
+                        <li
+                          key={index}
+                          ref={
+                            index === values.productList.length - 1
+                              ? lastFormRef
+                              : null
+                          }
+                        >
                           <NutritionInfoForm
                             isEditMode={isEditMode}
                             indexForm={index}
@@ -153,6 +168,7 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
                             fat: '',
                             calories: '',
                           });
+                          setFormCount(formCount + 1);
                         }}
                       >
                         + Add more

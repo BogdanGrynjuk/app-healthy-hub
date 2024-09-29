@@ -31,6 +31,16 @@ export const Container = styled.div`
       grid-column-start: 3;
       grid-column-end: 4;
     }
+
+    & > div:nth-child(4) {
+      grid-column-start: 4;
+      grid-column-end: 5;
+    }
+
+    & > div:nth-child(5) {
+      grid-column-start: 5;
+      grid-column-end: ${({ $hasRemoveButton }) => ($hasRemoveButton ? 6 : 7)};
+    }
   }
 `;
 

@@ -64,7 +64,7 @@ export const BlockInfo = styled.div`
   }
 `;
 
-export const Carbonohidrates = styled.p`
+export const Carbohydrates = styled.p`
   display: flex;
   width: 70px;
   column-gap: 6px;
@@ -82,14 +82,14 @@ export const Carbonohidrates = styled.p`
   }
 `;
 
-export const Protein = styled(Carbonohidrates)`
+export const Protein = styled(Carbohydrates)`
   width: 62px;
   @media screen and (${p => p.theme.mq.tablet}) {
     width: 80px;
   }
 `;
 
-export const Fat = styled(Carbonohidrates)`
+export const Fat = styled(Carbohydrates)`
   width: 58px;
   @media screen and (${p => p.theme.mq.tablet}) {
     width: 80px;

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 
@@ -10,12 +11,32 @@ import {
 import FoodDetails from 'components/FoodDetails';
 
 const BlockDetailedInfoOfDiarySection = ({ mealType, meals, imageSrc }) => {
+  const renderedMeals = getArrayToRenderDiary(meals, mealType);
+  const lastElementRef = useRef(null);
+  const prevRenderedMealsLength = useRef(renderedMeals.length);
+
+  useEffect(() => {
+    if (renderedMeals.length > prevRenderedMealsLength.current) {
+      if (lastElementRef.current) {
+        lastElementRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+    prevRenderedMealsLength.current = renderedMeals.length;
+  }, [renderedMeals.length]);
+
   return (
     <Container>
       <FoodList>
-        {getArrayToRenderDiary(meals, mealType).map((mealDetails, index) => {
+        {renderedMeals.map((mealDetails, index) => {
+          const isLastElement = index === renderedMeals.length - 1;
           return (
-            <FoodItem key={nanoid()}>
+            <FoodItem
+              key={nanoid()}
+              ref={isLastElement ? lastElementRef : null}
+            >
               <FoodDetails
                 mealDetails={mealDetails}
                 index={index}

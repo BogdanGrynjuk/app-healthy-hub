@@ -1,20 +1,25 @@
 export const getArrayToRenderDiary = (foodArray, mealType) => {
+  const sortedFoodArray = [...foodArray].sort((a, b) => {
+    return a.mealName.localeCompare(b.mealName);
+  });
+
   const result =
-    foodArray.length <= 3
+    sortedFoodArray.length <= 3
       ? [
-          ...foodArray,
+          ...sortedFoodArray,
           ...Array(1).fill({
             mealType,
             showButton: true,
           }),
-          ...Array(3 - foodArray.length).fill({}),
+          ...Array(3 - sortedFoodArray.length).fill({}),
         ]
       : [
-          ...foodArray,
+          ...sortedFoodArray,
           ...Array(1).fill({
             mealType,
             showButton: true,
           }),
         ];
+
   return result;
 };

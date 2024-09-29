@@ -13,7 +13,7 @@ import {
   EditButton,
   Img,
   BlockInfo,
-  Carbonohidrates,
+  Carbohydrates,
   Protein,
   Fat,
 } from './FoodDetails.styled';
@@ -55,10 +55,10 @@ const FoodDetails = ({ mealDetails, index, img }) => {
                 Edit
               </EditButton>
               <BlockInfo>
-                <Carbonohidrates>
+                <Carbohydrates>
                   <span>Carb.:</span>
                   {carbonohidrates}
-                </Carbonohidrates>
+                </Carbohydrates>
                 <Protein>
                   <span>Prot.:</span>
                   {protein}

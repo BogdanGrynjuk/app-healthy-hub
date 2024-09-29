@@ -54,12 +54,8 @@ export const Info = styled.div`
   line-height: 20px;
 
   @media screen and (${p => p.theme.mq.tablet}) {
-    margin-right: 60px;
+    margin-right: 110px;
     flex-wrap: nowrap;
-  }
-
-  @media screen and (${p => p.theme.mq.desktop}) {
-    margin-right: 25px;
   }
 `;
 
@@ -67,16 +63,16 @@ export const CarbohydratesWrap = styled.p`
   width: 100%;
 
   @media screen and (${p => p.theme.mq.tablet}) {
-    width: 164px;
+    width: auto;
   }
 `;
 
 export const ProteinWrap = styled.p`
-  width: 92px;
+  width: auto;
 `;
 
 export const FatWrap = styled.p`
-  width: 66px;
+  width: auto;
 `;
 
 export const Value = styled.span`
