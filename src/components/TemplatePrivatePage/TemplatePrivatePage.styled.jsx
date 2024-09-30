@@ -24,6 +24,7 @@ export const Content = styled.div`
   padding: 0 10px;
 
   @media screen and (${props => props.theme.mq.tablet}) {
+    position: relative;
     width: 834px;
     padding: 0 27px;
   }

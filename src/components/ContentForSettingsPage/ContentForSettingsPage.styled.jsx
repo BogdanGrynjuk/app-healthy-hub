@@ -34,7 +34,7 @@ export const TitlePage = styled.h1`
   }
 `;
 
-export const InfoBox = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +42,7 @@ export const InfoBox = styled.div`
 
   @media screen and (${props => props.theme.mq.desktop}) {
     flex-direction: row;
-    column-gap: 44px;
+    column-gap: 160px;
   }
 `;
 
@@ -67,10 +67,4 @@ export const Img = styled.img`
   display: block;
   max-width: 100%;
   height: auto;
-`;
-
-export const TextContainer = styled.div`
-  @media screen and (${props => props.theme.mq.desktop}) {
-    width: calc((100% - 44px) / 2);
-  }
 `;

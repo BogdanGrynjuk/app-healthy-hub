@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
 
 import { getMyFoodIntake } from '../foodIntake/foodIntake.Operations';
 
@@ -106,16 +105,9 @@ export const resetPassword = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'auth/updateUser',
-  async (fieldsToUpdate, { rejectWithValue }) => {
+  async (updatedUserData, { rejectWithValue }) => {
     try {
-      const formData = new FormData();
-      for (const field in fieldsToUpdate) {
-        formData.append(field, fieldsToUpdate[field]);
-      }
-
-      const res = await axiosAuth.patch('user/info', formData);
-      toast.success('Profile updated!');
-
+      const res = await axiosAuth.patch('user/info', updatedUserData);
       return res.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response.data.message) {

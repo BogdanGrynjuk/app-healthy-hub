@@ -25,7 +25,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { selectStatisticInfo } from 'redux/Stats/statsSelectors';
+import { selectStatisticInfo } from 'redux/Statistic/statsSelectors.js';
 
 ChartJS.register(
   CategoryScale,

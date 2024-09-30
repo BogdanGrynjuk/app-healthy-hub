@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectStatisticInfo } from 'redux/Stats/statsSelectors';
+import { selectStatisticInfo } from 'redux/Statistic/statsSelectors';
 import { MONTH_NAME } from '../../constants/monthName';
 import {
   List,
