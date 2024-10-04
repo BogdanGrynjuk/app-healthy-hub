@@ -45,7 +45,7 @@ const ForgotPasswordForm = () => {
               name="email"
               placeholder="E-mail"
               autoComplete="email"
-              error={touched.email && errors.email}
+              $error={touched.email && errors.email}
               value={values.email}
             />
             <ErrorMsg

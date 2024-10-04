@@ -82,7 +82,7 @@ const AddWater = ({ onClose }) => {
             <FormWrapper autoComplete="off">
               <Label htmlFor="water">How much water</Label>
               <Input
-                error={errors.water && touched.water}
+                $error={errors.water && touched.water}
                 value={values.water}
                 name="water"
                 type="number"

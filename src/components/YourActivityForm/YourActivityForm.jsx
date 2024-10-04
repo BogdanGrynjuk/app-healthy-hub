@@ -11,9 +11,10 @@ import {
   BackButton,
 } from './YourActivityForm.styled';
 import CustomRadioButton from 'components/CustomRadioButton';
-import { setNewUserActivity } from 'redux/Auth/authSlice';
+import { setUserActivity } from 'redux/Auth/authSlice';
 import { signUp } from 'redux/Auth/authOperations';
 import { selectError, selectUser } from 'redux/Auth/authSelectors';
+import { PHYSICAL_ACTIVITY_OPTIONS } from 'constants/physicalActivityOptions';
 
 const YourActivityForm = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,16 @@ const YourActivityForm = () => {
   const error = useSelector(selectError);
 
   const initialValues = {
-    activity: user.activity || '1.2',
+    physicalActivityRatio: user.physicalActivityRatio || '1.2',
   };
 
-  const handleClickNext = ({ activity }) => {
-    dispatch(setNewUserActivity(activity));
+  const handleClickNext = ({ physicalActivityRatio }) => {
+    dispatch(setUserActivity(physicalActivityRatio));
     dispatch(
-      signUp({ ...user, activity, physicalActivityRatio: Number(activity) })
+      signUp({
+        ...user,
+        physicalActivityRatio: Number(physicalActivityRatio),
+      })
     );
   };
 
@@ -48,36 +52,17 @@ const YourActivityForm = () => {
       {({ values }) => (
         <FormWrapper>
           <FormGroup role="group" aria-labelledby="activity-head">
-            <CustomRadioButton
-              name="activity"
-              value="1.2"
-              selectedValue={values.activity}
-              text="1.2 - if you do not have physical activity and sedentary work"
-            />
-            <CustomRadioButton
-              name="activity"
-              value="1.375"
-              selectedValue={values.activity}
-              text="1,375 - if you do short runs or light gymnastics 1-3 times a week"
-            />
-            <CustomRadioButton
-              name="activity"
-              value="1.55"
-              selectedValue={values.activity}
-              text="1.55 - if you play sports with average loads 3-5 times a week"
-            />
-            <CustomRadioButton
-              name="activity"
-              value="1.725"
-              selectedValue={values.activity}
-              text="1,725 - if you train fully 6-7 times a week"
-            />
-            <CustomRadioButton
-              name="activity"
-              value="1.9"
-              selectedValue={values.activity}
-              text="1.9 - if your work is related to physical labor, you train 2 times a day and include strength exercises in your training program"
-            />
+            {PHYSICAL_ACTIVITY_OPTIONS.map(option => {
+              return (
+                <CustomRadioButton
+                  key={option.value}
+                  name="physicalActivityRatio"
+                  value={option.value}
+                  selectedValue={values.physicalActivityRatio}
+                  text={option.text}
+                />
+              );
+            })}
           </FormGroup>
 
           <ButtonContainer>

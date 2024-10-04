@@ -1,6 +1,58 @@
 import styled from 'styled-components';
 import { ErrorMessage, Field, Form } from 'formik';
 
+export const SettingsPageSection = styled.main`
+  background-color: ${props => props.theme.colors.black};
+  color: ${props => props.theme.colors.white};
+  font-family: ${props => props.theme.fontFamily.poppins};
+  padding-top: 16px;
+  padding-bottom: 20px;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    padding-top: 24px;
+    padding-bottom: 20px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    padding-top: 20px;
+  }
+`;
+
+export const SettingsPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0 10px;
+  width: 320px;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 834px;
+    padding: 0 27px;
+    position: relative;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 1440px;
+    padding: 0 34px;
+  }
+`;
+
+export const TitlePage = styled.h1`
+  font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.l};
+  line-height: 30px;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    font-size: ${props => props.theme.fontSizes.xl};
+    line-height: 36px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    font-size: ${props => props.theme.fontSizes.xl};
+    line-height: 36px;
+  }
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,6 +82,7 @@ export const CancelButton = styled.button`
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.regular};
   line-height: 20px;
+
   width: 100%;
   padding: 8px 12px;
   border: ${p => p.theme.borders.normal} transparent;
@@ -51,6 +104,7 @@ export const SaveButton = styled.button`
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 20px;
+
   width: 212px;
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${props => props.theme.radii.normal};
@@ -62,7 +116,47 @@ export const SaveButton = styled.button`
   }
 `;
 
-export const FormWrapper = styled(Form)`
+export const ProfileSettingsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    margin-top: 20px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 16px;
+  }
+`;
+
+export const BannerThumb = styled.div`
+  width: 300px;
+  margin-bottom: 24px;
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    width: 380px;
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    width: 536px;
+    margin-bottom: 0;
+  }
+`;
+
+export const Img = styled.img`
+  display: block;
+  max-width: 100%;
+  height: auto;
+`;
+
+export const FormFormik = styled(Form)`
   display: flex;
   flex-direction: column;
   row-gap: 40px;
@@ -106,12 +200,6 @@ export const Input = styled(Field)`
   padding: 8px 10px;
   border-radius: ${props => props.theme.radii.normal};
   border: 1px solid ${props => props.theme.colors.gray};
-  border: ${p =>
-    p.$error
-      ? `${p.theme.borders.normal} ${p.theme.colors.error}`
-      : p.value === ''
-      ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`
-      : `${p.theme.borders.normal} ${p.theme.colors.correct}`};
 
   &:hover {
     border-color: ${props => props.theme.colors.greenLite};

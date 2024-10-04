@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
 import {
-  setNewUserName,
-  setNewUserEmail,
-  setNewUserPassword,
+  setUserName,
+  setUserEmail,
+  setUserPassword,
 } from 'redux/Auth/authSlice';
 
 import validationSchemaSignUp from 'validationSchemas/validationSchemaSignUp';
@@ -26,9 +26,9 @@ const SignUpForm = () => {
   };
 
   const handleSignUp = ({ name, email, password }) => {
-    dispatch(setNewUserName(name));
-    dispatch(setNewUserEmail(email));
-    dispatch(setNewUserPassword(password));
+    dispatch(setUserName(name));
+    dispatch(setUserEmail(email));
+    dispatch(setUserPassword(password));
 
     dispatch(checkEmail(email))
       .unwrap()

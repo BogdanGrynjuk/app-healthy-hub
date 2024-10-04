@@ -1,9 +1,9 @@
 import * as yup from 'yup';
-import validationSchemaForSettingsPage from 'validationSchemas/validationSchemaForSettdingsPage';
+import validationSchemaForProfileSetting from 'validationSchemas/validationSchemaForSettdingsPage';
 
 const validationSchemaForHeightAndWeight = yup.object({
-  height: validationSchemaForSettingsPage.fields.height,
-  weight: validationSchemaForSettingsPage.fields.weight,
+  height: validationSchemaForProfileSetting.fields.height,
+  weight: validationSchemaForProfileSetting.fields.weight,
 });
 
 export default validationSchemaForHeightAndWeight;

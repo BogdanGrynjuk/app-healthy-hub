@@ -33,34 +33,37 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    clearError: state => {
+      state.error = null;
+    },
     updateAppStatus: (state, { payload }) => {
       state.appStatus = payload;
     },
-    setNewUserName: (state, { payload }) => {
+    setUserName: (state, { payload }) => {
       state.user.name = payload;
     },
-    setNewUserEmail: (state, { payload }) => {
+    setUserEmail: (state, { payload }) => {
       state.user.email = payload;
     },
-    setNewUserPassword: (state, { payload }) => {
+    setUserPassword: (state, { payload }) => {
       state.user.password = payload;
     },
-    setNewUserGoal: (state, { payload }) => {
+    setUserGoal: (state, { payload }) => {
       state.user.goal = payload;
     },
-    setNewUserAge: (state, { payload }) => {
+    setUserAge: (state, { payload }) => {
       state.user.age = payload;
     },
-    setNewUserGender: (state, { payload }) => {
+    setUserGender: (state, { payload }) => {
       state.user.gender = payload;
     },
-    setNewUserHeight: (state, { payload }) => {
+    setUserHeight: (state, { payload }) => {
       state.user.height = payload;
     },
-    setNewUserWeight: (state, { payload }) => {
+    setUserWeight: (state, { payload }) => {
       state.user.weight = payload;
     },
-    setNewUserActivity: (state, { payload }) => {
+    setUserActivity: (state, { payload }) => {
       state.user.physicalActivityRatio = payload;
     },
   },
@@ -184,15 +187,16 @@ const authSlice = createSlice({
 });
 
 export const {
+  clearError,
   updateAppStatus,
-  setNewUserName,
-  setNewUserEmail,
-  setNewUserPassword,
-  setNewUserGoal,
-  setNewUserAge,
-  setNewUserGender,
-  setNewUserHeight,
-  setNewUserWeight,
-  setNewUserActivity,
+  setUserName,
+  setUserEmail,
+  setUserPassword,
+  setUserGoal,
+  setUserAge,
+  setUserGender,
+  setUserHeight,
+  setUserWeight,
+  setUserActivity,
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;

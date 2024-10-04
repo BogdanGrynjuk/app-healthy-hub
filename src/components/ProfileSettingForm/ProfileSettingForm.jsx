@@ -9,9 +9,9 @@ import {
   ButtonContainer,
   CancelButton,
   ErrorMsg,
-  FormFormik,
   FormGroup,
   FormGroupLabel,
+  FormWrapper,
   Input,
   InputFileContainer,
   Label,
@@ -21,13 +21,14 @@ import {
 } from './ProfileSettingForm.styled';
 
 import { selectUser } from 'redux/Auth/authSelectors';
-import validationSchemaForSettingsPage from 'validationSchemas/validationSchemaForSettdingsPage';
+import { updateUser } from 'redux/Auth/authOperations';
+import validationSchemaForProfileSetting from 'validationSchemas/validationSchemaForSettdingsPage';
 import CustomRadioButton from 'components/CustomRadioButton';
+import { PHYSICAL_ACTIVITY_OPTIONS } from 'constants/physicalActivityOptions';
+import { GENDER_OPTIONS } from 'constants/genderOptions';
 
 import downloadPhoto from 'images/icons/download-new-photo.svg';
 import avatar from 'images/icons/profile-circle.svg';
-import { updateUser } from 'redux/Auth/authOperations';
-import { PHYSICAL_ACTIVITY_OPTIONS } from 'constants/physicalActivityOptions';
 
 const ProfileSettingForm = () => {
   const dispatch = useDispatch();
@@ -90,16 +91,19 @@ const ProfileSettingForm = () => {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSaveClick}
-      validationSchema={validationSchemaForSettingsPage}
+      validationSchema={validationSchemaForProfileSetting}
     >
       {({ values, errors, touched }) => (
-        <FormFormik>
+        <FormWrapper>
           <Label>
             Your name
             <Input
               type="text"
               name="name"
               placeholder="Enter your name"
+              autoComplete="off"
+              $error={touched.name && errors.name}
+              value={values.name}
               required
             />
             <ErrorMsg name="name" component="div" />
@@ -132,6 +136,9 @@ const ProfileSettingForm = () => {
               type="number"
               name="age"
               placeholder="Enter your age"
+              autoComplete="off"
+              $error={touched.age && errors.age}
+              value={values.age}
               required
             />
             <ErrorMsg name="age" component="div" />
@@ -140,18 +147,15 @@ const ProfileSettingForm = () => {
           <FormGroup role="group" aria-labelledby="gender-head">
             <FormGroupLabel id="gender-head">Gender</FormGroupLabel>
             <WrapperRadioButton>
-              <CustomRadioButton
-                name="gender"
-                value="Male"
-                selectedValue={values.gender}
-                text="Male"
-              />
-              <CustomRadioButton
-                name="gender"
-                value="Female"
-                selectedValue={values.gender}
-                text="Female"
-              />
+              {GENDER_OPTIONS.map(option => (
+                <CustomRadioButton
+                  key={option.value}
+                  name="gender"
+                  value={option.value}
+                  selectedValue={values.gender}
+                  text={option.text}
+                />
+              ))}
             </WrapperRadioButton>
           </FormGroup>
 
@@ -161,6 +165,9 @@ const ProfileSettingForm = () => {
               type="number"
               name="height"
               placeholder="Enter your height"
+              autoComplete="off"
+              $error={touched.height && errors.height}
+              value={values.height}
               required
             />
             <ErrorMsg name="height" component="div" />
@@ -172,6 +179,9 @@ const ProfileSettingForm = () => {
               type="number"
               name="weight"
               placeholder="Enter your weight"
+              autoComplete="off"
+              $error={touched.weight && errors.weight}
+              value={values.weight}
               required
             />
             <ErrorMsg name="weight" component="div" />
@@ -196,7 +206,7 @@ const ProfileSettingForm = () => {
               Cancel
             </CancelButton>
           </ButtonContainer>
-        </FormFormik>
+        </FormWrapper>
       )}
     </Formik>
   );

@@ -11,7 +11,7 @@ import {
 } from 'redux-persist';
 import { authReducer } from './Auth/authSlice';
 import { foodIntakeReducer } from './foodIntake/foodIntakeSlice';
-import { statisticReducer } from './Statistic/statsSlice';
+import { statisticReducer } from './Stats/statsSlice';
 
 const persistConfig = {
   key: 'auth',

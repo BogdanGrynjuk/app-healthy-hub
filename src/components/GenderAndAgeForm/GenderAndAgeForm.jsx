@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
-import { setNewUserAge, setNewUserGender } from 'redux/Auth/authSlice';
+import { setUserAge, setUserGender } from 'redux/Auth/authSlice';
 import { selectUser } from 'redux/Auth/authSelectors';
 import validationSchemaForAge from 'validationSchemas/validationSchemaForAge';
 import CustomRadioButton from 'components/CustomRadioButton';
@@ -20,6 +20,7 @@ import {
   NextButton,
   BackButton,
 } from './GenderAndAgeForm.styled';
+import { GENDER_OPTIONS } from 'constants/genderOptions';
 
 const GenderAndAgeForm = () => {
   const dispatch = useDispatch();
@@ -33,8 +34,8 @@ const GenderAndAgeForm = () => {
   };
 
   const handleClickNext = values => {
-    dispatch(setNewUserGender(values.gender));
-    dispatch(setNewUserAge(values.age));
+    dispatch(setUserGender(values.gender));
+    dispatch(setUserAge(values.age));
     navigate('/body-parameters');
   };
 
@@ -53,18 +54,15 @@ const GenderAndAgeForm = () => {
           <FormGroup role="group" aria-labelledby="gender-head">
             <FormGroupLabel id="gender-head">Gender</FormGroupLabel>
             <WrapperRadioButton>
-              <CustomRadioButton
-                name="gender"
-                value="Male"
-                selectedValue={values.gender}
-                text="Male"
-              />
-              <CustomRadioButton
-                name="gender"
-                value="Female"
-                selectedValue={values.gender}
-                text="Female"
-              />
+              {GENDER_OPTIONS.map(option => (
+                <CustomRadioButton
+                  key={option.value}
+                  name="gender"
+                  value={option.value}
+                  selectedValue={values.gender}
+                  text={option.text}
+                />
+              ))}
             </WrapperRadioButton>
           </FormGroup>
 
@@ -74,9 +72,6 @@ const GenderAndAgeForm = () => {
               type="number"
               name="age"
               placeholder="Enter your age"
-              autoComplete="off"
-              error={touched.age && errors.age}
-              value={values.age}
               required
             />
             <ErrorMsg name="age" component="div" />

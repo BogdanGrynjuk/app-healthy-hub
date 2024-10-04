@@ -1,8 +1,8 @@
 import * as yup from 'yup';
-import validationSchemaForSettingsPage from 'validationSchemas/validationSchemaForSettdingsPage';
+import validationSchemaForProfileSetting from 'validationSchemas/validationSchemaForSettdingsPage';
 
 const validationSchemaForAge = yup.object({
-  age: validationSchemaForSettingsPage.fields.age,
+  age: validationSchemaForProfileSetting.fields.age,
 });
 
 export default validationSchemaForAge;

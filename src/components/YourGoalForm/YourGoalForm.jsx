@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNewUserGoal } from 'redux/Auth/authSlice';
+import { setUserGoal } from 'redux/Auth/authSlice';
 import { Formik } from 'formik';
 
 import CustomRadioButton from 'components/CustomRadioButton/CustomRadioButton';
@@ -19,7 +19,7 @@ const YourGoalForm = () => {
   };
 
   const handleClickNext = values => {
-    dispatch(setNewUserGoal(values.goal));
+    dispatch(setUserGoal(values.goal));
     navigate('/select-gender');
   };
   return (

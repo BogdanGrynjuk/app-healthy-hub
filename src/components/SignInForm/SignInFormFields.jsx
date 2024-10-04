@@ -1,59 +1,63 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectError } from 'redux/Auth/authSelectors';
+import { clearError } from 'redux/Auth/authSlice';
 
 import {
-  FormWrapper,
-  FormField,
-  Input,
   ErrorMsg,
+  ForgotPasswordLink,
   FormButton,
-  InputWrapper,
+  FormField,
+  FormWrapper,
   IconWrapper,
-} from './SignUpForm.styled';
+  Input,
+  InputWrapper,
+} from './SignInForm.styled';
 
 import { ReactComponent as EyeCloseSvg } from 'images/icons/eye-off.svg';
 import { ReactComponent as EyeOpenSvg } from 'images/icons/eye.svg';
 
-const SignUpFormFields = ({
+const SignInFormFields = ({
   values,
   errors,
   touched,
+  setFieldValue,
   setFieldTouched,
   setFieldError,
 }) => {
+  const dispatch = useDispatch();
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const errorFromState = useSelector(selectError);
 
   const togglePassword = () => setIsVisiblePassword(!isVisiblePassword);
 
+  const handleForgotPasswordClick = () => {
+    dispatch(clearError());
+  };
+
   useEffect(() => {
+    let errorFields = {};
     if (errorFromState) {
-      setFieldTouched('email', true);
-      setFieldError('email', errorFromState);
+      try {
+        errorFields = JSON.parse(errorFromState);
+      } catch (e) {
+        console.error(e);
+      }
+      setFieldValue('email', errorFields.email);
+      setFieldValue('password', errorFields.password);
+      setTimeout(() => {
+        setFieldTouched('email', true);
+        setFieldTouched('password', true);
+        setFieldError('email', 'Please check your email and try again');
+        setFieldError('password', 'Please check your password and try again');
+      }, 0);
     }
-  }, [errorFromState, setFieldError, setFieldTouched]);
+  }, [errorFromState, setFieldValue, setFieldError, setFieldTouched]);
 
   return (
     <FormWrapper>
-      <FormField>
-        <Input
-          type="text"
-          name="name"
-          placeholder="Name"
-          autoComplete="username"
-          $error={touched.name && errors.name}
-          value={values.name}
-        />
-        <ErrorMsg
-          className={touched.name && errors.name ? 'visible' : ''}
-          name="name"
-          component="div"
-        />
-      </FormField>
-
       <FormField>
         <Input
           type="email"
@@ -63,11 +67,7 @@ const SignUpFormFields = ({
           $error={touched.email && errors.email}
           value={values.email}
         />
-        <ErrorMsg
-          className={touched.email && errors.email ? 'visible' : ''}
-          name="email"
-          component="div"
-        />
+        <ErrorMsg name="email" component="div" />
       </FormField>
 
       <FormField>
@@ -88,36 +88,36 @@ const SignUpFormFields = ({
             )}
           </IconWrapper>
         </InputWrapper>
-        <ErrorMsg
-          className={touched.password && errors.password ? 'visible' : ''}
-          name="password"
-          component="div"
-        />
+        <ErrorMsg name="password" component="div" />
       </FormField>
 
-      <FormButton type="submit">Sign Up</FormButton>
+      <FormButton type="submit">Sign In</FormButton>
+      <ForgotPasswordLink
+        to={'/forgot-password'}
+        onClick={handleForgotPasswordClick}
+      >
+        Forgot your password?
+      </ForgotPasswordLink>
     </FormWrapper>
   );
 };
 
-SignUpFormFields.propTypes = {
+SignInFormFields.propTypes = {
   values: PropTypes.shape({
-    name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
   }).isRequired,
   errors: PropTypes.shape({
-    name: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
   }).isRequired,
   touched: PropTypes.shape({
-    name: PropTypes.bool,
     email: PropTypes.bool,
     password: PropTypes.bool,
   }).isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldError: PropTypes.func.isRequired,
 };
 
-export default SignUpFormFields;
+export default SignInFormFields;

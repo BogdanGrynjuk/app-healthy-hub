@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const validationSchemaForSettingsPage = yup.object({
+const validationSchemaForProfileSetting = yup.object({
   name: yup
     .string()
     .matches(
@@ -34,4 +34,4 @@ const validationSchemaForSettingsPage = yup.object({
     ),
 });
 
-export default validationSchemaForSettingsPage;
+export default validationSchemaForProfileSetting;

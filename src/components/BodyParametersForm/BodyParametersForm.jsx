@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
-import { setNewUserHeight, setNewUserWeight } from 'redux/Auth/authSlice';
+import { setUserHeight, setUserWeight } from 'redux/Auth/authSlice';
 import { selectUser } from 'redux/Auth/authSelectors';
 import validationSchemaForHeightAndWeight from 'validationSchemas/validationSchemaForHeightAndWeight';
 
@@ -29,8 +29,8 @@ const BodyParametersForm = () => {
   };
 
   const handleClickNext = ({ height, weight }) => {
-    dispatch(setNewUserHeight(height));
-    dispatch(setNewUserWeight(weight));
+    dispatch(setUserHeight(height));
+    dispatch(setUserWeight(weight));
     navigate('/your-activity');
   };
 
@@ -53,7 +53,7 @@ const BodyParametersForm = () => {
               name="height"
               placeholder="Enter your height"
               autoComplete="off"
-              error={touched.height && errors.height}
+              $error={touched.height && errors.height}
               value={values.height}
               required
             />
@@ -67,7 +67,7 @@ const BodyParametersForm = () => {
               name="weight"
               placeholder="Enter your weight"
               autoComplete="off"
-              error={touched.weight && errors.weight}
+              $or={touched.weight && errors.weight}
               value={values.weight}
               required
             />

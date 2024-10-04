@@ -63,7 +63,7 @@ export const Input = styled(Field)`
   padding: 8px 10px;
   width: 100%;
   border: ${p =>
-    p.error
+    p.$error
       ? `${p.theme.borders.normal} ${p.theme.colors.error}`
       : p.value === ''
       ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`

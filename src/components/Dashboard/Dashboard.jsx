@@ -21,7 +21,7 @@ import LineChart from 'components/Charts/LineChart';
 import ScaleChart from 'components/Charts/ScaleChart';
 import { MONTH_NAME } from 'constants/monthName';
 import { PERIOD_TYPES } from 'constants/periodTypes';
-import { getStatistic } from 'redux/Statistic/statsOperations';
+import { getStatistic } from 'redux/Stats/statsOperations';
 
 const Dashboard = () => {
   const [isYearView, setIsYearView] = useState(false);

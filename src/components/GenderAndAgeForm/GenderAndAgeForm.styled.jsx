@@ -99,7 +99,7 @@ export const Input = styled(Field)`
   border-radius: ${props => props.theme.radii.normal};
   border: 1px solid ${props => props.theme.colors.gray};
   border: ${p =>
-    p.error
+    p.$error
       ? `${p.theme.borders.normal} ${p.theme.colors.error}`
       : p.value === ''
       ? `${p.theme.borders.normal} ${p.theme.colors.greenLite}`

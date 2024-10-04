@@ -39,7 +39,7 @@ export const signIn = createAsyncThunk(
         toastifyMessage('error', error.response.data.message);
       }
       console.log(error.response.data.message);
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error.response.config.data);
     }
   }
 );

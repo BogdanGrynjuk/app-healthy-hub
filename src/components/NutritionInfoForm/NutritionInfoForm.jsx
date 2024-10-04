@@ -36,7 +36,7 @@ const NutritionInfoForm = ({
           name={`productList.${indexForm}.mealName`}
           placeholder="The name of the product or dish"
           value={values?.productList?.[indexForm]?.mealName}
-          error={
+          $error={
             touched?.productList?.[indexForm]?.mealName &&
             errors?.productList?.[indexForm]?.mealName
           }
@@ -56,7 +56,7 @@ const NutritionInfoForm = ({
           name={`productList.${indexForm}.carbonohidrates`}
           placeholder="Carbohydrates"
           value={values?.productList?.[indexForm]?.carbonohidrates}
-          error={
+          $error={
             touched?.productList?.[indexForm]?.carbonohidrates &&
             errors?.productList?.[indexForm]?.carbonohidrates
           }
@@ -77,7 +77,7 @@ const NutritionInfoForm = ({
           name={`productList.${indexForm}.protein`}
           placeholder="Protein"
           value={values?.productList?.[indexForm]?.protein}
-          error={
+          $error={
             touched?.productList?.[indexForm]?.protein &&
             errors?.productList?.[indexForm]?.protein
           }
@@ -95,7 +95,7 @@ const NutritionInfoForm = ({
           name={`productList.${indexForm}.fat`}
           placeholder="Fat"
           value={values?.productList?.[indexForm]?.fat}
-          error={
+          $error={
             touched?.productList?.[indexForm]?.fat &&
             errors?.productList?.[indexForm]?.fat
           }
@@ -113,7 +113,7 @@ const NutritionInfoForm = ({
           name={`productList.${indexForm}.calories`}
           placeholder="Calories"
           value={values?.productList?.[indexForm]?.calories}
-          error={
+          $error={
             touched?.productList?.[indexForm]?.calories &&
             errors?.productList?.[indexForm]?.calories
           }
