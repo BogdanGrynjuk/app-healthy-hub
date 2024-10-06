@@ -21,11 +21,11 @@ import {
   CancelBtn,
 } from './TargetModal.styled';
 
-import LoseFatMen from '../../images/icons/Lose-fat-image-men.svg';
-import MaintakeMen from '../../images/icons/Maintake-image-men.svg';
-import LoseFatGirl from '../../images/icons/Lose-fat-image-girl.svg';
-import MaintakeGirl from '../../images/icons/Maintake-image-girl.svg';
-import muscle from '../../images/icons/Gain-muscle.svg';
+import loseFatMen from '../../images/icons/lose-fat-image-men.svg';
+import maintainMen from '../../images/icons/maintain-image-men.svg';
+import maintainGirl from '../../images/icons/maintain-image-girl.svg';
+import loseFatGirl from '../../images/icons/lose-fat-image-girl.svg';
+import muscle from '../../images/icons/gain-muscle.svg';
 import close from '../../images/icons/close-circle.svg';
 
 export default function TargetModal({ onCloseModal }) {
@@ -35,8 +35,8 @@ export default function TargetModal({ onCloseModal }) {
   const currentUserGoal = user.goal;
   const [userGoal, setUserGoal] = useState(currentUserGoal);
 
-  let loseFatIcon = userGender === 'Female' ? LoseFatGirl : LoseFatMen;
-  let maintainIcon = userGender === 'Female' ? MaintakeGirl : MaintakeMen;
+  let loseFatIcon = userGender === 'Female' ? loseFatGirl : loseFatMen;
+  let maintainIcon = userGender === 'Female' ? maintainGirl : maintainMen;
   let muscleIcon = muscle;
 
   const newLosefatGoal = () => setUserGoal('Lose fat');

@@ -1,5 +1,5 @@
 import Dashboard from 'components/Dashboard';
-import TemplatePrivatePage from 'components/TemplatePrivatePage';
+import TemplatePrivatePage from 'components/PageTemplates/TemplatePrivatePage';
 
 const DashboardPage = () => {
   return (

@@ -23,7 +23,7 @@ import {
   postMyFoodIntake,
   updateMyFoodIntake,
 } from 'redux/foodIntake/foodIntake.Operations';
-import NutritionInfoForm from 'components/NutritionInfoForm';
+import NutritionInfoForm from 'components/Forms/NutritionInfoForm';
 
 const modalRoot = document.querySelector('#modal-root');
 

@@ -1,5 +1,5 @@
-import TemplatePrivatePage from 'components/TemplatePrivatePage';
-import ContentForSettingsPage from 'components/ContentForSettingsPage';
+import TemplatePrivatePage from 'components/PageTemplates/TemplatePrivatePage';
+import ContentForSettingsPage from 'components/ContentViews/ContentForSettingsPage';
 
 const SettingsPage = () => {
   return (

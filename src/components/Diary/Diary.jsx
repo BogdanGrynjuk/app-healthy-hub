@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Container } from './Diary.styled';
 
 import { selectFoodIntakeByCategory } from 'redux/foodIntake/foodIntakeSelectors';
-import SectionOfDiary from 'components/SectionOfDiary';
+import SectionOfDiary from 'components/Sections/SectionOfDiary';
 import { MEAL_TYPE_ICONS_MAP } from 'constants/iconsMaps';
 
 const Diary = () => {

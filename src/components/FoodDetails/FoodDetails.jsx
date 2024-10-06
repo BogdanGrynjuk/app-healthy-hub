@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import RecordDiaryModal from 'components/Modals/ModalRecordDiary/ModalRecordDiary';
 
-import edit from 'images/diaryPageImages/edit-2.svg';
+import edit from 'images/icons/edit.svg';
 
 import {
   Wrapper,

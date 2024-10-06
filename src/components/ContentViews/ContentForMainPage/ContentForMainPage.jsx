@@ -9,9 +9,9 @@ import {
 } from './ContentForMainPage.styled';
 
 import arrowRight from 'images/icons/arrow-right.svg';
-import SectionDailyConsumptionSummary from 'components/SectionDailyConsumptionSummary';
-import SectionDiary from 'components/SectionDiary';
-import SectionRecommendedFood from 'components/SectionRecommendedFood';
+import SectionDailyConsumptionSummary from 'components/Sections/SectionDailyConsumptionSummary';
+import SectionDiary from 'components/Sections/SectionDiary';
+import SectionRecommendedFood from 'components/Sections/SectionRecommendedFood';
 
 const ContentForMainPage = () => {
   return (

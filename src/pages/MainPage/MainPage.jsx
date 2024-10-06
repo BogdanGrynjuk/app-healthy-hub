@@ -1,5 +1,5 @@
-import TemplatePrivatePage from 'components/TemplatePrivatePage';
-import ContentForMainPage from 'components/ContentForMainPage';
+import TemplatePrivatePage from 'components/PageTemplates/TemplatePrivatePage';
+import ContentForMainPage from 'components/ContentViews/ContentForMainPage';
 
 const MainPage = () => {
   return (

@@ -1,5 +1,5 @@
-import TemplatePrivatePage from 'components/TemplatePrivatePage';
-import ContentForDiaryPage from 'components/ContentForDiaryPage';
+import TemplatePrivatePage from 'components/PageTemplates/TemplatePrivatePage';
+import ContentForDiaryPage from 'components/ContentViews/ContentForDiaryPage';
 
 const DiaryPage = () => {
   return (

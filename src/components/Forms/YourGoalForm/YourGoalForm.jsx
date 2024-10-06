@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserGoal } from 'redux/Auth/authSlice';
 import { Formik } from 'formik';
 
-import CustomRadioButton from 'components/CustomRadioButton/CustomRadioButton';
+import CustomRadioButton from 'components/UI/CustomRadioButton/CustomRadioButton';
 
 import { FormGroup, FormWrapper, NextButton } from './YourGoalForm.styled';
 import { selectUser } from 'redux/Auth/authSelectors';
+import { GOAL_OPTIONS } from 'constants/goalOptions';
 
 const YourGoalForm = () => {
   const dispatch = useDispatch();
@@ -27,24 +28,14 @@ const YourGoalForm = () => {
       {({ values }) => (
         <FormWrapper>
           <FormGroup role="group" aria-labelledby="goal-head">
-            <CustomRadioButton
-              name="goal"
-              value="Lose fat"
-              selectedValue={values.goal}
-              text="Lose fat"
-            />
-            <CustomRadioButton
-              name="goal"
-              value="Maintain"
-              selectedValue={values.goal}
-              text="Maintain"
-            />
-            <CustomRadioButton
-              name="goal"
-              value="Gain Muscle"
-              selectedValue={values.goal}
-              text="Gain muscle"
-            />
+            {GOAL_OPTIONS.map(option => (
+              <CustomRadioButton
+                name="goal"
+                value={option.value}
+                selectedValue={values.goal}
+                text={option.text}
+              />
+            ))}
           </FormGroup>
           <NextButton type="submit">Next</NextButton>
         </FormWrapper>

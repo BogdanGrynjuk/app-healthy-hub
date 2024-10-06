@@ -23,7 +23,7 @@ import {
 import { selectUser } from 'redux/Auth/authSelectors';
 import { updateUser } from 'redux/Auth/authOperations';
 import validationSchemaForProfileSetting from 'validationSchemas/validationSchemaForSettdingsPage';
-import CustomRadioButton from 'components/CustomRadioButton';
+import CustomRadioButton from 'components/UI/CustomRadioButton';
 import { PHYSICAL_ACTIVITY_OPTIONS } from 'constants/physicalActivityOptions';
 import { GENDER_OPTIONS } from 'constants/genderOptions';
 

@@ -1,5 +1,5 @@
-import AuthPageTemplate from 'components/AuthPageTemplate';
-import ContentForWelcomePage from 'components/ContentForWelcomePage';
+import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
+import ContentForWelcomePage from 'components/ContentViews/ContentForWelcomePage';
 
 import logoPic from '../../images/WelcomePageImg/logoPic.png';
 

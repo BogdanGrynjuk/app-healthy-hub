@@ -1,6 +1,6 @@
-import AuthPageTemplate from 'components/AuthPageTemplate';
+import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
 import BodyParametersLogoPic from '../../images/BodyParametersLogoPic.png';
-import BodyParametersForm from 'components/BodyParametersForm';
+import BodyParametersForm from 'components/Forms/BodyParametersForm';
 
 const BodyParametersPage = () => {
   return (

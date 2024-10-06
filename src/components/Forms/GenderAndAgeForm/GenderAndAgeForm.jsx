@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import { setUserAge, setUserGender } from 'redux/Auth/authSlice';
 import { selectUser } from 'redux/Auth/authSelectors';
 import validationSchemaForAge from 'validationSchemas/validationSchemaForAge';
-import CustomRadioButton from 'components/CustomRadioButton';
+import CustomRadioButton from 'components/UI/CustomRadioButton';
 
 import {
   FormWrapper,

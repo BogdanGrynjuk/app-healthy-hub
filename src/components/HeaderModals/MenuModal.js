@@ -18,17 +18,17 @@ import {
   EditSvg,
 } from './MenuModal.styled';
 
-import close from '../../images/icons/close-circle.svg';
-import waight from '../../images/icons/Waight-image.svg';
+import close from 'images/icons/close-circle.svg';
+import weight from 'images/icons/weight-image.svg';
 
-import loseFatMen from '../../images/icons/Lose-fat-image-men.svg';
-import loseFatGirl from '../../images/icons/Lose-fat-image-girl.svg';
-import maintakeMen from '../../images/icons/Maintake-image-men.svg';
-import maintakeGirl from '../../images/icons/Maintake-image-girl.svg';
-import muscle from '../../images/icons/Gain-muscle.svg';
+import loseFatMen from 'images/icons/lose-fat-image-men.svg';
+import loseFatGirl from 'images/icons/lose-fat-image-girl.svg';
+import maintainMen from 'images/icons/maintain-image-men.svg';
+import maintainGirl from 'images/icons/maintain-image-girl.svg';
+import muscle from 'images/icons/gain-muscle.svg';
 
-import arrowRight from '../../images/icons/arrow-right-open.svg';
-import edit from '../../images/icons/edit-2.svg';
+import arrowRight from 'images/icons/arrow-right-open.svg';
+import edit from 'images/icons/edit.svg';
 
 import TargetModal from './TargetModal';
 import WeightModal from './WeightModal';
@@ -50,9 +50,9 @@ export default function MenuModal({ onCloseModal }) {
       }
     } else if (user.goal === 'Maintain') {
       if (user.gender === 'female') {
-        goalIcon = maintakeGirl;
+        goalIcon = maintainGirl;
       } else {
-        goalIcon = maintakeMen;
+        goalIcon = maintainMen;
       }
     } else if (user.goal === 'Gain Muscle') {
       goalIcon = muscle;
@@ -84,7 +84,7 @@ export default function MenuModal({ onCloseModal }) {
   };
 
   const closeBtnHandler = () => {
-    console.log(onCloseModal());
+    // console.log(onCloseModal());
     onCloseModal();
   };
 
@@ -112,7 +112,7 @@ export default function MenuModal({ onCloseModal }) {
           </InfoBlock>
           <InfoBlock onClick={toggleModalSwitchWeight}>
             <IconContainer>
-              <img src={waight} alt="weight" width={28} />
+              <img src={weight} alt="weight" width={28} />
             </IconContainer>
             <TextContainer>
               <InfoBlockName>Weight</InfoBlockName>

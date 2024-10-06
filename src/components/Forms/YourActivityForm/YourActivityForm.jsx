@@ -10,7 +10,7 @@ import {
   NextButton,
   BackButton,
 } from './YourActivityForm.styled';
-import CustomRadioButton from 'components/CustomRadioButton';
+import CustomRadioButton from 'components/UI/CustomRadioButton';
 import { setUserActivity } from 'redux/Auth/authSlice';
 import { signUp } from 'redux/Auth/authOperations';
 import { selectError, selectUser } from 'redux/Auth/authSelectors';

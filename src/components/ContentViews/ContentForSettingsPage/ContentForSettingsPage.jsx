@@ -13,7 +13,7 @@ import {
   LinkToBack,
   TitlePage,
 } from './ContentForSettingsPage.styled';
-import ProfileSettingForm from 'components/ProfileSettingForm';
+import ProfileSettingForm from 'components/Forms/ProfileSettingForm';
 
 const ContentForSettingsPage = () => {
   const location = useLocation();

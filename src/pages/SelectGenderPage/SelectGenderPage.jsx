@@ -1,8 +1,8 @@
 import React from 'react';
 
 import SelectGenderLogoPic from '../../images/SelectGenderLogoPic.png';
-import AuthPageTemplate from 'components/AuthPageTemplate';
-import GenderAndAgeForm from 'components/GenderAndAgeForm';
+import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
+import GenderAndAgeForm from 'components/Forms/GenderAndAgeForm';
 
 const SelectGenderPage = () => {
   return (

@@ -1,5 +1,5 @@
-import AuthPageTemplate from 'components/AuthPageTemplate';
-import SignUpForm from 'components/SignUpForm';
+import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
+import SignUpForm from 'components/Forms/SignUpForm';
 
 import logoPic from '../../images/WelcomePageImg/logoPic.png';
 

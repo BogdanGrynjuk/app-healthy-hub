@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AuthPageTemplate from 'components/AuthPageTemplate';
-import YourGoalForm from 'components/YourGoalForm';
+import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
+import YourGoalForm from 'components/Forms/YourGoalForm';
 
 import GoalLogoPic from '../../images/YourGoalLogo.png';
 

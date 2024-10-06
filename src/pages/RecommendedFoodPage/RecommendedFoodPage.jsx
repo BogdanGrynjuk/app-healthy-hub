@@ -1,5 +1,5 @@
-import ContentForRecommendedFoodPage from 'components/ContentForRecommendedFoodPage';
-import TemplatePrivatePage from 'components/TemplatePrivatePage';
+import ContentForRecommendedFoodPage from 'components/ContentViews/ContentForRecommendedFoodPage';
+import TemplatePrivatePage from 'components/PageTemplates/TemplatePrivatePage';
 
 const RecommendedFoodPage = () => {
   return (
