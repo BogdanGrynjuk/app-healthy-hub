@@ -20,8 +20,8 @@ import imageWeightSrc from 'images/icons/weight-image.svg';
 import imageArrowDownSrc from 'images/icons/arrow-down.svg';
 import imageEditSrc from 'images/icons/edit.svg';
 
-import TargetModal from '../HeaderModals/TargetModal';
-import WeightModal from '../HeaderModals/WeightModal';
+import ModalChangeGoal from 'components/Modals/ModalChangeGoal';
+import ModalChangeWeight from 'components/Modals/ModalChangeWeight';
 
 const MetricMenu = ({ metricName }) => {
   const [isOpenModalTarget, setIsOpenModalTarget] = useState(false);
@@ -86,8 +86,8 @@ const MetricMenu = ({ metricName }) => {
             )}
           </InfoBlockMetricMenu>
         </TextContainer>
-        {isOpenModalTarget && <TargetModal onCloseModal={closeModal} />}
-        {isOpenModalWeight && <WeightModal onCloseModal={closeModal} />}
+        {isOpenModalTarget && <ModalChangeGoal onClose={closeModal} />}
+        {isOpenModalWeight && <ModalChangeWeight onClose={closeModal} />}
       </WrapperMetricMenu>
     </>
   );

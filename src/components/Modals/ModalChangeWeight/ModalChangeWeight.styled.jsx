@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BaseButton = styled.button`
@@ -74,21 +73,4 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 24px;
-`;
-
-export const CustomLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-`;
-
-export const Icon = styled.img`
-  width: 16px;
-  height: 16px;
-`;
-
-export const Title = styled.span`
-  font-weight: ${p => p.theme.fontWeights.medium};
-  font-size: ${p => p.theme.fontSizes.xs};
-  color: ${p => p.theme.colors.white};
 `;
