@@ -1,8 +1,8 @@
-import loseFatMen from 'images/icons/temp-lose-fat-image-men.svg';
-import loseFatGirl from 'images/icons/temp-lose-fat-image-girl.svg';
+import loseFatMen from 'images/icons/lose-fat-image-men.svg';
+import loseFatGirl from 'images/icons/lose-fat-image-girl.svg';
 import maintainMen from 'images/icons/maintain-image-men.svg';
 import maintainGirl from 'images/icons/maintain-image-girl.svg';
-import muscle from 'images/icons/temp-gain-muscle.svg';
+import muscle from 'images/icons/gain-muscle.svg';
 
 export const getGoalIcon = (gender, goal) => {
   const icons = {
