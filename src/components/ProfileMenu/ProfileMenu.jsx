@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectUser } from 'redux/Auth/authSelectors';
-import ProfileModal from 'components/HeaderModals/ProfileModal';
 
 import {
   IconArrow,
@@ -14,6 +13,7 @@ import {
 
 import imageProfileSrc from 'images/icons/profile-circle.svg';
 import imageArrowDownSrc from 'images/icons/arrow-down.svg';
+import ModalProfileMenu from 'components/Modals/ModalProfileMenu';
 
 const ProfileMenu = () => {
   const [isOpenModalProfile, setIsOpenModalProfile] = useState(false);
@@ -43,7 +43,7 @@ const ProfileMenu = () => {
         $isOpen={isOpenModalProfile}
       />
       {isOpenModalProfile && (
-        <ProfileModal onCloseModal={() => closeModal(setIsOpenModalProfile)} />
+        <ModalProfileMenu onClose={() => closeModal(setIsOpenModalProfile)} />
       )}
     </WrapperProfileMenu>
   );

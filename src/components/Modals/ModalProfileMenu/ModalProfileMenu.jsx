@@ -1,22 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import MetricMenu from 'components/MetricMenu';
+import { logOut } from 'redux/Auth/authOperations';
 
 import {
   Backdrop,
   ButtonClose,
   Content,
+  CustomLink,
+  Icon,
   IconClose,
   Modal,
-} from './ModalMainMenu.styled';
+  Title,
+  Wrapper,
+} from './ModalProfileMenu.styled';
 
 import imageCloseSrc from 'images/icons/close-circle.svg';
+import imageSettingSrc from 'images/icons/setting-2.svg';
+import imageLogOutSrc from 'images/icons/logout.svg';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const ModalMainMenu = ({ onClose }) => {
+const ModalProfileMenu = ({ onClose }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -25,7 +32,7 @@ const ModalMainMenu = ({ onClose }) => {
     setTimeout(() => {
       setIsVisible(false);
       onClose();
-    }, 300);
+    }, 0);
   }, [onClose]);
 
   const handleBackdropClick = useCallback(
@@ -46,9 +53,8 @@ const ModalMainMenu = ({ onClose }) => {
     [closeModal]
   );
 
-  const handleClickButtonClose = () => {
-    closeModal();
-  };
+  const dispatch = useDispatch();
+  const handleLogOut = () => dispatch(logOut());
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden';
@@ -68,22 +74,30 @@ const ModalMainMenu = ({ onClose }) => {
 
   return createPortal(
     <Backdrop onClick={handleBackdropClick}>
-      <Modal className={isActive ? 'active' : ''}>
-        <ButtonClose type="button" onClick={handleClickButtonClose}>
-          <IconClose src={imageCloseSrc} alt="close" />
-        </ButtonClose>
-        <Content>
-          <MetricMenu metricName="goal" />
-          <MetricMenu metricName="weight" />
-        </Content>
-      </Modal>
+      <Wrapper>
+        <Modal className={isActive ? 'active' : ''}>
+          <ButtonClose type="button" onClick={closeModal}>
+            <IconClose src={imageCloseSrc} alt="close" />
+          </ButtonClose>
+          <Content>
+            <CustomLink onClick={closeModal} to={'/settings'}>
+              <Icon src={imageSettingSrc} alt="icon setting" />
+              <Title>Setting</Title>
+            </CustomLink>
+            <CustomLink onClick={handleLogOut} to={'/'}>
+              <Icon src={imageLogOutSrc} alt="icon log out" />
+              <Title>Log out</Title>
+            </CustomLink>
+          </Content>
+        </Modal>
+      </Wrapper>
     </Backdrop>,
     modalRoot
   );
 };
 
-ModalMainMenu.propTypes = {
+ModalProfileMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default ModalMainMenu;
+export default ModalProfileMenu;
