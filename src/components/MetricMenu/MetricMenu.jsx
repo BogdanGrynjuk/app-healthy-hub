@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import {
   IconArrow,
   IconContainer,
@@ -12,6 +13,7 @@ import {
   Unit,
   WrapperMetricMenu,
 } from './MetricMenu.styled';
+
 import { getGoalIcon } from 'helpers/getGoalIcon';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'redux/Auth/authSelectors';
@@ -86,9 +88,9 @@ const MetricMenu = ({ metricName }) => {
             )}
           </InfoBlockMetricMenu>
         </TextContainer>
-        {isOpenModalTarget && <ModalChangeGoal onClose={closeModal} />}
-        {isOpenModalWeight && <ModalChangeWeight onClose={closeModal} />}
       </WrapperMetricMenu>
+      {isOpenModalTarget && <ModalChangeGoal onClose={closeModal} />}
+      {isOpenModalWeight && <ModalChangeWeight onClose={closeModal} />}
     </>
   );
 };
