@@ -40,6 +40,10 @@ const SignInFormFields = ({
   useEffect(() => {
     let errorFields = {};
     if (errorFromState) {
+      if (errorFromState === 'Unable to fetch user: No token') {
+        dispatch(clearError());
+        return;
+      }
       try {
         errorFields = JSON.parse(errorFromState);
       } catch (e) {
@@ -54,7 +58,7 @@ const SignInFormFields = ({
         setFieldError('password', 'Please check your password and try again');
       }, 0);
     }
-  }, [errorFromState, setFieldValue, setFieldError, setFieldTouched]);
+  }, [errorFromState, setFieldValue, setFieldError, setFieldTouched, dispatch]);
 
   return (
     <FormWrapper>

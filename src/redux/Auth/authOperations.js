@@ -8,7 +8,6 @@ import {
   resetGlobalAuthHeader,
   setGlobalAuthHeader,
 } from 'helpers/network';
-import { sleep } from 'helpers/sleep';
 import toastifyMessage from 'helpers/toastify';
 
 export const signUp = createAsyncThunk(
@@ -38,7 +37,7 @@ export const signIn = createAsyncThunk(
       if (error instanceof AxiosError && error.response.data.message) {
         toastifyMessage('error', error.response.data.message);
       }
-      console.log(error.response.data.message);
+      console.error(error.response.data.message);
       return rejectWithValue(error.response.config.data);
     }
   }
@@ -59,15 +58,7 @@ export const refresh = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
     await thunkAPI.dispatch(getMyFoodIntake());
     return response.data;
   } catch (error) {
-    if (error instanceof AxiosError && error.response.status === 401) {
-      await sleep(500);
-      toastifyMessage(
-        'error',
-        'Your session has expired. Please log in again.'
-      );
-      return thunkAPI.rejectWithValue('Session expired');
-    }
-    console.log(error.response.data.message);
+    console.error(error.response.data.message);
     return thunkAPI.rejectWithValue(
       error.response?.data?.message || error.message
     );
@@ -83,6 +74,7 @@ export const logOut = createAsyncThunk(
       return res.status;
     } catch (error) {
       toastifyMessage('error', 'Something went wrong!');
+      console.error(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -96,6 +88,7 @@ export const resetPassword = createAsyncThunk(
       return res.data;
     } catch (error) {
       toastifyMessage('error', 'An error occurred during password reset.');
+      console.error(error.response.data.message);
       return rejectWithValue(
         error.response.data.message || 'Something went wrong!'
       );
@@ -113,6 +106,7 @@ export const updateUser = createAsyncThunk(
       if (error instanceof AxiosError && error.response.data.message) {
         toastifyMessage('error', error.response.data.message);
       }
+      console.error(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -129,6 +123,7 @@ export const checkEmail = createAsyncThunk(
         toastifyMessage('error', error.response.data.message);
         return rejectWithValue(error.response.data.message);
       }
+      console.error(error.response.data.message);
       return rejectWithValue(
         error.response.data.message || 'Something went wrong'
       );

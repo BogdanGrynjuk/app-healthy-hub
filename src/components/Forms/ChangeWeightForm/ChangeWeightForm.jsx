@@ -26,7 +26,6 @@ const ChangeWeightForm = ({ closeModal }) => {
   };
 
   const handleSubmit = values => {
-    console.log('updated weight: ', values.weight);
     dispatch(updateUser({ weight: values.weight }));
     closeModal();
   };

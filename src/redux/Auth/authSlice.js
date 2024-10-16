@@ -25,6 +25,7 @@ const initialState = {
   },
   token: null,
   isLoggedIn: false,
+  isRefreshing: false,
   appStatus: APP_STATUS.loading,
   error: null,
 };
@@ -72,6 +73,7 @@ const authSlice = createSlice({
       // refresh
       .addCase(refresh.pending, state => {
         state.appStatus = APP_STATUS.loading;
+        state.isRefreshing = true;
         state.error = null;
       })
       .addCase(refresh.fulfilled, (state, { payload }) => {
@@ -84,9 +86,6 @@ const authSlice = createSlice({
       .addCase(refresh.rejected, (state, { payload }) => {
         state.appStatus = APP_STATUS.idle;
         state.isRefreshing = false;
-        if (payload === 401) {
-          state.token = null;
-        }
         state.error = payload;
       })
 

@@ -4,11 +4,13 @@ import { Route, Routes } from 'react-router-dom';
 import SharedLayout from './SharedLayout';
 import { RestrictedRoute } from 'components/Routes/RestrictedRoute';
 import { PrivateRoute } from 'components/Routes/PrivateRoute';
-import { selectAppStatus, selectToken } from 'redux/Auth/authSelectors';
+import {
+  selectAppStatus,
+  selectIsRefreshing,
+  selectToken,
+} from 'redux/Auth/authSelectors';
 import { refresh } from 'redux/Auth/authOperations';
 import Loader from './Loader/Loader';
-import { APP_STATUS } from 'constants/appStatus';
-import { updateAppStatus } from 'redux/Auth/authSlice';
 import { resetFoodIntakeState } from 'redux/foodIntake/foodIntakeSlice';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage'));
@@ -30,17 +32,16 @@ export const App = () => {
 
   const token = useSelector(selectToken);
   const appStatus = useSelector(selectAppStatus);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    if (token) {
-      dispatch(refresh());
-    } else {
+    if (!token) {
       dispatch(resetFoodIntakeState());
-      dispatch(updateAppStatus(APP_STATUS.idle));
     }
+    dispatch(refresh());
   }, [dispatch, token]);
 
-  return appStatus === 'loading' ? (
+  return isRefreshing && appStatus === 'loading' ? (
     <Loader />
   ) : (
     <Routes>
