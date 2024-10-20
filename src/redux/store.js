@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { authReducer } from './Auth/authSlice';
-import { foodIntakeReducer } from './TempFoodIntake/foodIntakeSlice';
+import { foodIntakeReducer } from './FoodIntake/foodIntakeSlice';
 import { statisticReducer } from './Statistic/statsSlice';
 
 const persistConfig = {

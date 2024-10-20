@@ -16,7 +16,7 @@ import {
 
 import bubble from 'images/icons/bubble.svg';
 import bottle from 'images/icons/bottle.svg';
-import { selectDailyWaterGoal } from 'redux/TempFoodIntake/foodIntakeSelectors';
+import { selectDailyWaterGoal } from 'redux/FoodIntake/foodIntakeSelectors';
 
 const BlockDailyGoal = () => {
   const dailyWaterGoal = useSelector(selectDailyWaterGoal);

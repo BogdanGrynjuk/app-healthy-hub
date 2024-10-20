@@ -11,7 +11,7 @@ import {
 
 import arrowRight from 'images/icons/arrow-right-open.svg';
 import BlockMealDetail from 'components/BlockMealDetail';
-import { selectNutrientSums } from 'redux/TempFoodIntake/foodIntakeSelectors';
+import { selectNutrientSums } from 'redux/FoodIntake/foodIntakeSelectors';
 import { MEAL_TYPE_ICONS_MAP } from 'constants/iconsMaps';
 
 const SectionDiary = () => {

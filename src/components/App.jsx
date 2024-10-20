@@ -6,7 +6,7 @@ import { RestrictedRoute } from 'components/Routes/RestrictedRoute';
 import { PrivateRoute } from 'components/Routes/PrivateRoute';
 import { selectIsRefreshing, selectToken } from 'redux/Auth/authSelectors';
 import { refresh } from 'redux/Auth/authOperations';
-import { resetFoodIntakeState } from 'redux/TempFoodIntake/foodIntakeSlice';
+import { resetFoodIntakeState } from 'redux/FoodIntake/foodIntakeSlice';
 import Loader from './Loader/Loader';
 
 const WelcomePage = lazy(() => import('../pages/WelcomePage'));

@@ -15,7 +15,7 @@ import {
   Value,
 } from './BlockGeneralInfoOfDiarySection.styled';
 
-import { selectTotalNutrientsByMealType } from 'redux/TempFoodIntake/foodIntakeSelectors';
+import { selectTotalNutrientsByMealType } from 'redux/FoodIntake/foodIntakeSelectors';
 
 const BlockGeneralInfoOfDiarySection = ({ mealType, imageSrc }) => {
   const { carbonohidrates, protein, fat } = useSelector(
