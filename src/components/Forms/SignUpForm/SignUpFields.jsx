@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectError } from 'redux/Auth/authSelectors';
 
@@ -16,6 +16,7 @@ import {
 
 import { ReactComponent as EyeCloseSvg } from 'images/icons/eye-off.svg';
 import { ReactComponent as EyeOpenSvg } from 'images/icons/eye.svg';
+import { clearError } from 'redux/Auth/authSlice';
 
 const SignUpFormFields = ({
   values,
@@ -24,6 +25,7 @@ const SignUpFormFields = ({
   setFieldTouched,
   setFieldError,
 }) => {
+  const dispatch = useDispatch();
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const errorFromState = useSelector(selectError);
 
@@ -31,10 +33,14 @@ const SignUpFormFields = ({
 
   useEffect(() => {
     if (errorFromState) {
+      if (errorFromState === 'Unable to fetch user: No token') {
+        dispatch(clearError());
+        return;
+      }
       setFieldTouched('email', true);
       setFieldError('email', errorFromState);
     }
-  }, [errorFromState, setFieldError, setFieldTouched]);
+  }, [dispatch, errorFromState, setFieldError, setFieldTouched]);
 
   return (
     <FormWrapper>

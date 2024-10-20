@@ -31,6 +31,7 @@ const YourGoalForm = () => {
             {GOAL_OPTIONS.map(option => (
               <CustomRadioButton
                 name="goal"
+                key={option.value}
                 value={option.value}
                 selectedValue={values.goal}
                 text={option.text}

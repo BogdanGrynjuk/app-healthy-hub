@@ -24,9 +24,9 @@ export const BackLink = styled(Link)`
 `;
 
 export const ArrowReturn = styled.img`
-  @media screen and (${props => props.theme.mq.mobile}) {
-    width: 16px;
-  }
+  width: 16px;
+  transform: rotate(180deg);
+
   @media screen and (${props => props.theme.mq.tablet}) {
     width: 24px;
   }

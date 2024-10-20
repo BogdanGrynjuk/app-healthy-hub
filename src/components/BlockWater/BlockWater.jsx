@@ -19,15 +19,13 @@ import {
 
 import ModalAddWater from 'components/Modals/ModalAddWater/ModalAddWater';
 
-import img1 from 'images/add.png';
-import img2 from 'images/add@2x.png';
 import {
   selectConsumedWaterAmount,
   selectExceededWaterLimit,
   selectWaterConsumptionPercentage,
   selectWaterExcess,
   selectWaterRemainingToGoal,
-} from 'redux/foodIntake/foodIntakeSelectors';
+} from 'redux/TempFoodIntake/foodIntakeSelectors';
 import { outNum } from 'helpers/outNum';
 import toastifyMessage from 'helpers/toastify';
 
@@ -96,14 +94,7 @@ const BlockWater = () => {
                 </CounterOfWaterLeftToDrinkInMl>
               </CounterList>
               <Btn type="button" onClick={toggleModal}>
-                <img
-                  srcSet={`${img1} 1x, ${img2} 2x`}
-                  width={16}
-                  height={16}
-                  src={img1}
-                  alt="Add"
-                />
-                <p>Add water intake</p>
+                + Add water intake
               </Btn>
             </CardText>
           </Card>

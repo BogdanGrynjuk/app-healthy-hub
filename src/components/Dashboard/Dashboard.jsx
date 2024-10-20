@@ -16,12 +16,12 @@ import {
   ToggleButton,
 } from './Dashboard.styled';
 import arrowDown from 'images/icons/arrow-down.svg';
-import arrowLeft from 'images/icons/arrow-left.svg';
+import arrowLeft from 'images/icons/arrow-right-open.svg';
 import LineChart from 'components/Charts/LineChart';
 import ScaleChart from 'components/Charts/ScaleChart';
 import { MONTH_NAME } from 'constants/monthName';
 import { PERIOD_TYPES } from 'constants/periodTypes';
-import { getStatistic } from 'redux/Stats/statsOperations';
+import { getStatistic } from 'redux/Statistic/statsOperations';
 
 const Dashboard = () => {
   const [isYearView, setIsYearView] = useState(false);

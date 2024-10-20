@@ -32,8 +32,12 @@ export const LinkToDashboard = styled(Link)`
   flex-direction: row;
   align-items: center;
   gap: 6px;
-
   cursor: pointer;
+
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5 ease-in-out;
+  }
 `;
 
 export const LinkText = styled.span`

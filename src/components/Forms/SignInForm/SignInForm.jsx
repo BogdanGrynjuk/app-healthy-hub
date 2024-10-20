@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
-import { signIn } from '../../../redux/Auth/authOperations';
+import { signIn } from 'redux/Auth/authOperations';
 
 import validationSchemaSignIn from 'validationSchemas/validationSchemaSignIn';
 import SignInFormFields from './SignInFormFields';

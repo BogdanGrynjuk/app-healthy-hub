@@ -41,6 +41,7 @@ export const NextButton = styled.button`
   line-height: 1.43;
   border-radius: ${p => p.theme.radii.normal};
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
+  color: ${p => p.theme.colors.black};
   background-color: ${p => p.theme.colors.greenLite};
   cursor: pointer;
 

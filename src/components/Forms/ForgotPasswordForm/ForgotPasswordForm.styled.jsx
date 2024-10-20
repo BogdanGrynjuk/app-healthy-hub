@@ -58,9 +58,10 @@ export const FormButton = styled.button`
   width: 300px;
   padding: 8px;
   text-align: center;
-  background-color: ${p => p.theme.colors.greenLite};
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${p => p.theme.radii.normal};
+  color: ${p => p.theme.colors.black};
+  background-color: ${p => p.theme.colors.greenLite};
   font-family: ${p => p.theme.fontFamily.poppins};
   font-weight: ${p => p.theme.fontWeights.medium};
   font-size: ${p => p.theme.fontSizes.xs};

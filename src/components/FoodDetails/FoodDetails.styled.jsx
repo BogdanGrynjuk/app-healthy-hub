@@ -42,6 +42,11 @@ export const EditButton = styled.button`
   line-height: 20px;
   cursor: pointer;
 
+  &:hover {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5 ease-in-out;
+  }
+
   @media screen and (${p => p.theme.mq.tablet}) {
     order: 1;
   }

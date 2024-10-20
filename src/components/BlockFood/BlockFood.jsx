@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectFoodStatistics } from 'redux/foodIntake/foodIntakeSelectors';
+import { selectFoodStatistics } from 'redux/TempFoodIntake/foodIntakeSelectors';
 
 import {
   Wrapper,

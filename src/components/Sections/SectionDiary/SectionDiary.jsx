@@ -5,10 +5,13 @@ import {
   SectionTitle,
   LinkToDiaryPage,
   SectionList,
+  LinkImage,
+  LinkText,
 } from './SectionDiary.styled';
 
+import arrowRight from 'images/icons/arrow-right-open.svg';
 import BlockMealDetail from 'components/BlockMealDetail';
-import { selectNutrientSums } from 'redux/foodIntake/foodIntakeSelectors';
+import { selectNutrientSums } from 'redux/TempFoodIntake/foodIntakeSelectors';
 import { MEAL_TYPE_ICONS_MAP } from 'constants/iconsMaps';
 
 const SectionDiary = () => {
@@ -18,7 +21,10 @@ const SectionDiary = () => {
     <Section>
       <SectionHeader>
         <SectionTitle>Diary</SectionTitle>
-        <LinkToDiaryPage to="/diary">See more</LinkToDiaryPage>
+        <LinkToDiaryPage to="/diary">
+          <LinkText>See more</LinkText>
+          <LinkImage src={arrowRight} alt="Arrow right" />
+        </LinkToDiaryPage>
       </SectionHeader>
       <SectionList>
         {nutrientSums.map(item => (

@@ -28,17 +28,34 @@ export const SectionTitle = styled.h2`
 `;
 
 export const LinkToDiaryPage = styled(Link)`
-  padding: 0;
-  color: ${props => props.theme.colors.gray};
-  font-family: ${props => props.theme.fontFamily.poppins};
-  font-size: ${p => p.theme.fontSizes.xs};
-  font-weight: ${p => p.theme.fontWeights.medium};
-  line-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
 
-  @media screen and (${p => p.theme.mq.tablet}) {
-    font-size: ${p => p.theme.fontSizes.s};
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5 ease-in-out;
+  }
+`;
+
+export const LinkText = styled.span`
+  font-size: ${props => props.theme.fontSizes.xs};
+  font-weight: ${props => props.theme.fontWeights.medium};
+  line-height: 20px;
+  letter-spacing: 0;
+  color: ${props => props.theme.colors.gray};
+
+  @media screen and (${props => props.theme.mq.tablet}) {
+    font-size: ${props => props.theme.fontSizes.s};
     line-height: 22px;
   }
+`;
+
+export const LinkImage = styled.img`
+  width: 16px;
+  height: 16px;
 `;
 
 export const SectionList = styled.ul`

@@ -55,6 +55,7 @@ export const SaveButton = styled.button`
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${props => props.theme.radii.normal};
   padding: 8px;
+  color: ${props => props.theme.colors.black};
   cursor: pointer;
 
   @media screen and (max-width: 833px) {

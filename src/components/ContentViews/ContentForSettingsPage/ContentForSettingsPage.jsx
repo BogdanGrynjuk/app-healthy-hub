@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import arrowLeft from 'images/icons/arrow-left.svg';
-import banner from 'images/settings-page.png';
+import arrowLeft from 'images/icons/arrow-right-open.svg';
+import banner from 'images/SettingsLogoPic.png';
 
 import {
   ArrowReturn,

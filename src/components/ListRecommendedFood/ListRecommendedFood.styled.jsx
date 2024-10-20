@@ -10,6 +10,10 @@ export const List = styled.ul`
     flex-direction: row;
     flex-wrap: wrap;
   }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    gap: 50px;
+  }
 `;
 
 export const Item = styled.li`
@@ -17,5 +21,9 @@ export const Item = styled.li`
 
   @media screen and (${props => props.theme.mq.tablet}) {
     flex-basis: calc((100% - 20px) / 2);
+  }
+
+  @media screen and (${props => props.theme.mq.desktop}) {
+    flex-basis: calc((100% - 50px) / 2);
   }
 `;

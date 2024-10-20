@@ -67,7 +67,7 @@ const BodyParametersForm = () => {
               name="weight"
               placeholder="Enter your weight"
               autoComplete="off"
-              $or={touched.weight && errors.weight}
+              $error={touched.weight && errors.weight}
               value={values.weight}
               required
             />

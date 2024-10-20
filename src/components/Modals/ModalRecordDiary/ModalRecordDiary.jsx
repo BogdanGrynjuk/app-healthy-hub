@@ -22,7 +22,7 @@ import validationSchemaForNutrients from 'validationSchemas/validationSchemaForN
 import {
   postMyFoodIntake,
   updateMyFoodIntake,
-} from 'redux/foodIntake/foodIntake.Operations';
+} from 'redux/TempFoodIntake/foodIntakeOperations';
 import NutritionInfoForm from 'components/Forms/NutritionInfoForm';
 
 const modalRoot = document.querySelector('#modal-root');

@@ -16,6 +16,7 @@ export const LinkToBack = styled(NavLink)`
 `;
 
 export const ArrowReturn = styled.img`
+  transform: rotate(180deg);
   width: 16px;
   @media screen and (${props => props.theme.mq.tablet}) {
     width: 24px;

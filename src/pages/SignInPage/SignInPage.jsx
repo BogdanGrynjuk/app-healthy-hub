@@ -1,7 +1,7 @@
 import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
 import SignInForm from 'components/Forms/SignInForm/SignInForm';
 
-import logoPic from '../../images/WelcomePageImg/logoPic.png';
+import logoPic from 'images/WelcomeLogoPic.png';
 
 const SignInPage = () => {
   return (

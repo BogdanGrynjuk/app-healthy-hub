@@ -1,7 +1,7 @@
 import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
 import ForgotPasswordForm from 'components/Forms/ForgotPasswordForm';
 
-import logoPic from '../../images/WelcomePageImg/logoPic.png';
+import logoPic from 'images/WelcomeLogoPic.png';
 
 const ForgotPasswordPage = () => {
   return (

@@ -9,33 +9,53 @@ export const Section = styled.div`
   }
 `;
 
-export const SectionTitle = styled.h2`
+export const SectionHeader = styled.div`
   margin-bottom: 16px;
-  font-family: ${props => props.theme.fontFamily.poppins};
+  display: flex;
+  column-gap: 16px;
+  align-items: center;
+`;
+
+export const SectionTitle = styled.h2`
   color: ${props => props.theme.colors.white};
-  font-size: ${props => props.theme.fontSizes.m};
-  font-weight: ${props => props.theme.fontWeights.regular};
+  font-family: ${props => props.theme.fontFamily.poppins};
+  font-size: ${p => p.theme.fontSizes.m};
+  font-weight: ${p => p.theme.fontWeights.regular};
   line-height: 24px;
 
-  @media screen and (${props => props.theme.mq.tablet}) {
-    font-size: ${props => props.theme.fontSizes.l};
+  @media screen and (${p => p.theme.mq.tablet}) {
+    font-size: ${p => p.theme.fontSizes.l};
     line-height: 32px;
   }
 `;
 
-export const ButtonSeeMore = styled(Link)`
-  margin-top: 16px;
+export const LinkToRecommendedFoodPage = styled(Link)`
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 6px;
-  color: ${props => props.theme.colors.gray};
-  font-family: ${props => props.theme.fontFamily.poppins};
+  cursor: pointer;
+
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5 ease-in-out;
+  }
+`;
+
+export const LinkText = styled.span`
   font-size: ${props => props.theme.fontSizes.xs};
   font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 20px;
+  letter-spacing: 0;
+  color: ${props => props.theme.colors.gray};
 
   @media screen and (${props => props.theme.mq.tablet}) {
     font-size: ${props => props.theme.fontSizes.s};
     line-height: 22px;
   }
+`;
+
+export const LinkImage = styled.img`
+  width: 16px;
+  height: 16px;
 `;

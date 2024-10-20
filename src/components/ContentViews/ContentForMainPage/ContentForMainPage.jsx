@@ -8,7 +8,7 @@ import {
   FlexContainer,
 } from './ContentForMainPage.styled';
 
-import arrowRight from 'images/icons/arrow-right.svg';
+import arrowRight from 'images/icons/arrow-right-open.svg';
 import SectionDailyConsumptionSummary from 'components/Sections/SectionDailyConsumptionSummary';
 import SectionDiary from 'components/Sections/SectionDiary';
 import SectionRecommendedFood from 'components/Sections/SectionRecommendedFood';

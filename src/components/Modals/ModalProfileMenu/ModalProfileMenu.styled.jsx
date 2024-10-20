@@ -80,6 +80,11 @@ export const CustomLink = styled(Link)`
   display: flex;
   align-items: center;
   column-gap: 8px;
+
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5 ease-in-out;
+  }
 `;
 
 export const Icon = styled.img`

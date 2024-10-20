@@ -5,7 +5,7 @@ import {
   postMyFoodIntake,
   postMyWaterIntake,
   updateMyFoodIntake,
-} from './foodIntake.Operations';
+} from './foodIntakeOperations';
 
 const initialState = {
   items: [],

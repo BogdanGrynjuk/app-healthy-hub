@@ -1,7 +1,7 @@
 import AuthPageTemplate from 'components/PageTemplates/AuthPageTemplate';
 import ContentForWelcomePage from 'components/ContentViews/ContentForWelcomePage';
 
-import logoPic from '../../images/WelcomePageImg/logoPic.png';
+import logoPic from 'images/WelcomeLogoPic.png';
 
 const WelcomePage = () => {
   return (

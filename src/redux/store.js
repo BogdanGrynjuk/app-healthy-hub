@@ -10,8 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { authReducer } from './Auth/authSlice';
-import { foodIntakeReducer } from './foodIntake/foodIntakeSlice';
-import { statisticReducer } from './Stats/statsSlice';
+import { foodIntakeReducer } from './TempFoodIntake/foodIntakeSlice';
+import { statisticReducer } from './Statistic/statsSlice';
 
 const persistConfig = {
   key: 'auth',

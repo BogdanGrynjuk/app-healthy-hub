@@ -7,7 +7,7 @@ const BaseButton = styled.button`
   outline: none;
   font-family: ${props => props.theme.fontFamily.poppins};
   font-size: ${props => props.theme.fontSizes.xs};
-  font-weight: ${props => props.theme.fontWeights.regular};
+  font-weight: ${props => props.theme.fontWeights.medium};
   line-height: 20px;
   cursor: pointer;
 `;
@@ -85,6 +85,7 @@ export const ConfirmButton = styled(BaseButton)`
   border: ${p => p.theme.borders.normal} ${p => p.theme.colors.greenLite};
   border-radius: ${props => props.theme.radii.normal};
   padding: 8px;
+  color: ${p => p.theme.colors.black};
   cursor: pointer;
 
   @media screen and (max-width: 833px) {

@@ -12,7 +12,7 @@ import {
   TitlePage,
 } from './ContentForRecommendedFoodPage.styled';
 
-import arrowLeft from 'images/icons/arrow-left.svg';
+import arrowLeft from 'images/icons/arrow-right-open.svg';
 import banner from 'images/Ketogenic.png';
 import ListRecommendedFood from 'components/ListRecommendedFood';
 

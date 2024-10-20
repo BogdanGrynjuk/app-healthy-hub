@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import arrowLeft from 'images/icons/arrow-left.svg';
+import arrowLeft from 'images/icons/arrow-right-open.svg';
 import {
   ArrowReturn,
   HeaderPage,

@@ -72,6 +72,8 @@ const GenderAndAgeForm = () => {
               type="number"
               name="age"
               placeholder="Enter your age"
+              $error={touched.age && errors.age}
+              value={values.age}
               required
             />
             <ErrorMsg name="age" component="div" />
