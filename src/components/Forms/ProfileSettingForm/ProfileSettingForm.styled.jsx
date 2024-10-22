@@ -199,9 +199,14 @@ export const LinkDownloadPhoto = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: color 0.5s ease-in-out;
 
   & > img {
     width: 16px;
     height: 16px;
+  }
+
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
   }
 `;

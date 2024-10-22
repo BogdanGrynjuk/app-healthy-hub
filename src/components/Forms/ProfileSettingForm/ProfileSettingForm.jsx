@@ -125,7 +125,7 @@ const ProfileSettingForm = () => {
 
               <LinkDownloadPhoto>
                 <img src={downloadPhoto} alt="Select File" />
-                Download new photo
+                <span>Download new photo</span>
               </LinkDownloadPhoto>
             </Label>
           </InputFileContainer>

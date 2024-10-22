@@ -53,7 +53,7 @@ export const Modal = styled.div`
     opacity: 0;
   }
 
-  @media screen and (${props => props.theme.mq.tablet}) {
+  @media screen and (${p => p.theme.mq.tablet}) {
     top: 100px;
     width: 160px;
   }

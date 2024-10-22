@@ -5,14 +5,17 @@ import PropTypes from 'prop-types';
 import { MONTH_NAME } from 'constants/monthName.js';
 
 import {
-  TitleContainer,
-  ChartsTitle,
-  ChartsSubtitle,
-  ChartsCaption,
   Chart,
-  ChartLabelBlock,
-  ChartLabelContent,
-} from './ScaleLineCharts.styled.jsx';
+  ChartContainer,
+  ChartTitle,
+  ChartTooltip,
+  MetricValue,
+  ScrollWrapper,
+  TitleContainer,
+  TooltipMetric,
+  TooltipValue,
+  ValueDisplay,
+} from './LineChart.styled';
 
 import {
   Chart as ChartJS,
@@ -25,6 +28,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+
 import { selectStatisticInfo } from 'redux/Statistic/statsSelectors.js';
 
 ChartJS.register(
@@ -124,7 +128,6 @@ const LineChart = ({ isYearData, type }) => {
             ? positionX + caretX + 'px'
             : positionX + caretX - tooltipWidth / 2 + 'px';
           tooltipEl.style.top = positionY + caretY - tooltipHeight - 10 + 'px';
-          tooltipEl.style.backgroundColor = 'rgb(15, 15, 15)';
           tooltipTitle.textContent =
             context.tooltip.dataPoints[0].formattedValue;
         },
@@ -200,26 +203,28 @@ const LineChart = ({ isYearData, type }) => {
   };
 
   return (
-    <>
+    <Chart>
       <TitleContainer>
-        <ChartsTitle>{type === 'water' ? 'Water' : 'Calories'}</ChartsTitle>
-        <ChartsSubtitle>
+        <ChartTitle>{type === 'water' ? 'Water' : 'Calories'}</ChartTitle>
+        <ValueDisplay>
           Average value:{' '}
-          <ChartsCaption>
+          <MetricValue>
             {average} {type === 'water' ? 'ml' : 'cal'}
-          </ChartsCaption>
-        </ChartsSubtitle>
+          </MetricValue>
+        </ValueDisplay>
       </TitleContainer>
-      <Chart>
-        <Line options={options} data={data} />
-        <ChartLabelBlock>
-          <ChartLabelContent>
-            <p id="value"></p>
-            <span>{type === 'water' ? 'milliliters' : 'calories'}</span>
-          </ChartLabelContent>
-        </ChartLabelBlock>
-      </Chart>
-    </>
+      <ScrollWrapper>
+        <ChartContainer>
+          <Line options={options} data={data} />
+          <ChartTooltip>
+            <TooltipValue id="value"></TooltipValue>
+            <TooltipMetric>
+              {type === 'water' ? 'milliliters' : 'calories'}
+            </TooltipMetric>
+          </ChartTooltip>
+        </ChartContainer>
+      </ScrollWrapper>
+    </Chart>
   );
 };
 
