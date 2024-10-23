@@ -29,8 +29,10 @@ const validationSchemaForProfileSetting = yup.object({
     .min(40, 'Weight must be at least 40kg')
     .max(170, 'Weight must be no more than 170kg')
     .required('Weight is required')
-    .test('maxDigitsAfterDecimal', 'Must have 1 digits after decimal', number =>
-      /^\d+(\.\d{1})?$/.test(number)
+    .test(
+      'maxDigitsAfterDecimal',
+      'Weight can have only 1 digit after decimal point',
+      number => /^\d+(\.\d{1})?$/.test(number)
     ),
 });
 

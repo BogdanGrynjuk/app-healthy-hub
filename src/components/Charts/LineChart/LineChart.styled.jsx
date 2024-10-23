@@ -72,6 +72,7 @@ export const ScrollWrapper = styled.div`
 `;
 
 export const ChartContainer = styled.div`
+  position: relative;
   padding: 24px 20px 24px 14px;
   background-color: ${p => p.theme.colors.black2};
   border-radius: ${p => p.theme.radii.normal};
@@ -100,8 +101,6 @@ export const ChartTooltip = styled.div`
   width: 90px;
   position: absolute;
   opacity: 0;
-  top: 0;
-  left: 0;
   padding: 8px 6px;
   border-radius: 8px;
   background-color: ${p => p.theme.colors.black2};
