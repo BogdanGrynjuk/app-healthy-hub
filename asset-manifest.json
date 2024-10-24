@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/app-healthy-hub/static/css/main.fc411baf.css",
-    "main.js": "/app-healthy-hub/static/js/main.585418d7.js",
+    "main.js": "/app-healthy-hub/static/js/main.cb4d8eff.js",
     "static/js/36.2921d1fd.chunk.js": "/app-healthy-hub/static/js/36.2921d1fd.chunk.js",
     "static/js/913.2b4e865e.chunk.js": "/app-healthy-hub/static/js/913.2b4e865e.chunk.js",
-    "static/js/746.d6431079.chunk.js": "/app-healthy-hub/static/js/746.d6431079.chunk.js",
+    "static/js/746.0a777b79.chunk.js": "/app-healthy-hub/static/js/746.0a777b79.chunk.js",
     "static/js/755.a55a69f4.chunk.js": "/app-healthy-hub/static/js/755.a55a69f4.chunk.js",
     "static/js/366.7e12d2ad.chunk.js": "/app-healthy-hub/static/js/366.7e12d2ad.chunk.js",
     "static/js/124.20e22019.chunk.js": "/app-healthy-hub/static/js/124.20e22019.chunk.js",
@@ -50,10 +50,10 @@
     "static/media/arrow-right-open.svg": "/app-healthy-hub/static/media/arrow-right-open.4b79b540b4210b099c8be8dfec113119.svg",
     "static/media/arrow-down.svg": "/app-healthy-hub/static/media/arrow-down.8cf3438f3dbcde251e8bc48b07aab667.svg",
     "main.fc411baf.css.map": "/app-healthy-hub/static/css/main.fc411baf.css.map",
-    "main.585418d7.js.map": "/app-healthy-hub/static/js/main.585418d7.js.map",
+    "main.cb4d8eff.js.map": "/app-healthy-hub/static/js/main.cb4d8eff.js.map",
     "36.2921d1fd.chunk.js.map": "/app-healthy-hub/static/js/36.2921d1fd.chunk.js.map",
     "913.2b4e865e.chunk.js.map": "/app-healthy-hub/static/js/913.2b4e865e.chunk.js.map",
-    "746.d6431079.chunk.js.map": "/app-healthy-hub/static/js/746.d6431079.chunk.js.map",
+    "746.0a777b79.chunk.js.map": "/app-healthy-hub/static/js/746.0a777b79.chunk.js.map",
     "755.a55a69f4.chunk.js.map": "/app-healthy-hub/static/js/755.a55a69f4.chunk.js.map",
     "366.7e12d2ad.chunk.js.map": "/app-healthy-hub/static/js/366.7e12d2ad.chunk.js.map",
     "124.20e22019.chunk.js.map": "/app-healthy-hub/static/js/124.20e22019.chunk.js.map",
@@ -69,6 +69,6 @@
   },
   "entrypoints": [
     "static/css/main.fc411baf.css",
-    "static/js/main.585418d7.js"
+    "static/js/main.cb4d8eff.js"
   ]
 }
