@@ -4,7 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 import SharedLayout from './SharedLayout';
 import { RestrictedRoute } from 'components/Routes/RestrictedRoute';
 import { PrivateRoute } from 'components/Routes/PrivateRoute';
-import { selectIsRefreshing, selectToken } from 'redux/Auth/authSelectors';
+import {
+  selectIsLoading,
+  selectIsRefreshing,
+  selectToken,
+} from 'redux/Auth/authSelectors';
 import { refresh } from 'redux/Auth/authOperations';
 import { resetFoodIntakeState } from 'redux/FoodIntake/foodIntakeSlice';
 import Loader from './Loader/Loader';
@@ -27,6 +31,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     if (!token) {
@@ -35,7 +40,7 @@ export const App = () => {
     dispatch(refresh());
   }, [dispatch, token]);
 
-  return isRefreshing ? (
+  return isRefreshing || isLoading ? (
     <Loader />
   ) : (
     <Routes>

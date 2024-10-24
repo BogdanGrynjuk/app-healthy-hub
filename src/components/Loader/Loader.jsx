@@ -1,8 +1,11 @@
 import { Oval } from 'react-loader-spinner';
+import { createPortal } from 'react-dom';
 import { Wrapper, Text } from './Loader.styled';
 
+const modalRoot = document.querySelector('#modal-root');
+
 const Loader = () => {
-  return (
+  return createPortal(
     <Wrapper>
       <Oval
         ariaLabel="loading-indicator"
@@ -15,7 +18,8 @@ const Loader = () => {
         visible={true}
       />
       <Text>Loading...</Text>
-    </Wrapper>
+    </Wrapper>,
+    modalRoot
   );
 };
 

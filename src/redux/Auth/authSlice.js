@@ -25,6 +25,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoading: false,
   error: null,
 };
 
@@ -87,77 +88,94 @@ const authSlice = createSlice({
       // signUp
       .addCase(signUp.pending, state => {
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
+        state.isLoading = false;
         state.isLoggedIn = true;
         state.error = null;
       })
       .addCase(signUp.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       })
 
       // signIn
       .addCase(signIn.pending, state => {
+        state.isLoading = true;
         state.isLoggedIn = false;
         state.error = null;
       })
       .addCase(signIn.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
         state.error = null;
       })
       .addCase(signIn.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.isLoggedIn = false;
         state.error = payload;
       })
 
       // logOut
       .addCase(logOut.pending, state => {
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(logOut.fulfilled, () => {
         return { ...initialState };
       })
       .addCase(logOut.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       })
 
       // updateUser
       .addCase(updateUser.pending, state => {
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
         for (const key in payload) {
           if (payload.hasOwnProperty(key)) state.user[key] = payload[key];
         }
         state.error = null;
       })
       .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       })
 
       // checkEmail
       .addCase(checkEmail.pending, state => {
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(checkEmail.fulfilled, state => {
+        state.isLoading = false;        
         state.error = null;
       })
       .addCase(checkEmail.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       })
 
       // resetPassword
       .addCase(resetPassword.pending, state => {
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(resetPassword.fulfilled, state => {
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(resetPassword.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       });
   },

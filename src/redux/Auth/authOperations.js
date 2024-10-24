@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { getMyFoodIntake } from '../FoodIntake/foodIntakeOperations';
+import { getMyFoodIntake } from 'redux/FoodIntake/foodIntakeOperations';
+import { getRecommendedFood } from 'redux/RecommendedFood/recommendedFoodOperations';
 
 import {
   axiosAuth,
@@ -56,6 +57,7 @@ export const refresh = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
     const response = await axiosAuth.get('auth/current');
 
     await thunkAPI.dispatch(getMyFoodIntake());
+    await thunkAPI.dispatch(getRecommendedFood());
     return response.data;
   } catch (error) {
     console.error(error.response.data.message);

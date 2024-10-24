@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Arrow,
   ArrowReturn,
@@ -20,8 +20,11 @@ import ScaleChart from 'components/Charts/ScaleChart/ScaleChart';
 import { MONTH_NAME } from 'constants/monthName';
 import { PERIOD_TYPES } from 'constants/periodTypes';
 import { getStatistic } from 'redux/Statistic/statsOperations';
+import { selectIsLoading } from 'redux/Statistic/statsSelectors';
+import Loader from 'components/Loader';
 
 const ContentForDashboardPage = () => {
+  const isLoading = useSelector(selectIsLoading);
   const [isYearView, setIsYearView] = useState(false);
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [isTransitionActive, setIsTransitionActive] = useState(false);
@@ -79,7 +82,9 @@ const ContentForDashboardPage = () => {
   const currentMonth = MONTH_NAME.FULL[new Date().getMonth() + 1];
   const currentYear = new Date().getFullYear();
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <HeaderPage>
         <MainHeaderBlock>

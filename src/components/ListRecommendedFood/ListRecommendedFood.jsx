@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getRecommendedFood } from 'helpers/getRecommendedFood';
 import { randomizeFood } from 'helpers/randomizeFood';
 
 import { Item, List } from './ListRecommendedFood.styled';
 import CardRecommendedProduct from 'components/CardRecommendedProduct';
+import { selectRecommendedFood } from 'redux/RecommendedFood/recommendedFoodSelectors';
+import { useSelector } from 'react-redux';
 
 const RecommendedFoodList = ({ itemLimit }) => {
   const [arrayForRender, setArrayForRender] = useState([]);
+  const arrayOfRecommendedFood = useSelector(selectRecommendedFood);
 
   useEffect(() => {
-    getRecommendedFood()
-      .then(response => {
-        setArrayForRender(randomizeFood(response, itemLimit));
-      })
-      .catch(err => console.error(err));
-  }, [itemLimit]);
+    setArrayForRender(randomizeFood(arrayOfRecommendedFood, itemLimit));
+  }, [arrayOfRecommendedFood, itemLimit]);
 
   return (
     <List>

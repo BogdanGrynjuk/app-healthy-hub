@@ -12,6 +12,7 @@ import {
 import { authReducer } from './Auth/authSlice';
 import { foodIntakeReducer } from './FoodIntake/foodIntakeSlice';
 import { statisticReducer } from './Statistic/statsSlice';
+import { recommendedFoodReducer } from './RecommendedFood/recommendedFoodSlice';
 
 const persistConfig = {
   key: 'auth',
@@ -26,6 +27,7 @@ export const store = configureStore({
     auth: persistedReducer,
     foodIntake: foodIntakeReducer,
     statistic: statisticReducer,
+    recommendedFood: recommendedFoodReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

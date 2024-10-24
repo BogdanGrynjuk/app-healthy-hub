@@ -49,6 +49,7 @@ export const ScrollWrapper = styled.div`
   @media screen and (${p => p.theme.mq.tablet}) {
     column-gap: 6px;
     width: calc(834px - (24px * 2));
+    overflow-x: hidden;
   }
 
   @media screen and (${p => p.theme.mq.desktop}) {
@@ -77,6 +78,11 @@ export const ChartContainer = styled.div`
   background-color: ${p => p.theme.colors.black2};
   border-radius: ${p => p.theme.radii.normal};
   width: 676px;
+  height: 382px;
+
+  & canvas {
+    position: absolute;
+  }
 
   @media screen and (${p => p.theme.mq.tablet}) {
     width: 780px;
