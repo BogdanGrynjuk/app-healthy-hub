@@ -2,19 +2,28 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { axiosAuth } from 'helpers/network';
 import toastifyMessage from 'helpers/toastify';
+import { setLoginStatus } from 'redux/Auth/authSlice';
 
 export const getStatistic = createAsyncThunk(
   'statistic/getStatistic',
-  async (period, { rejectWithValue }) => {
+  async (period, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axiosAuth.get(`/user/statistics?range=${period}`);
       return data;
     } catch (error) {
-      if (error instanceof AxiosError && error.response.data.message) {
-        toastifyMessage('error', error.response.data.message);
+      const errorMessage =
+        error.response?.data?.message || 'Something went wrong';
+
+      if (error instanceof AxiosError && errorMessage === 'Not authorized') {
+        toastifyMessage(
+          'error',
+          'Your session has expired. Please log in again.'
+        );
+        dispatch(setLoginStatus(false));
       }
-      console.error(error.response.data.message);
-      return rejectWithValue(error.response.data.message);
+
+      console.error(errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );

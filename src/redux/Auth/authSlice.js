@@ -36,8 +36,8 @@ const authSlice = createSlice({
     clearError: state => {
       state.error = null;
     },
-    updateAppStatus: (state, { payload }) => {
-      state.appStatus = payload;
+    setLoginStatus: (state, { payload }) => {
+      state.isLoggedIn = payload;
     },
     setUserName: (state, { payload }) => {
       state.user.name = payload;
@@ -131,6 +131,7 @@ const authSlice = createSlice({
       })
       .addCase(logOut.rejected, (state, { payload }) => {
         state.isLoading = false;
+        state.isLoggedIn = false;
         state.error = payload;
       })
 
@@ -157,7 +158,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(checkEmail.fulfilled, state => {
-        state.isLoading = false;        
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(checkEmail.rejected, (state, { payload }) => {
@@ -183,7 +184,7 @@ const authSlice = createSlice({
 
 export const {
   clearError,
-  updateAppStatus,
+  setLoginStatus,
   setUserName,
   setUserEmail,
   setUserPassword,

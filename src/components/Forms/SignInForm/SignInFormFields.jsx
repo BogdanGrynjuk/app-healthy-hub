@@ -40,14 +40,11 @@ const SignInFormFields = ({
   useEffect(() => {
     let errorFields = {};
     if (errorFromState) {
-      if (errorFromState === 'Unable to fetch user: No token') {
-        dispatch(clearError());
-        return;
-      }
       try {
         errorFields = JSON.parse(errorFromState);
       } catch (e) {
-        console.error(e);
+        dispatch(clearError());
+        return;
       }
       setFieldValue('email', errorFields.email);
       setFieldValue('password', errorFields.password);

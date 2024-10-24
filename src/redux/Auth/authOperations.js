@@ -75,7 +75,10 @@ export const logOut = createAsyncThunk(
       resetGlobalAuthHeader();
       return res.status;
     } catch (error) {
-      toastifyMessage('error', 'Something went wrong!');
+      toastifyMessage(
+        'error',
+        'Your session has expired. Please log in again.'
+      );
       console.error(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
