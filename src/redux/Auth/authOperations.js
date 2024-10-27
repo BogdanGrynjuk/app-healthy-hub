@@ -10,6 +10,7 @@ import {
   setGlobalAuthHeader,
 } from 'helpers/network';
 import toastifyMessage from 'helpers/toastify';
+import { resetNotifications } from 'redux/FoodIntake/foodIntakeSlice';
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
@@ -103,9 +104,10 @@ export const resetPassword = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'auth/updateUser',
-  async (updatedUserData, { rejectWithValue }) => {
+  async (updatedUserData, { dispatch, rejectWithValue }) => {
     try {
       const res = await axiosAuth.patch('user/info', updatedUserData);
+      dispatch(resetNotifications());
       return res.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response.data.message) {

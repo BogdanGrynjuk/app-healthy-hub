@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Wrapper,
@@ -22,21 +22,24 @@ import ModalAddWater from 'components/Modals/ModalAddWater/ModalAddWater';
 import {
   selectConsumedWaterAmount,
   selectExceededWaterLimit,
+  selectNotifications,
   selectWaterConsumptionPercentage,
   selectWaterExcess,
   selectWaterRemainingToGoal,
 } from 'redux/FoodIntake/foodIntakeSelectors';
 import { outNum } from 'helpers/outNum';
 import toastifyMessage from 'helpers/toastify';
+import { setNotification } from 'redux/FoodIntake/foodIntakeSlice';
 
 const BlockWater = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const chartRef = useRef(null);
   const counterRef = useRef(null);
-  const hasNotified = useRef(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  const notifications = useSelector(selectNotifications);
   const consumedWaterMl = useSelector(selectConsumedWaterAmount);
   const waterConsumptionPercentage = useSelector(
     selectWaterConsumptionPercentage
@@ -60,14 +63,14 @@ const BlockWater = () => {
   }, [consumedWaterMl]);
 
   useEffect(() => {
-    if (exceededWaterLimit && !hasNotified.current) {
+    if (exceededWaterLimit && !notifications.water) {
       toastifyMessage(
         'warn',
         `Maximum water consumption. If you continue to consume, you will not reach your goal`
       );
-      hasNotified.current = true;
+      dispatch(setNotification({ type: 'water', value: true }));
     }
-  }, [exceededWaterLimit]);
+  }, [dispatch, exceededWaterLimit, notifications.water]);
 
   return (
     <>

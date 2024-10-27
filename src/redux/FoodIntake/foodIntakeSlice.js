@@ -11,6 +11,13 @@ const initialState = {
   items: [],
   waterIntake: 0,
   error: null,
+  notifications: {
+    water: false,
+    calories: false,
+    fat: false,
+    carbohydrates: false,
+    protein: false,
+  },
 };
 
 const foodIntakeSlice = createSlice({
@@ -18,6 +25,15 @@ const foodIntakeSlice = createSlice({
   initialState,
   reducers: {
     resetFoodIntakeState: () => initialState,
+    setNotification(state, action) {
+      const { type, value } = action.payload;
+      state.notifications[type] = value;
+    },
+    resetNotifications(state) {
+      Object.keys(state.notifications).forEach(key => {
+        state.notifications[key] = false;
+      });
+    },
   },
   extraReducers: builder => {
     builder
@@ -38,5 +54,6 @@ const foodIntakeSlice = createSlice({
   },
 });
 
-export const { resetFoodIntakeState } = foodIntakeSlice.actions;
+export const { setNotification, resetNotifications, resetFoodIntakeState } =
+  foodIntakeSlice.actions;
 export const foodIntakeReducer = foodIntakeSlice.reducer;

@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import toastifyMessage from 'helpers/toastify';
 import { Doughnut } from 'react-chartjs-2';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectNotifications } from 'redux/FoodIntake/foodIntakeSelectors';
+import { setNotification } from 'redux/FoodIntake/foodIntakeSlice';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -11,7 +14,8 @@ const SecondaryDoughnutChart = ({
   nutrient,
   colorDoughnutChart,
 }) => {
-  const hasNotified = useRef(false);
+  const dispatch = useDispatch();
+  const notifications = useSelector(selectNotifications);
   const [chartKey, setChartKey] = useState(0);
 
   const {
@@ -52,7 +56,7 @@ const SecondaryDoughnutChart = ({
       const yCoord = chart.getDatasetMeta(0).data[0].y;
 
       ctx.save();
-      ctx.font = `400 12px sans-serif`;
+      ctx.font = `400 11px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#B6B6B6';
@@ -83,15 +87,17 @@ const SecondaryDoughnutChart = ({
     setChartKey(prevKey => prevKey + 1);
   }, [nutrient]);
 
+  const formattedNameNutrient = nameNutrient.toLowerCase();
+
   useEffect(() => {
-    if (isGoalExceeded && !hasNotified.current) {
+    if (isGoalExceeded && !notifications[formattedNameNutrient]) {
       toastifyMessage(
         'warn',
-        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
+        `Maximum ${formattedNameNutrient} consumption. If you continue to consume, you will not reach your goal`
       );
-      hasNotified.current = true;
+      dispatch(setNotification({ type: formattedNameNutrient, value: true }));
     }
-  }, [isGoalExceeded, nameNutrient]);
+  }, [dispatch, formattedNameNutrient, isGoalExceeded, notifications]);
 
   return (
     <Doughnut

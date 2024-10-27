@@ -1,18 +1,23 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import toastifyMessage from 'helpers/toastify';
 import { Doughnut } from 'react-chartjs-2';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectNotifications } from 'redux/FoodIntake/foodIntakeSelectors';
+import { setNotification } from 'redux/FoodIntake/foodIntakeSlice';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
-  const hasNotified = useRef(false);
+  const dispatch = useDispatch();
+  const notifications = useSelector(selectNotifications);
 
-  const { consumedAmount, remainingAmount, isGoalExceeded } = nutrient;
+  const { consumedAmount, excessAmount, remainingAmount, isGoalExceeded } =
+    nutrient;
 
   const data = {
-    labels: ['Consumed:', 'Left:'],
+    labels: [`${!isGoalExceeded ? 'Consumed:' : 'Excess:'}`, 'Left:'],
     datasets: [
       {
         data: [consumedAmount, remainingAmount >= 0 ? remainingAmount : 0],
@@ -32,6 +37,14 @@ const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const value = context.raw;
+            return `${isGoalExceeded ? excessAmount : value}`;
+          },
+        },
       },
     },
   };
@@ -75,15 +88,17 @@ const MainDoughnutChart = ({ nameNutrient, nutrient, colorDoughnutChart }) => {
     },
   };
 
+  const formattedNameNutrient = nameNutrient.toLowerCase();
+
   useEffect(() => {
-    if (isGoalExceeded && !hasNotified.current) {
+    if (isGoalExceeded && !notifications[formattedNameNutrient]) {
       toastifyMessage(
         'warn',
-        `Maximum ${nameNutrient.toLowerCase()} consumption. If you continue to consume, you will not reach your goal`
+        `Maximum ${formattedNameNutrient} consumption. If you continue to consume, you will not reach your goal`
       );
-      hasNotified.current = true;
+      dispatch(setNotification({ type: formattedNameNutrient, value: true }));
     }
-  }, [isGoalExceeded, nameNutrient]);
+  }, [dispatch, isGoalExceeded, formattedNameNutrient, notifications]);
 
   return (
     <Doughnut
