@@ -25,7 +25,7 @@ import imageEditSrc from 'images/icons/edit.svg';
 import ModalChangeGoal from 'components/Modals/ModalChangeGoal';
 import ModalChangeWeight from 'components/Modals/ModalChangeWeight';
 
-const MetricMenu = ({ metricName }) => {
+const MetricMenu = ({ metricName, onOpenInnerModal, onCloseInnerModal }) => {
   const [isOpenModalTarget, setIsOpenModalTarget] = useState(false);
   const [isOpenModalWeight, setIsOpenModalWeight] = useState(false);
   const { gender, goal, weight } = useSelector(selectUser);
@@ -50,20 +50,22 @@ const MetricMenu = ({ metricName }) => {
   const metric = metricConfig[metricName];
 
   const openModal = useCallback(() => {
-    if (metric.title === 'Weight') {
+    onOpenInnerModal?.();
+    if (metricName === 'weight') {
       setIsOpenModalWeight(true);
     } else {
       setIsOpenModalTarget(true);
     }
-  }, [metric.title]);
+  }, [metricName, onOpenInnerModal]);
 
   const closeModal = useCallback(() => {
-    if (metric.title === 'Weight') {
+    onCloseInnerModal?.();
+    if (metricName === 'weight') {
       setIsOpenModalWeight(false);
     } else {
       setIsOpenModalTarget(false);
     }
-  }, [metric.title]);
+  }, [metricName, onCloseInnerModal]);
 
   return (
     <>
@@ -97,6 +99,8 @@ const MetricMenu = ({ metricName }) => {
 
 MetricMenu.propTypes = {
   metricName: PropTypes.string.isRequired,
+  onOpenInnerModal: PropTypes.func,
+  onCloseInnerModal: PropTypes.func,
 };
 
 export default MetricMenu;

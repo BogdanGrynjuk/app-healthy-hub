@@ -28,7 +28,7 @@ const ModalChangeGoal = ({ onClose }) => {
     setTimeout(() => {
       setIsVisible(false);
       onClose();
-    }, 0);
+    }, 300);
   }, [onClose]);
 
   const handleBackdropClick = useCallback(

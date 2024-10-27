@@ -19,13 +19,25 @@ const modalRoot = document.querySelector('#modal-root');
 const ModalMainMenu = ({ onClose }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isInnerModalOpen, setIsInnerModalOpen] = useState(false);
 
   const closeModal = useCallback(() => {
     setIsActive(false);
     setTimeout(() => {
-      setIsVisible(false);
-      onClose();
+      if (!isInnerModalOpen) {
+        setIsVisible(false);
+        onClose();
+      }
     }, 300);
+  }, [onClose, isInnerModalOpen]);
+
+  const openInnerModal = useCallback(() => {
+    setIsInnerModalOpen(true);
+    setIsActive(false);
+  }, []);
+
+  const closeInnerModal = useCallback(() => {
+    onClose();
   }, [onClose]);
 
   const handleBackdropClick = useCallback(
@@ -46,14 +58,9 @@ const ModalMainMenu = ({ onClose }) => {
     [closeModal]
   );
 
-  const handleClickButtonClose = () => {
-    closeModal();
-  };
-
   useEffect(() => {
     document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       document.body.style.overflowY = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
@@ -69,12 +76,20 @@ const ModalMainMenu = ({ onClose }) => {
   return createPortal(
     <Backdrop onClick={handleBackdropClick}>
       <Modal className={isActive ? 'active' : ''}>
-        <ButtonClose type="button" onClick={handleClickButtonClose}>
+        <ButtonClose type="button" onClick={closeModal}>
           <IconClose src={imageCloseSrc} alt="close" />
         </ButtonClose>
         <Content>
-          <MetricMenu metricName="goal" />
-          <MetricMenu metricName="weight" />
+          <MetricMenu
+            metricName="goal"
+            onOpenInnerModal={openInnerModal}
+            onCloseInnerModal={closeInnerModal}
+          />
+          <MetricMenu
+            metricName="weight"
+            onOpenInnerModal={openInnerModal}
+            onCloseInnerModal={closeInnerModal}
+          />
         </Content>
       </Modal>
     </Backdrop>,
