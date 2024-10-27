@@ -29,6 +29,7 @@ const ContentForDashboardPage = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [isTransitionActive, setIsTransitionActive] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState(PERIOD_TYPES.MONTH);
+  const dropdownRef = useRef(null);
 
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/main');
@@ -45,14 +46,22 @@ const ContentForDashboardPage = () => {
       }
     };
 
+    const handleClickOutside = event => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
     if (isToggleOpen) {
       document.body.style.overflowY = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('mousedown', handleClickOutside);
     }
     return () => {
       if (isToggleOpen) {
         document.body.style.overflowY = 'auto';
         window.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('mousedown', handleClickOutside);
       }
     };
   }, [isToggleOpen]);
@@ -97,6 +106,7 @@ const ContentForDashboardPage = () => {
           </ButtonToggleDropdown>
           {isToggleOpen && (
             <DropdownPeriodToggle
+              ref={dropdownRef}
               className={isTransitionActive ? 'active' : ''}
               onClick={togglePeriod}
             >
