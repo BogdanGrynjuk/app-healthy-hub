@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -11,7 +10,7 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: ${p => p.theme.colors.black };
+  background-color: ${p => p.theme.colors.black};
   z-index: 10;
 `;
 
@@ -23,5 +22,5 @@ export const Text = styled.h1`
   font-size: ${p => p.theme.fontSizes.s};
   font-weight: ${p => p.theme.fontWeights.semiBold};
   color: ${p => p.theme.colors.liteGreen};
-  z-index: 20;  
+  z-index: 20;
 `;
