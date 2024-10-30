@@ -38,6 +38,15 @@ const AddWater = ({ onClose }) => {
     }, 300);
   }, [onClose]);
 
+  const handleBackdropClick = useCallback(
+    event => {
+      if (event.currentTarget === event.target) {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
+
   const handleKeyDown = useCallback(
     event => {
       if (event.code === 'Escape') {
@@ -70,7 +79,7 @@ const AddWater = ({ onClose }) => {
   if (!isVisible) return null;
 
   return createPortal(
-    <Backdrop>
+    <Backdrop onClick={handleBackdropClick}>
       <Modal className={isActive ? 'active' : ''}>
         <Title>Add water intake</Title>
         <Formik

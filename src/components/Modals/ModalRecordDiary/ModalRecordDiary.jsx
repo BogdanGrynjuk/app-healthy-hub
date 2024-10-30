@@ -66,6 +66,15 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
     [closeModal]
   );
 
+  const handleBackdropClick = useCallback(
+    event => {
+      if (event.currentTarget === event.target) {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
+
   const handleSubmit = (values, { resetForm }) => {
     values.productList.forEach(
       ({ mealType, mealName, carbonohidrates, protein, fat, calories }) => {
@@ -113,7 +122,7 @@ const RecordDiaryModal = ({ onClose, image, mealType, mealDetails }) => {
   if (!isVisible) return null;
 
   return createPortal(
-    <Backdrop>
+    <Backdrop onClick={handleBackdropClick}>
       <Modal className={isActive ? 'active' : ''}>
         <ModalTitle>
           {!mealDetails ? 'Record your meal' : 'Edit meal'}

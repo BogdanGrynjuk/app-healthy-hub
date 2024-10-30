@@ -87,6 +87,18 @@ export const CustomLink = styled(Link)`
   }
 `;
 
+export const ButtonLink = styled(BaseButton)`
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding: 0;
+
+  &:hover > span {
+    color: ${p => p.theme.colors.greenLite};
+    transition: color 0.5s ease-in-out;
+  }
+`;
+
 export const Icon = styled.img`
   width: 16px;
   height: 16px;
