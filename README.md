@@ -1,113 +1,92 @@
-# React homework template
+# HealthyHub
 
-Этот проект был создан при помощи
-[Create React App](https://github.com/facebook/create-react-app). Для знакомства
-и настройки дополнительных возможностей
-[обратись к документации](https://facebook.github.io/create-react-app/docs/getting-started).
+HealthyHub is a web application designed to help users track their daily health
+habits, including hydration and meal tracking. The app offers an intuitive
+interface to log water intake, record meals, set goals, and monitor progress
+over time.
 
-## Создание репозитория по шаблону
+## Problems Addressed
 
-Используй этот репозиторий организации GoIT как шаблон для создания репозитория
-своего проекта. Для этого нажми на кнопку `«Use this template»` и выбери опцию
-`«Create a new repository»`, как показано на изображении.
+HealthyHub addresses several key health challenges faced by users:
 
-![Creating repo from a template step 1](./assets/template-step-1.png)
+1. **Insufficient Water Intake**: Many individuals struggle to meet their daily
+   hydration needs. The app allows users to track their water consumption,
+   ensuring they stay hydrated and maintain optimal health.
+2. **Difficulties with Meal Tracking**: Changing dietary habits can be
+   overwhelming. HealthyHub simplifies the process of logging meals, providing
+   customizable options that help users manage their nutrition effectively.
+3. **Lack of Progress Visualization**: Users often find it hard to see the
+   impact of their health habits. HealthyHub offers graphs and charts that
+   visualize changes in water intake and nutrition, motivating users to stay on
+   track with their health goals.
+4. **Need for Personalized Goal Setting**: Whether users aim to lose weight,
+   maintain their current weight, or gain muscle, HealthyHub allows for
+   personalized goal setting, helping users stay focused and accountable on
+   their health journey.
+5. **User-Friendly Interface**: In a fast-paced world, having an
+   easy-to-navigate application is crucial. HealthyHub provides a clean and
+   intuitive interface that makes it simple for anyone to log their hydration
+   and meals, regardless of their tech-savviness.
 
-На следующем шаге откроется страница создания нового репозитория. Заполни поле
-его имени, убедись что репозиторий публичный, после чего нажми кнопку
-`«Create repository from template»`.
+## Table of Contents
 
-![Creating repo from a template step 2](./assets/template-step-2.png)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Contributing](#contributing)
+- [Contact Us](#contact-us)
 
-После того как репозиторий будет создан, необходимо перейти в настройки
-созданного репозитория на вкладку `Settings` > `Actions` > `General` как
-показано на изображении.
+## Features
 
-![Settings GitHub Actions permissions step 1](./assets/gh-actions-perm-1.png)
+- **User Authentication**: Secure user registration, login, and logout
+  functionality.
+- **Water Intake Tracking**: Log daily water consumption to stay hydrated.
+- **Meal Tracking**: Record daily meals with customizable options.
+- **Progress Visualization**: Graphs and charts to monitor health habits.
+- **Responsive Design**: Optimized for both desktop and mobile viewing.
 
-Проскролив страницу до самого конца, в секции `«Workflow permissions»` выбери
-опцию `«Read and write permissions»` и поставь галочку в чекбоксе. Это
-необходимо для автоматизации процесса деплоя проекта.
+## Getting Started
 
-![Settings GitHub Actions permissions step 2](./assets/gh-actions-perm-2.png)
+1. Clone this repository to your local machine.
+2. Make sure you have an LTS version of Node.js installed on your computer.
+   [Download and install](https://nodejs.org/en/) if needed.
+3. Install dependencies with the `npm install` command.
+4. Start development mode by running the `npm start` command.
 
-Теперь у тебя есть личный репозиторий проекта, со структурой файлов и папок
-репозитория-шаблона. Далее работай с ним как с любым другим личным репозиторием,
-клонируй его себе на компьютер, пиши код, делай коммиты и отправляй их на
-GitHub.
+The app should now be running on http://localhost:3000.
 
-## Подготовка к работе
+## Usage
 
-1. Убедись что на компьютере установлена LTS-версия Node.js.
-   [Скачай и установи](https://nodejs.org/en/) её если необходимо.
-2. Установи базовые зависимости проекта командой `npm install`.
-3. Запусти режим разработки, выполнив команду `npm start`.
-4. Перейди в браузере по адресу [http://localhost:3000](http://localhost:3000).
-   Эта страница будет автоматически перезагружаться после сохранения изменений в
-   файлах проекта.
+- **Log Water Intake**: Navigate to the Water Tracker to add your daily water
+  consumption.
+- **Record Meals**: In the Meal Tracker section, you can log your meals and view
+  nutrition details.
+- **Profile Settings**: Manage account settings, including personal details and
+  health goals.
 
-## Деплой
+## Tech Stack
 
-Продакшн версия проекта будет автоматически проходить линтинг, собираться и
-деплоиться на GitHub Pages, в ветку `gh-pages`, каждый раз когда обновляется
-ветка `main`. Например, после прямого пуша или принятого пул-реквеста. Для этого
-необходимо в файле `package.json` отредактировать поле `homepage`, заменив
-`your_username` и `your_repo_name` на свои, и отправить изменения на GitHub.
+- **Frontend**: React, Redux, styled-components
+- **Form Validation**: Formik, Yup
+- **Data Visualization**: Chart.js
+- **Backend**: Node.js, Express
+  - **Database**: MongoDB (Mongoose)
+  - **API Documentation**: [Swagger](https://healthyhub.onrender.com/api/docs/)
+  - **Repository**:
+    [HealthyHub-Backend](https://github.com/RenTensei/HealthyHub-Backend)
 
-```json
-"homepage": "https://your_username.github.io/your_repo_name/"
-```
+## Contributing
 
-Далее необходимо зайти в настройки GitHub-репозитория (`Settings` > `Pages`) и
-выставить раздачу продакшн версии файлов из папки `/root` ветки `gh-pages`, если
-это небыло сделано автоматически.
+Contributions are welcome! Please follow these steps:
 
-![GitHub Pages settings](./assets/repo-settings.png)
+1. Fork the repository.
+2. Create a new branch with a descriptive name.
+3. Commit your changes and push the branch.
+4. Open a pull request with a detailed description of your changes.
 
-### Статус деплоя
+## Contact Us
 
-Статус деплоя крайнего коммита отображается иконкой возле его идентификатора.
+If you have any questions or feedback, feel free to reach out to us at bgrynjuk@ukr.net.
 
-- **Желтый цвет** - выполняется сборка и деплой проекта.
-- **Зеленый цвет** - деплой завершился успешно.
-- **Красный цвет** - во время линтинга, сборки или деплоя произошла ошибка.
-
-Более детальную информацию о статусе можно посмотреть кликнув по иконке, и в
-выпадающем окне перейти по ссылке `Details`.
-
-![Deployment status](./assets/deploy-status.png)
-
-### Живая страница
-
-Через какое-то время, обычно пару минут, живую страницу можно будет посмотреть
-по адресу указанному в отредактированном свойстве `homepage`. Например, вот
-ссылка на живую версию для этого репозитория
-[https://goitacademy.github.io/react-homework-template](https://goitacademy.github.io/react-homework-template).
-
-Если открывается пустая страница, убедись что во вкладке `Console` нет ошибок
-связанных с неправильными путями к CSS и JS файлам проекта (**404**). Скорее
-всего у тебя неправильное значение свойства `homepage` в файле `package.json`.
-
-### Маршрутизация
-
-Если приложение использует библиотеку `react-router-dom` для маршрутизации,
-необходимо дополнительно настроить компонент `<BrowserRouter>`, передав в пропе
-`basename` точное название твоего репозитория. Слеш в начале строки обязателен.
-
-```jsx
-<BrowserRouter basename="/your_repo_name">
-  <App />
-</BrowserRouter>
-```
-
-## Как это работает
-
-![How it works](./assets/how-it-works.png)
-
-1. После каждого пуша в ветку `main` GitHub-репозитория, запускается специальный
-   скрипт (GitHub Action) из файла `.github/workflows/deploy.yml`.
-2. Все файлы репозитория копируются на сервер, где проект инициализируется и
-   проходит линтинг и сборку перед деплоем.
-3. Если все шаги прошли успешно, собранная продакшн версия файлов проекта
-   отправляется в ветку `gh-pages`. В противном случае, в логе выполнения
-   скрипта будет указано в чем проблема.
+Happy tracking with HealthyHub! 💧 🍎
